@@ -1,13 +1,16 @@
+
 ---
 import Layout from '../layouts/Layout.astro';
 import Terminal from '../components/Terminal.astro';
+import InteractiveTerminal from '../components/InteractiveTerminal.astro';
 ---
 
 <Layout 
     title="DeJon Gaines | Chief Information Officer" 
     description="Technology executive orchestrating enterprise-scale digital transformations"
 >
-    <nav>
+  <!-- Navigation -->
+<nav>
         <div class="container">
             <div class="nav-content">
                 <a href="/" class="logo">DG</a>
@@ -17,33 +20,46 @@ import Terminal from '../components/Terminal.astro';
                     <a href="#talks">Talks</a>
                     <a href="#writing">Writing</a>
                     <a href="#contact">Contact</a>
+                    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                        🌙
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main>
+ 
+<!-- Hero Section -->
+  <main>
         <section class="hero">
             <div class="container">
-                <h1>DeJon Gaines</h1>
-                <div class="subtitle">Chief Information Officer</div>
-                <p class="tagline">Architecting enterprise technology strategies and digital transformations that scale across healthcare, financial services, and government sectors. Leading innovation in AI implementation, cloud infrastructure, and operational excellence.</p>
-                <div class="impact-areas">
-                    <span class="impact-item">Digital Transformation</span>
-                    <span class="impact-item">AI & ML Implementation</span>
-                    <span class="impact-item">Enterprise Architecture</span>
-                    <span class="impact-item">Executive Leadership</span>
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <h1>DeJon Gaines</h1>
+                        <div class="subtitle">Chief Information Officer</div>
+                        <p class="tagline">
+                            Architecting enterprise technology strategies and digital transformations that scale across healthcare, financial services, and government sectors. Leading innovation in AI implementation, cloud infrastructure, and operational excellence.
+                        </p>
+                        <div class="impact-areas">
+                            <span class="impact-item">Digital Transformation</span>
+                            <span class="impact-item">AI & ML Implementation</span>
+                            <span class="impact-item">Enterprise Architecture</span>
+                            <span class="impact-item">Executive Leadership</span>
+                        </div>
+                        <div class="hero-cta">
+                            <a href="#about" class="btn btn-primary">About Me</a>
+                            <a href="#contact" class="btn btn-outline">Get in Touch</a>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-terminal">
+                        <Terminal />
+                    </div>
                 </div>
-                <div class="hero-cta">
-                    <a href="#about" class="btn btn-primary">About Me</a>
-                    <a href="#contact" class="btn btn-outline">Get in Touch</a>
-                </div>
-                
-                <Terminal />
             </div>
         </section>
 
-        <section id="about">
+	<section id="about">
             <div class="container">
                 <h2>About Me</h2>
                 <div class="about-grid">
@@ -226,17 +242,20 @@ import Terminal from '../components/Terminal.astro';
         </section>
     </main>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-copyright">
-                    © 2025 DeJon Gaines. All rights reserved.
-                </div>
-                <div class="footer-links">
-                    <a href="https://www.linkedin.com/in/dejon-gaines" target="_blank">LinkedIn</a>
-                    <a href="mailto:dejon.gaines@outlook.com">Email</a>
-                </div>
-            </div>
+
+<!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-copyright">
+          © 2025 DeJon Gaines. All rights reserved.
         </div>
-    </footer>
+        <div class="footer-links">
+            <a href="https://www.linkedin.com/in/dejon-gaines" target="_blank">LinkedIn</a>
+            <a href="mailto:dejon.gaines@outlook.com">Email</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <InteractiveTerminal />
 </Layout>
