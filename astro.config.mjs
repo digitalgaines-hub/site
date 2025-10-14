@@ -1,7 +1,6 @@
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
 export default defineConfig({
-  site: 'https://digitalgaines-hub.github.io',
-  base: '/site',
+  site: 'https://digitalgaines.com',
+  base: '/', // Important: remove '/site' if you had it before
 });
