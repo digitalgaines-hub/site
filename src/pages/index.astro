@@ -1,13 +1,13 @@
-
 ---
 import Layout from '../layouts/Layout.astro';
 import Terminal from '../components/Terminal.astro';
 import InteractiveTerminal from '../components/InteractiveTerminal.astro';
+import LiveDashboard from '../components/LiveDashboard.astro';  // ← ADD THIS LINE
 ---
 
 <Layout 
-    title="DeJon Gaines | Chief Information Officer" 
-    description="Technology executive orchestrating enterprise-scale digital transformations"
+    title="DeJon Gaines | Technology Transformation Leader" 
+    description="Challenging how enterprises think about technology transformation"
 >
   <!-- Navigation -->
 <nav>
@@ -15,11 +15,9 @@ import InteractiveTerminal from '../components/InteractiveTerminal.astro';
             <div class="nav-content">
                 <a href="/" class="logo">DG</a>
                 <div class="nav-links">
-                    <a href="#about">About</a>
-                    <a href="#experience">Experience</a>
-                    <a href="#talks">Talks</a>
-                    <a href="#writing">Writing</a>
-                    <a href="#contact">Contact</a>
+    <a href="#perspective">Perspective</a>
+    <a href="#focus">Current Focus</a>
+    <a href="#engage">Engage</a>
                     <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
                         🌙
                     </button>
@@ -28,7 +26,6 @@ import InteractiveTerminal from '../components/InteractiveTerminal.astro';
         </div>
     </nav>
 
- 
 <!-- Hero Section -->
   <main>
         <section class="hero">
@@ -36,19 +33,19 @@ import InteractiveTerminal from '../components/InteractiveTerminal.astro';
                 <div class="hero-grid">
                     <div class="hero-content">
                         <h1>DeJon Gaines</h1>
-                        <div class="subtitle">Chief Information Officer</div>
+                        <div class="subtitle">Technology Transformation Leader</div>
                         <p class="tagline">
-                            Architecting enterprise technology strategies and digital transformations that scale across healthcare, financial services, and government sectors. Leading innovation in AI implementation, cloud infrastructure, and operational excellence.
-                        </p>
-                        <div class="impact-areas">
-                            <span class="impact-item">Digital Transformation</span>
-                            <span class="impact-item">AI & ML Implementation</span>
-                            <span class="impact-item">Enterprise Architecture</span>
-                            <span class="impact-item">Executive Leadership</span>
-                        </div>
+Most digital transformations fail because they're technology projects pretending to be business transformations. Real change happens when you reimagine how organizations create value—not just upgrade their infrastructure.
+</p>
+                       <div class="impact-areas">
+  <span class="impact-item">Transformation Strategy</span>
+  <span class="impact-item">AI at Scale</span>
+  <span class="impact-item">Culture & Change</span>
+  <span class="impact-item">Executive Leadership</span>
+</div>
                         <div class="hero-cta">
-                            <a href="#about" class="btn btn-primary">About Me</a>
-                            <a href="#contact" class="btn btn-outline">Get in Touch</a>
+                            <a href="#perspective" class="btn btn-primary">My Perspective</a>
+                            <a href="#engage" class="btn btn-outline">Let's Talk</a>
                         </div>
                     </div>
                     
@@ -59,183 +56,96 @@ import InteractiveTerminal from '../components/InteractiveTerminal.astro';
             </div>
         </section>
 
-	<section id="about">
+      <!-- About DeJon - Quick Intro -->
+<section style="background: var(--bg-secondary); padding: 3rem 0;">
+    <div class="container">
+        <div style="display: flex; align-items: center; gap: 3rem; max-width: 1000px; margin: 0 auto; flex-wrap: wrap; justify-content: center;">
+            <img src="/profile.jpg" alt="DeJon Gaines" style="width: 280px; height: 280px; border-radius: 50%; object-fit: cover; box-shadow: 0 12px 24px rgba(0,0,0,0.15);">
+               </div>
+    </div>
+</section>
+
+<!-- Recognition Section -->
+<section id="awards" style="background: var(--bg-secondary); padding: 3rem 0;">
+    ...
+</section>  
+
+<LiveDashboard />
+
+	<!-- Current Focus Section -->
+        <section id="focus" style="background: var(--bg-secondary);">
             <div class="container">
-                <h2>About Me</h2>
-                <div class="about-grid">
-                    <img src="/profile.jpg" alt="DeJon Gaines" class="profile-image">
-                    <div>
-                        <p class="section-intro"><strong>Transforming how enterprises adopt and scale technology solutions.</strong> As Chief Information Officer at Conduent, I lead technology strategy for a global customer experience management company with 65,000 employees, 2,000+ enterprise clients, and $3B in annual revenue.</p>
-                    </div>
-                </div>
+                <h2>What I'm Exploring Now</h2>
+                <p style="text-align: center; color: var(--text-secondary); max-width: 800px; margin: 0 auto 3rem; font-size: 1.1rem;">
+                    The questions keeping me up at night—and the conversations I'm having with enterprise leaders
+                </p>
                 
-                <div class="impact-metrics">
-                    <div class="metric-item">
-                        <div class="metric-number">$54M</div>
-                        <div class="metric-label">Annual Savings Generated</div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-number">25K+</div>
-                        <div class="metric-label">Associates Impacted</div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-number">2,000+</div>
-                        <div class="metric-label">IT Professionals Led</div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-number">$900M</div>
-                        <div class="metric-label">Technology Budget</div>
-                    </div>
-                </div>
-
-                <div class="about-content">
-                    <p>My career has been defined by orchestrating large-scale digital transformations that deliver measurable business impact. From implementing next-generation cloud-based contact center platforms serving 25,000 associates to pioneering real-time AI translation technology, I focus on solutions that create sustainable competitive advantage while generating quantifiable value.</p>
-                    
-                    <p>I build high-performance teams across multiple geographies, fostering a culture of innovation and accountability. My approach combines deep technical expertise with strategic business acumen—understanding both the technical challenges and the organizational dynamics that make or break technology adoption in large enterprises.</p>
-                    
-                    <p>Beyond technology leadership, I'm an active voice in the industry through conference speaking and technical writing. I've contributed insights on AI implementation, customer experience transformation, and the evolving role of technology in business operations. I believe the best leadership comes from staying hands-on with emerging technologies while maintaining strategic perspective.</p>
-                    
-                    <p>Based in Lexington, Kentucky. Graduate of Eastern Kentucky University with executive leadership training from McKinsey & Company.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="experience">
-            <div class="container">
-                <h2>Experience</h2>
-                
-                <div class="experience-item">
-                    <h3>Chief Information Officer</h3>
-                    <div class="experience-meta">Conduent · 2020 - Present · Florham Park, NJ</div>
-                    <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem;">Leading technology strategy and digital transformation for a global customer experience management company. Managing $900M technology budget and global team of 2,000 IT professionals.</p>
-                    <ul>
-                        <li>Designed and implemented next-generation, cloud-based contact center platform revolutionizing operations for 25,000 CX associates</li>
-                        <li>Reduced average handle time from 12 minutes to 7.5 minutes through unified customer data access and AI agent assist technology</li>
-                        <li>Improved first-call resolution rates by 45% through intelligent routing and contextual customer information</li>
-                        <li>Pioneered real-time AI translation technology enabling seamless migration of complex multilingual customer interactions</li>
-                    </ul>
-                </div>
-
-                <div class="experience-item">
-                    <h3>Vice President</h3>
-                    <div class="experience-meta">Conduent · 2017 - 2020</div>
-                    <ul>
-                        <li>Led enterprise-wide Agile/DevOps transformation, accelerating software deployment time by 60%</li>
-                        <li>Designed three-year IT strategic roadmap driving $25M in operational savings</li>
-                        <li>Achieved 100% audit compliance while reducing audit preparation time by 50%</li>
-                        <li>Drove 100-point increase in Net Promoter Score through data-driven optimization</li>
-                    </ul>
-                </div>
-
-                <div class="experience-item">
-                    <h3>Vice President – IT Service Management</h3>
-                    <div class="experience-meta">Xerox Services · 2010 - 2016 · Webster, NY</div>
-                    <ul>
-                        <li>Achieved 60% reduction in mean time to resolution through standardized incident management</li>
-                        <li>Generated $12M in annual cost savings by streamlining IT service delivery</li>
-                        <li>Elevated contract renewal rates from 82% to 95%</li>
-                    </ul>
-                </div>
-
-                <div class="experience-item">
-                    <h3>Director – IT Service Management</h3>
-                    <div class="experience-meta">Affiliated Computer Services (ACS) · 2004 - 2010 · Dallas, TX</div>
-                    <p style="color: var(--text-secondary); line-height: 1.7;">Managed IT operations across multiple delivery centers supporting 15,000 associates.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="talks">
-            <div class="container">
-                <h2>Recent Talks</h2>
                 <div class="card-grid">
                     <div class="card">
-                        <div class="card-header">
-                            <span class="card-tag">Talk</span>
-                            <span class="card-date">2023</span>
-                        </div>
-                        <h3 class="card-title">Digital Transformation in Customer Experience</h3>
-                        <div class="card-event">Genesys Xperience 2023</div>
-                        <p class="card-description">Keynote presentation on leveraging AI and cloud technologies to revolutionize customer experience delivery at scale. Explored real-world implementations and lessons learned from managing 2,000+ enterprise clients.</p>
-                        <a href="https://www.genesys.com/webinars/large-enterprises-and-outsourcers-going-big-with-genesys-cloud" class="card-link">View Presentation <span>→</span></a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="writing">
-            <div class="container">
-                <h2>Featured Writings</h2>
-                <div class="card-grid">
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="card-tag">Article</span>
-                            <span class="card-date">2025</span>
-                        </div>
-                        <h3 class="card-title">Two Years of Generative AI: How Has Customer Experience Delivery Changed?</h3>
-                        <div class="card-event">Call Center Times</div>
-                        <p class="card-description">Examining the transformative impact of generative AI on customer experience operations, analyzing adoption patterns, implementation challenges, and measurable outcomes.</p>
-                        <a href="#https://events.dzone.com/" class="card-link">Read Article <span>→</span></a>
+                        <h3 class="card-title" style="margin-bottom: 1rem;">The Post-AI CIO</h3>
+                        <p class="card-description">
+                            When AI handles execution, what's the CIO's actual job? I'm watching the role transform from "keeper of systems" to "architect of capability"—and most organizations aren't ready for this shift.
+                        </p>
                     </div>
 
                     <div class="card">
-                        <div class="card-header">
-                            <span class="card-tag">Article</span>
-                            <span class="card-date">2025</span>
-                        </div>
-                        <h3 class="card-title">Enabling Agents to Transform CX Experience through Strategic Integration of AI</h3>
-                        <div class="card-event">Call Center Times</div>
-                        <p class="card-description">A comprehensive look at how AI agent assist technology empowers customer service representatives to deliver exceptional experiences while reducing handle times.</p>
-                        <a href="#" class="card-link">Read Article <span>→</span></a>
+                        <h3 class="card-title" style="margin-bottom: 1rem;">Culture Eats AI Strategy</h3>
+                        <p class="card-description">
+                            Every company is rushing to implement AI, but the winners won't be determined by technology—they'll be determined by whether your culture can actually change how people work. Technology is easy. People are hard.
+                        </p>
                     </div>
 
                     <div class="card">
-                        <div class="card-header">
-                            <span class="card-tag">Article</span>
-                            <span class="card-date">2024</span>
-                        </div>
-                        <h3 class="card-title">Successful Digital Customer Experience Requires Data and Continuous Improvement</h3>
-                        <div class="card-event">Call Center Times</div>
-                        <p class="card-description">Exploring the critical role of data analytics, KPI tracking, and iterative improvement cycles in building world-class customer experience programs at enterprise scale.</p>
-                        <a href="#" class="card-link">Read Article <span>→</span></a>
+                        <h3 class="card-title" style="margin-bottom: 1rem;">Building Transformation Muscles</h3>
+                        <p class="card-description">
+                            Most transformations don't survive leadership changes. I'm focused on building organizational capabilities that outlast individual leaders—transformation as muscle memory, not one-time project.
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="awards">
-            <div class="container">
-                <h2>Recognition</h2>
-                <div class="awards-list">
-                    <span class="award-item">🏆 2024 Conduent CEO Award</span>
-                    <span class="award-item">🏆 2020 Conduent CEO Award</span>
-                    <span class="award-item">🏆 2013 Xerox President's Club Award</span>
-                    <span class="award-item">🏆 2010 ACS CEO Hustle Award</span>
-                    <span class="award-item">🏆 2008 ACS CEO Hustle Award</span>
-                </div>
-            </div>
-        </section>
+      
 
-        <section id="education">
+        <!-- Engage Section -->
+        <section id="engage">
             <div class="container">
-                <h2>Education & Credentials</h2>
-                <div class="about-content">
-                    <p><strong>Executive Leadership Program</strong><br>McKinsey & Company</p>
-                    <p><strong>BS, Cyber Systems Technology</strong><br>Eastern Kentucky University</p>
-                    <p><strong>AAS, Technology Computer Electronics</strong><br>Eastern Kentucky University</p>
-                    <p style="margin-top: 2rem;"><strong>Certifications:</strong> ITIL Certified · VMware: Install Configure Manage · Schneider Data Center Certified Associate</p>
-                </div>
-            </div>
-        </section>
+                <h2>Let's Engage</h2>
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <p class="section-intro" style="text-align: center; margin-bottom: 3rem;">
+                        I'm interested in conversations about where enterprise technology is heading—not where it's been. Whether you're wrestling with transformation challenges, looking for a keynote speaker who won't bore your audience, or exploring advisory relationships, let's talk.
+                    </p>
 
-        <section id="contact">
-            <div class="container">
-                <h2>Contact</h2>
-                <div class="about-content">
-                    <p class="section-intro">I'm interested in discussing technology leadership opportunities, speaking engagements, or strategic consulting projects. Whether you're looking for guidance on digital transformation, AI implementation strategies, or executive technology leadership, I'd be happy to connect.</p>
-                    <div class="contact-info">
-                        <p><strong>Email:</strong> <a href="mailto:dejon.gaines@outlook.com">dejon.gaines@outlook.com</a></p>
-                        <p><strong>Location:</strong> Lexington, Kentucky</p>
+                    <div class="card-grid" style="margin-bottom: 3rem;">
+                        <div class="card">
+                            <h3 class="card-title" style="margin-bottom: 1rem;">Speaking Engagements</h3>
+                            <p class="card-description">
+                                Keynotes and workshops on AI transformation, strategic leadership, and the future of the CIO role. No generic advice—real stories, real results.
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="card-title" style="margin-bottom: 1rem;">Strategic Advisory</h3>
+                            <p class="card-description">
+                                Board advisory and consulting for organizations serious about transformation. I work with leaders who want to build capability, not just deploy technology.
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="card-title" style="margin-bottom: 1rem;">Executive Conversations</h3>
+                            <p class="card-description">
+                                Coffee chats (virtual or in-person) with fellow leaders navigating transformation. The best insights come from peer conversations, not consultants.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="contact-info" style="text-align: center; padding: 2rem; background: var(--bg-secondary); border-radius: 8px;">
+                        <p style="font-size: 1.2rem; margin-bottom: 1rem;"><strong>Email:</strong> <a href="mailto:dejon.gaines@outlook.com">dejon.gaines@outlook.com</a></p>
+                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Based in Lexington, Kentucky</p>
+                        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                            <a href="https://www.linkedin.com/in/dejon-gaines" target="_blank" class="btn btn-primary">Connect on LinkedIn</a>
+                            <a href="mailto:dejon.gaines@outlook.com" class="btn btn-outline">Send Email</a>
+                        </div>
                     </div>
                 </div>
             </div>

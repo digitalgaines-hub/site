@@ -1,0 +1,353 @@
+---
+// LiveDashboard.astro - Real-time operations counter with daily totals
+---
+
+<section class="live-dashboard">
+    <div class="dashboard-header">
+        <h2>Operations at Scale</h2>
+        <div class="live-indicator">
+            <span class="live-dot"></span>
+            <span>LIVE ACROSS 2,000+ ENTERPRISE CLIENTS</span>
+        </div>
+        <p class="dashboard-subtitle">Today's impact across healthcare, financial services, and government sectors</p>
+    </div>
+
+    <div class="counters-grid">
+        <div class="counter-card">
+            <div class="counter-icon">💬</div>
+            <div class="counter-label">Customer Interactions Today</div>
+            <div class="counter-value" id="interactions-counter">0</div>
+            <div class="counter-rate">~10 per second</div>
+            <div class="counter-context">Omnichannel interactions handled by 25,000+ associates globally</div>
+        </div>
+
+        <div class="counter-card">
+            <div class="counter-icon">🤖</div>
+            <div class="counter-label">AI Assists Delivered Today</div>
+            <div class="counter-value" id="ai-counter">0</div>
+            <div class="counter-rate">~8 per second</div>
+            <div class="counter-context">Real-time AI agent assist reducing handle time by 37.5%</div>
+        </div>
+
+        <div class="counter-card">
+            <div class="counter-icon">🌐</div>
+            <div class="counter-label">Languages Translated Today</div>
+            <div class="counter-value" id="translation-counter">0</div>
+            <div class="counter-rate">~3 per second</div>
+            <div class="counter-context">Real-time AI translation across 47 languages, breaking barriers at scale</div>
+        </div>
+
+        <div class="counter-card">
+            <div class="counter-icon">⚡</div>
+            <div class="counter-label">Value Generated Today</div>
+            <div class="counter-value" id="value-counter">$0</div>
+            <div class="counter-rate">Continuous optimization</div>
+            <div class="counter-context">Operational savings from AI-powered efficiency improvements</div>
+        </div>
+    </div>
+
+    <div class="dashboard-footer">
+        <p>Last updated: <span id="last-updated"></span> | Resets daily at midnight EST</p>
+    </div>
+</section>
+
+<style>
+    .live-dashboard {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        padding: 4rem 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    [data-theme="light"] .live-dashboard {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+
+    .live-dashboard::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 50%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+        pointer-events: none;
+    }
+
+    .dashboard-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .dashboard-header h2 {
+        color: white;
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+
+    [data-theme="light"] .dashboard-header h2 {
+        color: #0f172a;
+    }
+
+    .live-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #10b981;
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-top: 0.5rem;
+    }
+
+    .live-dot {
+        width: 8px;
+        height: 8px;
+        background: #10b981;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+
+    .dashboard-subtitle {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    [data-theme="light"] .dashboard-subtitle {
+        color: #64748b;
+    }
+
+  .counters-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+    .counter-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 2rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    [data-theme="light"] .counter-card {
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .counter-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .counter-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(59, 130, 246, 0.5);
+    }
+
+    .counter-card:hover::before {
+        opacity: 1;
+    }
+
+    .counter-icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .counter-label {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.5rem;
+    }
+
+    [data-theme="light"] .counter-label {
+        color: #64748b;
+    }
+
+    .counter-value {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: 700;
+        font-family: 'Courier New', monospace;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+    }
+
+    [data-theme="light"] .counter-value {
+        color: #0f172a;
+    }
+
+    .counter-rate {
+        color: #10b981;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .counter-context {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.85rem;
+        margin-top: 0.75rem;
+        line-height: 1.5;
+    }
+
+    [data-theme="light"] .counter-context {
+        color: #64748b;
+    }
+
+    .dashboard-footer {
+        text-align: center;
+        margin-top: 2rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .dashboard-footer p {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.85rem;
+    }
+
+    [data-theme="light"] .dashboard-footer p {
+        color: #94a3b8;
+    }
+
+    @media (max-width: 768px) {
+    .live-dashboard {
+        padding: 3rem 1.5rem;
+    }
+
+    .dashboard-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .counters-grid {
+        grid-template-columns: 1fr;  /* Stack on mobile */
+        gap: 1.5rem;
+    }
+
+    .counter-value {
+        font-size: 2rem;
+    }
+}
+
+</style>
+
+<script>
+    // Calculate seconds elapsed since midnight EST
+    function getSecondsToday() {
+        const now = new Date();
+        // Convert to EST (UTC-5)
+        const estOffset = -5 * 60; // minutes
+        const localOffset = now.getTimezoneOffset(); // minutes
+        const estTime = new Date(now.getTime() + (localOffset + estOffset) * 60000);
+        
+        const midnight = new Date(estTime);
+        midnight.setHours(0, 0, 0, 0);
+        
+        return Math.floor((estTime - midnight) / 1000);
+    }
+
+    // Counter configuration based on daily totals
+    const counters = {
+        interactions: {
+            element: document.getElementById('interactions-counter'),
+            perSecond: 10, // ~864K per day (10 * 86400 seconds)
+            format: (num) => num.toLocaleString()
+        },
+        ai: {
+            element: document.getElementById('ai-counter'),
+            perSecond: 8, // ~691K per day
+            format: (num) => num.toLocaleString()
+        },
+        translation: {
+            element: document.getElementById('translation-counter'),
+            perSecond: 3, // ~259K per day
+            format: (num) => num.toLocaleString()
+        },
+        value: {
+            element: document.getElementById('value-counter'),
+            perSecond: 1.73, // ~$150K per day
+            format: (num) => '$' + num.toLocaleString('en-US', { maximumFractionDigits: 0 })
+        }
+    };
+
+    // Calculate initial values based on time of day
+    const secondsToday = getSecondsToday();
+    Object.values(counters).forEach(counter => {
+        counter.current = counter.perSecond * secondsToday;
+    });
+
+    // Update timestamp
+    function updateTimestamp() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('en-US', { 
+            hour: 'numeric', 
+            minute: '2-digit',
+            hour12: true 
+        });
+        const timestampElement = document.getElementById('last-updated');
+        if (timestampElement) {
+            timestampElement.textContent = timeString;
+        }
+    }
+
+    // Update counters smoothly
+    function updateCounters() {
+        Object.values(counters).forEach(counter => {
+            if (counter.element) {
+                counter.current += counter.perSecond;
+                counter.element.textContent = counter.format(counter.current);
+            }
+        });
+        updateTimestamp();
+    }
+
+    // Start counters
+    function initCounters() {
+        // Initial display
+        Object.values(counters).forEach(counter => {
+            if (counter.element) {
+                counter.element.textContent = counter.format(counter.current);
+            }
+        });
+        updateTimestamp();
+
+        // Update every second
+        setInterval(updateCounters, 1000);
+    }
+
+    // Initialize when page loads
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCounters);
+    } else {
+        initCounters();
+    }
+</script>

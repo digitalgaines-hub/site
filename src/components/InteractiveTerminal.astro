@@ -145,7 +145,7 @@
     }
 
     .terminal-result {
-        color: #58a6ff;
+        color: #8dd1ff;
         white-space: pre-wrap;
     }
 
@@ -206,28 +206,203 @@
             padding: 1rem;
         }
     }
+/* Light mode terminal styles */
+[data-theme="light"] .terminal-window-full {
+    background: #f6f8fa;
+}
+
+[data-theme="light"] .terminal-header-full {
+    background: #e1e4e8;
+    border-bottom: 1px solid #d1d5da;
+}
+
+[data-theme="light"] .terminal-title-full {
+    color: #24292e;
+}
+
+[data-theme="light"] .terminal-body-full {
+    background: #ffffff;
+}
+
+[data-theme="light"] .terminal-line {
+    color: #24292e;
+}
+
+[data-theme="light"] .terminal-command {
+    color: #0366d6;
+}
+
+[data-theme="light"] .terminal-result {
+    color: #0969da;
+}
+
+[data-theme="light"] .terminal-prompt {
+    color: #22863a;
+}
+
+[data-theme="light"] .terminal-error {
+    color: #d73a49;
+}
+
+[data-theme="light"] .terminal-input {
+    color: #24292e;
+    caret-color: #22863a;
+}
+
+[data-theme="light"] .terminal-input-line {
+    border-top: 1px solid #e1e4e8;
+}
+
+/* Light mode scrollbar */
+[data-theme="light"] .terminal-body-full::-webkit-scrollbar-track {
+    background: #f6f8fa;
+}
+
+[data-theme="light"] .terminal-body-full::-webkit-scrollbar-thumb {
+    background: #d1d5da;
+}
+
+[data-theme="light"] .terminal-body-full::-webkit-scrollbar-thumb:hover {
+    background: #959da5;
+}
+    
 </style>
 
 <script>
     const commands = {
-        help: 'Available commands:\n  help - Show this message\n  about - Learn about me\n  skills - View my technical skills\n  experience - See my work history\n  achievements - View key accomplishments\n  contact - Get my contact information\n  github - Visit my GitHub\n  linkedin - Visit my LinkedIn\n  clear - Clear the terminal',
-        
-        about: 'DeJon Gaines\nChief Information Officer at Conduent\n\nTransforming enterprise technology through innovative AI implementation, cloud architecture, and strategic leadership. Leading 2,000+ IT professionals managing $900M technology budget.',
-        
-        skills: 'Technical Skills:\n  • Enterprise Architecture & Cloud Infrastructure\n  • AI/ML Implementation & Strategy\n  • Digital Transformation Leadership\n  • DevOps & Agile Methodologies\n  • Cybersecurity & Compliance (ISO 27001, NIST, SOX)\n  • Infrastructure as Code (Terraform, Ansible, Kubernetes)',
-        
-        experience: 'Work Experience:\n\n[2020-Present] Chief Information Officer - Conduent\n  → Leading technology strategy for 65,000 employees\n  → Managing $900M technology budget\n\n[2017-2020] Vice President - Conduent\n  → Drove $25M in operational savings\n  → 100-point NPS increase\n\n[2010-2016] VP IT Service Management - Xerox\n  → $12M annual cost savings\n  → 60% reduction in MTTR',
-        
-        achievements: 'Key Achievements:\n  ✓ $54M in annual savings generated\n  ✓ 25,000+ associates impacted globally\n  ✓ Reduced handle time from 12min to 7.5min (37.5%)\n  ✓ 45% improvement in first-call resolution\n  ✓ Real-time AI translation deployed\n  ✓ 60% faster software deployment\n  ✓ Multiple CEO/President awards',
-        
-        contact: 'Contact Information:\n  Email: dejon.gaines@outlook.com\n  Location: Lexington, Kentucky\n  LinkedIn: linkedin.com/in/dejon-gaines',
-        
-        github: 'Opening GitHub... (Feature coming soon!)',
-        
-        linkedin: 'Opening LinkedIn profile...\n→ https://linkedin.com/in/dejon-gaines',
-        
-        clear: 'CLEAR'
-    };
+  help: `Available commands:
+  help - Show this message
+  philosophy - My leadership approach
+  transformation - View transformation methodology
+  skills - Technical capabilities
+  impact - Key achievements & metrics
+  strategy - Strategic approach to change
+  contact - Get in touch
+  linkedin - Visit my LinkedIn
+  clear - Clear the terminal`,
+
+  philosophy: `Leadership Philosophy:
+
+"The best transformations don't just modernize technology—they reimagine 
+how organizations create value."
+
+Core Beliefs:
+  → Transformation requires both strategic vision and tactical excellence
+  → Success happens at the intersection of innovation, execution, and culture
+  → The best leaders stay hands-on while maintaining strategic altitude
+  → Teams thrive when technical excellence and business outcomes are inseparable`,
+
+  transformation: `Transformation Methodology:
+
+1. UNDERSTAND THE BUSINESS CONTEXT
+   → What problem are we really solving?
+   → How does this create competitive advantage?
+
+2. BUILD THE RIGHT TEAM & CULTURE
+   → High-performance teams across geographies
+   → Culture of innovation and accountability
+
+3. ARCHITECT FOR SCALE
+   → Cloud-native infrastructure
+   → AI/ML integration at the right points
+   → Data-driven decision making
+
+4. MEASURE WHAT MATTERS
+   → Focus on business outcomes, not technology metrics
+   → Sustainable competitive advantage
+   → Quantifiable value generation`,
+
+  skills: `Technical Capabilities:
+
+Enterprise Architecture:
+  → Cloud Infrastructure (AWS, Azure, Multi-cloud)
+  → Infrastructure as Code (Terraform, Ansible, Kubernetes)
+  → Microservices & Containerization
+
+AI & Innovation:
+  → Generative AI Implementation
+  → Real-time AI Translation Systems
+  → Agent Assist Technology
+  → ML Model Deployment
+
+Strategic Leadership:
+  → Digital Transformation at Scale
+  → Agile/DevOps Transformation
+  → $900M Budget Management
+  → Global Team Leadership (2,000+ professionals)
+
+Security & Compliance:
+  → ISO 27001, NIST, SOX
+  → Enterprise Cybersecurity
+  → Audit & Risk Management`,
+
+  impact: `Transformation Impact:
+
+Financial:
+  ✓ $54M in annual savings generated
+  ✓ $25M operational savings from IT roadmap
+  ✓ $12M cost savings through service optimization
+
+Operational:
+  ✓ 37.5% reduction in average handle time
+  ✓ 45% improvement in first-call resolution
+  ✓ 60% faster software deployment
+  ✓ 60% reduction in mean time to resolution
+
+Scale:
+  ✓ 25,000+ associates impacted globally
+  ✓ 2,000+ enterprise clients served
+  ✓ $900M technology budget managed
+  ✓ 2,000+ IT professionals led
+
+Strategic:
+  ✓ 100-point Net Promoter Score increase
+  ✓ Contract renewals: 82% → 95%
+  ✓ Real-time AI translation deployed
+  ✓ Next-gen cloud platform architected`,
+
+  strategy: `Strategic Approach to Technology Change:
+
+THE FRAMEWORK:
+  
+  1. START WITH WHY
+     → Business outcomes drive technology decisions
+     → Sustainable competitive advantage is the goal
+  
+  2. CULTURE EATS STRATEGY
+     → Technology transformation is people transformation
+     → Create conditions where teams choose better ways
+  
+  3. MEASURE WHAT MATTERS
+     → Metrics should drive action, not just report status
+     → Focus on outcomes over outputs
+  
+  4. SCALE WITH INTENTION
+     → What works at 100 users rarely works at 25,000
+     → Architecture for today, design for tomorrow
+  
+  5. STAY HANDS-ON
+     → The best leaders remove obstacles and accelerate execution
+     → Strategic altitude + tactical excellence = transformation`,
+
+  contact: `Let's Connect:
+
+Email: dejon.gaines@outlook.com
+Location: Lexington, Kentucky
+
+Interested in:
+  → Technology transformation consulting
+  → Speaking engagements
+  → Strategic advisory roles
+  → Board positions
+
+LinkedIn: linkedin.com/in/dejon-gaines`,
+
+  linkedin: `Opening LinkedIn profile...
+→ https://linkedin.com/in/dejon-gaines`,
+
+  clear: 'CLEAR'
+};
 
     function initInteractiveTerminal() {
         const toggleBtn = document.getElementById('terminal-toggle');
@@ -239,18 +414,18 @@
         if (!toggleBtn || !overlay || !input || !output) return;
 
         // Welcome message
-       const welcomeMsg = `
+       const welcomeMessage = `
 <div class="terminal-line" style="text-align: center; margin: 2rem 0;">
 <span style="color: #7ee787; font-weight: bold; font-size: 1.1rem;">Welcome to DeJon's Terminal! 🚀</span>
 
-<div style="margin-top: 1rem;">Type <span style="color: #ffa657; font-weight: bold;">'help'</span> to see available commands.</div>
+<div style="margin-top: 1rem; color: #c9d1d9;">Type <span style="color: #ffa657; font-weight: bold;">'help'</span> to explore my transformation philosophy.</div>
 </div>`;
 
         // Toggle terminal
         toggleBtn?.addEventListener('click', () => {
             overlay.classList.add('active');
             if (output.innerHTML === '') {
-                output.innerHTML = welcomeMsg;
+                output.innerHTML = welcomeMessage;
             }
             input.focus();
         });

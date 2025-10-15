@@ -137,37 +137,79 @@
 <script>
     function initTerminal() {
         const commands = [
-            {
-                command: "terraform apply -auto-approve",
-                output: "✓ $900M cloud infrastructure deployed",
-                delay: 4000
-            },
-            {
-                command: "kubectl scale deployment/cx-platform --replicas=25000",
-                output: "✓ Scaled to 25,000+ associates globally",
-                delay: 4000
-            },
-            {
-                command: "ansible-playbook cost-optimization.yml",
-                output: "✓ Achieved $54M in annual savings",
-                delay: 4000
-            },
-            {
-                command: "docker-compose up -d ai-translation",
-                output: "✓ Real-time AI translation deployed",
-                delay: 4000
-            },
-            {
-                command: "helm upgrade contact-center --values=prod.yaml",
-                output: "✓ Reduced handle time by 37.5%",
-                delay: 4000
-            },
-            {
-                command: "aws cloudformation deploy --stack-name enterprise",
-                output: "✓ Multi-cloud architecture operational",
-                delay: 4000
-            }
-        ];
+    {
+        command: "# Analyzing enterprise transformation requirements...",
+        output: "→ Assessment complete: 3 key bottlenecks identified",
+        delay: 2500
+    },
+    {
+        command: "terraform init transformation-strategy",
+        output: "✓ Enterprise transformation framework initialized",
+        delay: 3500
+    },
+    {
+        command: "# Evaluating customer experience platform needs...",
+        output: "→ Target: 25,000 associates | Current gap: 78%",
+        delay: 2500
+    },
+    {
+        command: "kubectl scale deployment/cx-platform --replicas=25000",
+        output: "✓ 25K associates empowered with AI-powered platform",
+        delay: 4000
+    },
+    {
+        command: "# Identifying language barriers in global operations...",
+        output: "→ 47 languages detected | Translation latency: Critical",
+        delay: 2500
+    },
+    {
+        command: "ansible-playbook ai-translation.yml --extra-vars='impact=global'",
+        output: "✓ Real-time translation: Breaking language barriers at scale",
+        delay: 4000
+    },
+    {
+        command: "# Calculating optimization opportunities...",
+        output: "→ Significant cost reduction potential identified",
+        delay: 2500
+    },
+    {
+        command: "terraform apply cost-optimization --auto-approve",
+        output: "✓ 8-figure annual savings achieved | ROI: 8X+",
+        delay: 4000
+    },
+    {
+        command: "# Planning multi-cloud enterprise architecture...",
+        output: "→ Designing for: Enterprise-scale | 2K+ clients",
+        delay: 2500
+    },
+    {
+        command: "aws cloudformation deploy --stack-name multi-cloud-enterprise",
+        output: "⣾ Deploying infrastructure... █████████░ 90%",
+        delay: 2000,
+        hasProgress: true
+    },
+    {
+        command: "",
+        output: "✓ Multi-cloud architecture operational | Zero downtime achieved",
+        delay: 4000,
+        skipCommand: true
+    },
+    {
+        command: "helm install agile-transformation --set culture=innovation",
+        output: "✓ 60% faster deployments | 100-point NPS increase",
+        delay: 4000
+    },
+    {
+        command: "# Analyzing customer experience metrics...",
+        output: "→ First-call resolution: Below industry standard",
+        delay: 2500
+    },
+    {
+        command: "docker-compose up data-driven-cx --scale",
+        output: "✓ 45% improvement in first-call resolution",
+        delay: 4000
+    }
+];
 
         let currentIndex = 0;
         const commandElement = document.getElementById('animated-command');
@@ -177,6 +219,12 @@
         if (!commandElement || !outputElement || !cursorElement) return;
 
         function typeCommand(text, callback) {
+            if (!text) {
+                // Skip typing if no command
+                if (callback) callback();
+                return;
+            }
+            
             commandElement.textContent = '';
             cursorElement.style.display = 'inline';
             let i = 0;
@@ -192,17 +240,25 @@
                         if (callback) callback();
                     }, 500);
                 }
-            }, 80 + Math.random() * 40);
+            }, text.startsWith('#') ? 40 : 80 + Math.random() * 40); // Faster for thinking states
         }
 
-        function showOutput(text, delay) {
+        function showOutput(text, delay, hasProgress) {
             outputElement.textContent = text;
             outputElement.classList.add('show');
             
-            setTimeout(() => {
-                outputElement.classList.remove('show');
-                nextCommand();
-            }, delay);
+            if (hasProgress) {
+                // Show progress bar briefly before continuing
+                setTimeout(() => {
+                    outputElement.classList.remove('show');
+                    nextCommand();
+                }, delay);
+            } else {
+                setTimeout(() => {
+                    outputElement.classList.remove('show');
+                    nextCommand();
+                }, delay);
+            }
         }
 
         function nextCommand() {
@@ -210,20 +266,26 @@
             
             setTimeout(() => {
                 const cmd = commands[currentIndex];
-                typeCommand(cmd.command, () => {
-                    setTimeout(() => {
-                        showOutput(cmd.output, cmd.delay);
-                    }, 800);
-                });
-            }, 1500);
+                
+                if (cmd.skipCommand) {
+                    // Just show output without typing command
+                    showOutput(cmd.output, cmd.delay, false);
+                } else {
+                    typeCommand(cmd.command, () => {
+                        setTimeout(() => {
+                            showOutput(cmd.output, cmd.delay, cmd.hasProgress);
+                        }, 600);
+                    });
+                }
+            }, 1200);
         }
 
         function start() {
             const firstCmd = commands[0];
             typeCommand(firstCmd.command, () => {
                 setTimeout(() => {
-                    showOutput(firstCmd.output, firstCmd.delay);
-                }, 800);
+                    showOutput(firstCmd.output, firstCmd.delay, firstCmd.hasProgress);
+                }, 600);
             });
         }
 
