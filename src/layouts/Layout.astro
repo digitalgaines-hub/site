@@ -27,6 +27,13 @@ const { title, description } = Astro.props;
 </html>
 
 <style is:global>
+.gradient-name {
+  background: linear-gradient(90deg, #1e90ff, #00ff95);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
     :root {
         --bg-primary: #ffffff;
         --bg-secondary: #f8f9fa;
@@ -78,44 +85,75 @@ const { title, description } = Astro.props;
         max-width: 800px;
     }
 
-    nav {
-        padding: 1.5rem 0;
-        border-bottom: 1px solid var(--border-color);
-        position: sticky;
-        top: 0;
-        background: var(--bg-primary);
-        z-index: 100;
-    }
+   nav {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
 
-    .nav-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
 
-    .logo {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        text-decoration: none;
-    }
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+    transition: color 0.3s ease;
+}
 
-    .nav-links {
-        display: flex;
-        gap: 2rem;
-        align-items: center;
-    }
+.logo:hover {
+    color: var(--accent-color);
+}
 
-    .nav-links a {
-        color: var(--text-secondary);
-        text-decoration: none;
-        font-weight: 500;
-        transition: color 0.2s;
-    }
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
 
-    .nav-links a:hover {
-        color: var(--text-primary);
-    }
+.nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    color: var(--text-secondary);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    color: var(--accent-color);
+}
+
 
     /* ADD THIS THEME TOGGLE CSS HERE */
     .theme-toggle {
@@ -207,27 +245,33 @@ const { title, description } = Astro.props;
     }
 
     .btn-primary {
-        background: var(--text-primary);
-        color: white;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
 
-    .btn-primary:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    }
+.btn-primary:hover {
+  background-color: #1c86ee;
+}
 
-    .btn-outline {
-        border: 2px solid var(--border-color);
-        color: var(--text-primary);
-        background: var(--bg-primary);
-    }
+.btn-outline {
+  border: 2px solid #1e90ff;
+  color: #1e90ff;
+  background: transparent;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background 0.3s ease, color 0.3s ease;
+}
 
-    .btn-outline:hover {
-        background: var(--bg-secondary);
-        border-color: var(--text-primary);
-        transform: translateY(-2px);
-    }
+.btn-outline:hover {
+  background-color: #1e90ff;
+  color: white;
+}
 
     .hero-cta {
         display: flex;

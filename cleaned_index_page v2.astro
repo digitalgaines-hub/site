@@ -1,0 +1,102 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Terminal from '../components/Terminal.astro';
+import InteractiveTerminal from '../components/InteractiveTerminal.astro';
+import LiveDashboard from '../components/LiveDashboard.astro';
+---
+
+<Layout 
+  title="DeJon Gaines | Technology Transformation Leader" 
+  description="Challenging how enterprises think about technology transformation"
+  theme="dark"
+>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>DeJon Gaines</h1>
+        <p class="subtitle">Technology Transformation Leader</p>
+        <p class="tagline">
+          Most digital transformations fail because they're technology projects pretending to be business transformations. Real change happens when you reimagine how organizations create value—not just upgrade their infrastructure.
+        </p>
+        <div class="impact-areas">
+          <span>Transformation Strategy</span>
+          <span>AI at Scale</span>
+          <span>Culture & Change</span>
+          <span>Executive Leadership</span>
+        </div>
+        <div class="hero-cta">
+          <a href="#perspective" class="btn btn-primary">My Perspective</a>
+          <a href="#engage" class="btn btn-outline">Let's Talk</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="focus" class="section-dark">
+      <div class="container">
+        <h2>What I'm Exploring Now</h2>
+        <p class="section-intro">
+          The questions keeping me up at night—and the conversations I'm having with enterprise leaders
+        </p>
+        <div class="card-grid">
+          <div class="card">
+            <h3>The Post-AI CIO</h3>
+            <p>When AI handles execution, what's the CIO's actual job? I'm watching the role transform from "keeper of systems" to "architect of capability"—and most organizations aren't ready for this shift.</p>
+          </div>
+          <div class="card">
+            <h3>Culture Eats AI Strategy</h3>
+            <p>Every company is rushing to implement AI, but the winners won't be determined by technology—they'll be determined by whether your culture can actually change how people work. Technology is easy. People are hard.</p>
+          </div>
+          <div class="card">
+            <h3>Building Transformation Muscles</h3>
+            <p>Most transformations don't survive leadership changes. I'm focused on building organizational capabilities that outlast individual leaders—transformation as muscle memory, not one-time project.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="engage" class="section-dark">
+      <div class="container">
+        <h2>Let's Engage</h2>
+        <p class="section-intro">
+          I'm interested in conversations about where enterprise technology is heading—not where it's been. Whether you're wrestling with transformation challenges, looking for a keynote speaker who won't bore your audience, or exploring advisory relationships, let's talk.
+        </p>
+        <div class="card-grid">
+          <div class="card">
+            <h3>Speaking Engagements</h3>
+            <p>Keynotes and workshops on AI transformation, strategic leadership, and the future of the CIO role. No generic advice—real stories, real results.</p>
+          </div>
+          <div class="card">
+            <h3>Strategic Advisory</h3>
+            <p>Board advisory and consulting for organizations serious about transformation. I work with leaders who want to build capability, not just deploy technology.</p>
+          </div>
+          <div class="card">
+            <h3>Executive Conversations</h3>
+            <p>Coffee chats (virtual or in-person) with fellow leaders navigating transformation. The best insights come from peer conversations, not consultants.</p>
+          </div>
+        </div>
+        <div class="contact-info">
+          <p><strong>Email:</strong> <a href="mailto:dejon.gaines@outlook.com">dejon.gaines@outlook.com</a></p>
+          <p>Based in Lexington, Kentucky</p>
+          <div class="contact-buttons">
+            <a href="https://www.linkedin.com/in/dejon-gaines" target="_blank" class="btn btn-primary">Connect on LinkedIn</a>
+            <a href="mailto:dejon.gaines@outlook.com" class="btn btn-outline">Send Email</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <LiveDashboard />
+    <Terminal />
+    <InteractiveTerminal />
+  </main>
+
+  <footer class="footer-dark">
+    <div class="container">
+      <p>© 2025 DeJon Gaines. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://www.linkedin.com/in/dejon-gaines" target="_blank">LinkedIn</a>
+        <a href="mailto:dejon.gaines@outlook.com">Email</a>
+      </div>
+    </div>
+  </footer>
+</Layout>
