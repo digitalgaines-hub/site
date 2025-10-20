@@ -1,0 +1,213 @@
+
+---
+// Terminal.astro - Animated terminal component with white text and auto-scroll
+---
+
+<div class="animated-terminal">
+  <div class="terminal-window">
+    <div class="terminal-header">
+      <div class="terminal-controls">
+        <span class="control control-close"></span>
+        <span class="control control-minimize"></span>
+        <span class="control control-maximize"></span>
+      </div>
+      <div class="terminal-title">dejon@digitalgaines:~</div>
+    </div>
+    <div class="terminal-body" id="terminal-body">
+      <div class="terminal-content">
+        <div class="command-line">
+          <span class="prompt">$</span>
+          <span class="command" id="animated-command"></span>
+          <span class="cursor" id="cursor">_</span>
+        </div>
+        <div class="output" id="output-line"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .animated-terminal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
+  }
+
+  .terminal-window {
+    width: 100%;
+    max-width: 700px;
+    background: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    overflow: hidden;
+  }
+
+  .terminal-header {
+    background: #323232;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .terminal-controls {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .control-close {
+    background: #ff5f56;
+  }
+
+  .control-minimize {
+    background: #ffbd2e;
+  }
+
+  .control-maximize {
+    background: #27c93f;
+  }
+
+  .terminal-title {
+    color: #b4b4b4;
+    font-size: 0.85rem;
+    font-family: 'Courier New', monospace;
+  }
+
+  .terminal-body {
+    padding: 1.5rem;
+    min-height: 150px;
+    font-family: 'Courier New', monospace;
+    color: #ffffff;
+    font-size: 0.95rem;
+    overflow-y: auto;
+    max-height: 400px;
+  }
+
+  .command-line {
+    margin-bottom: 0.5rem;
+  }
+
+  .prompt {
+    color: #00ff00;
+    margin-right: 0.5rem;
+  }
+
+  .command {
+    color: #ffffff;
+  }
+
+  .cursor {
+    color: #00ff00;
+    animation: blink 1s infinite;
+    margin-left: 2px;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  .output {
+    color: #00d9ff;
+    margin-left: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .output.show {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    .terminal-window {
+      max-width: 100%;
+    }
+
+    .terminal-body {
+      font-size: 0.85rem;
+      padding: 1rem;
+    }
+  }
+</style>
+
+<script>
+  function initTerminal() {
+    const commands = [
+      { command: "# Initializing transformation strategy...", output: "✓ Strategy initialized", delay: 2500 },
+      { command: "terraform apply enterprise-plan", output: "✓ Infrastructure deployed", delay: 3000 },
+      { command: "# Scaling customer experience platform...", output: "✓ 25K associates empowered", delay: 2500 },
+      { command: "helm install agile-culture --set values=innovation", output: "✓ Culture transformation complete", delay: 3000 }
+    ];
+
+    let currentIndex = 0;
+    const commandElement = document.getElementById('animated-command');
+    const outputElement = document.getElementById('output-line');
+    const cursorElement = document.getElementById('cursor');
+    const terminalBody = document.getElementById('terminal-body');
+
+    if (!commandElement || !outputElement || !cursorElement || !terminalBody) return;
+
+    function typeCommand(text, callback) {
+      commandElement.textContent = '';
+      cursorElement.style.display = 'inline';
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < text.length) {
+          commandElement.textContent += text.charAt(i);
+          i++;
+        } else {
+          clearInterval(interval);
+          setTimeout(() => {
+            cursorElement.style.display = 'none';
+            if (callback) callback();
+          }, 500);
+        }
+      }, 60);
+    }
+
+    function showOutput(text, delay) {
+      outputElement.textContent = text;
+      outputElement.classList.add('show');
+      terminalBody.scrollTop = terminalBody.scrollHeight;
+      setTimeout(() => {
+        outputElement.classList.remove('show');
+        nextCommand();
+      }, delay);
+    }
+
+    function nextCommand() {
+      currentIndex = (currentIndex + 1) % commands.length;
+      setTimeout(() => {
+        const cmd = commands[currentIndex];
+        typeCommand(cmd.command, () => {
+          setTimeout(() => {
+            showOutput(cmd.output, cmd.delay);
+          }, 600);
+        });
+      }, 1200);
+    }
+
+    function start() {
+      const firstCmd = commands[0];
+      typeCommand(firstCmd.command, () => {
+        setTimeout(() => {
+          showOutput(firstCmd.output, firstCmd.delay);
+        }, 600);
+      });
+    }
+
+    start();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTerminal);
+  } else {
+    initTerminal();
+</script>

@@ -1,0 +1,132 @@
+---
+---
+
+// InteractiveTerminal.astro - Hidden terminal easter egg
+
+<div id="terminal-root">
+  <button id="terminal-toggle" class="terminal-toggle-btn" aria-label="Toggle Terminal">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <polyline points="4 17 10 11 4 5"></polyline>
+      <line x1="12" y1="19" x2="20" y2="19"></line>
+    </svg>
+  </button>
+
+  <div id="terminal-overlay" class="terminal-overlay">
+    <div class="terminal-window-full">
+      <div class="terminal-header-full">
+        <span class="terminal-title-full">dejon@digitalgaines:~$</span>
+        <button id="terminal-close" class="terminal-close-btn">×</button>
+      </div>
+      <div class="terminal-body-full">
+        <div id="terminal-output" class="terminal-output-full"></div>
+        <div class="terminal-input-line">
+          <span class="terminal-prompt">$</span>
+          <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" spellcheck="false" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .terminal-output-full,
+  .terminal-line,
+  .terminal-command,
+  .terminal-result,
+  .terminal-input,
+  .terminal-prompt {
+    color: #ffffff;
+  }
+
+  .terminal-body-full {
+    scroll-behavior: smooth;
+  }
+</style>
+
+<script>
+  const commands = {
+    help: \`Available commands:
+help - Show this message
+philosophy - My leadership approach
+transformation - View transformation methodology
+skills - Technical capabilities
+impact - Key achievements & metrics
+strategy - Strategic approach to change
+contact - Get in touch
+linkedin - Visit my LinkedIn
+clear - Clear the terminal\`,
+
+    linkedin: \`Opening LinkedIn profile...
+→ https://linkedin.com/in/dejon-gaines\`,
+    clear: 'CLEAR'
+  };
+
+  function initInteractiveTerminal() {
+    const toggleBtn = document.getElementById('terminal-toggle');
+    const closeBtn = document.getElementById('terminal-close');
+    const overlay = document.getElementById('terminal-overlay');
+    const input = document.getElementById('terminal-input');
+    const output = document.getElementById('terminal-output');
+
+    if (!toggleBtn || !overlay || !input || !output) return;
+
+    const welcomeMessage = \`
+<div class="terminal-line" style="text-align: center; margin: 2rem 0;">
+<span style="color: #7ee787; font-weight: bold; font-size: 1.1rem;">Welcome to DeJon's Terminal! 🚀</span>
+<div style="margin-top: 1rem; color: #c9d1d9;">Type <span style="color: #ffa657; font-weight: bold;">'help'</span> to explore my transformation philosophy.</div>
+</div>\`;
+
+    toggleBtn.addEventListener('click', () => {
+      overlay.classList.add('active');
+      if (output.innerHTML === '') {
+        output.innerHTML = welcomeMessage;
+      }
+      input.focus();
+    });
+
+    closeBtn.addEventListener('click', () => {
+      overlay.classList.remove('active');
+    });
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        overlay.classList.remove('active');
+      }
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const command = input.value.trim().toLowerCase();
+        if (command) {
+          const cmdLine = document.createElement('div');
+          cmdLine.className = 'terminal-line';
+          cmdLine.innerHTML = \`<span class="terminal-prompt">$</span> <span class="terminal-command">\${command}</span>\`;
+          output.appendChild(cmdLine);
+
+          if (command === 'clear') {
+            output.innerHTML = '';
+          } else if (commands[command]) {
+            const result = document.createElement('div');
+            result.className = 'terminal-line terminal-result';
+            result.innerHTML = commands[command].replace(/\n/g, '<br>');
+            output.appendChild(result);
+          } else {
+            const error = document.createElement('div');
+            error.className = 'terminal-line terminal-error';
+            error.textContent = \`Command not found: \${command}. Type 'help' for available commands.\`;
+            output.appendChild(error);
+          }
+
+          input.value = '';
+          output.scrollTop = output.scrollHeight;
+        }
+      }
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initInteractiveTerminal);
+  } else {
+    initInteractiveTerminal();
+  }
+</script>

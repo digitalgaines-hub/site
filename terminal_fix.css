@@ -1,0 +1,22 @@
+
+.terminal-output {
+    color: white !important;
+    overflow-y: auto;
+    max-height: 400px;
+    padding: 1rem;
+    font-family: monospace;
+    background-color: #0d1117;
+}
+
+.terminal-output pre {
+    color: white !important;
+}
+
+.terminal-input {
+    color: white !important;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-family: monospace;
+    font-size: 1rem;
+}
