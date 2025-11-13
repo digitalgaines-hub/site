@@ -1,4 +1,3 @@
-
 ---
 import Layout from '../layouts/Layout.astro';
 import Terminal from '../components/Terminal.astro';
@@ -16,8 +15,9 @@ import LiveDashboard from '../components/LiveDashboard.astro';
       <div class="nav-content">
         <a href="/" class="logo">DG</a>
         <div class="nav-links">
-          <a href="#perspective">Perspective</a>
+          <a href="#about">About</a>
           <a href="#focus">Current Focus</a>
+          <a href="#lab">AI Lab</a>
           <a href="#engage">Engage</a>
           <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
         </div>
@@ -43,7 +43,7 @@ import LiveDashboard from '../components/LiveDashboard.astro';
               <span class="impact-item">Executive Leadership</span>
             </div>
             <div class="hero-cta">
-              <a href="#perspective" class="btn btn-primary">My Perspective</a>
+              <a href="#about" class="btn btn-primary">About Me</a>
               <a href="#engage" class="btn btn-outline">Let's Talk</a>
             </div>
           </div>
@@ -55,55 +55,139 @@ import LiveDashboard from '../components/LiveDashboard.astro';
     </section>
 
     <!-- About Section -->
-    <section class="about" style="background: var(--bg-secondary); padding: 3rem 0;">
+    <section id="about" style="background: var(--bg-secondary); padding: 4rem 0;">
       <div class="container">
-    <div style="text-align: center; margin-bottom: 3rem;">
-    <img src="/profile2.JPEG" alt="DeJon Gaines preparing for interview" style="
-        width: 600px; 
-        max-width: 90%;
-        height: auto; 
-        border-radius: 12px; 
-        object-fit: cover; 
-        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    ">
-</div>
-
-    <!-- Recognition Section -->
-    <section id="awards" style="background: var(--bg-secondary); padding: 3rem 0;">
-      <!-- Content omitted for brevity -->
-    </section>
-
-    <LiveDashboard />
-
-    <!-- Current Focus Section -->
-    <section id="focus" style="background: var(--bg-secondary);">
-      <div class="container">
-        <h2>What I'm Exploring Now</h2>
-        <p class="section-intro">
-          The questions keeping me up at night—and the conversations I'm having with enterprise leaders
-        </p>
-        <div class="card-grid">
-          <div class="card">
-            <h3 class="card-title">The Post-AI CIO</h3>
-            <p class="card-description">
-              When AI handles execution, what's the CIO's actual job? I'm watching the role transform from "keeper of systems" to "architect of capability"—and most organizations aren't ready for this shift.
+        <div style="display: grid; grid-template-columns: 400px 1fr; gap: 4rem; max-width: 1100px; margin: 0 auto; align-items: center;">
+          
+          <img src="/profile2.JPEG" alt="DeJon Gaines preparing for interview" style="
+              width: 100%; 
+              height: 450px; 
+              border-radius: 12px; 
+              object-fit: cover; 
+              box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+          ">
+          
+          <div>
+            <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.05rem; margin-bottom: 1rem;">
+              Leading technology transformation for 2,000+ enterprise clients across healthcare, financial services, and government. Orchestrating strategy for 65,000 employees with a focus on AI implementation, culture change, and sustainable competitive advantage.
             </p>
-          </div>
-          <div class="card">
-            <h3 class="card-title">Culture Eats AI Strategy</h3>
-            <p class="card-description">
-              Every company is rushing to implement AI, but the winners won't be determined by technology—they'll be determined by whether your culture can actually change how people work. Technology is easy. People are hard.
+            <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.05rem;">
+              I don't just advise on AI transformation—I'm building my own on-premises AI infrastructure (NVIDIA DGX) to understand the real economics, security trade-offs, and performance implications that enterprise leaders face.
             </p>
-          </div>
-          <div class="card">
-            <h3 class="card-title">Building Transformation Muscles</h3>
-            <p class="card-description">
-              Most transformations don't survive leadership changes. I'm focused on building organizational capabilities that outlast individual leaders—transformation as muscle memory, not one-time project.
+            <p style="color: var(--text-secondary); margin-top: 1.5rem; font-size: 0.95rem;">
+              📍 Lexington, Kentucky | 🎓 McKinsey Executive Leadership | 🎤 Keynote Speaker
             </p>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- Current Focus Section -->
+    <section id="focus">
+      <div class="container">
+        <h2>What I'm Exploring Now</h2>
+        <p class="section-intro">
+          The questions keeping me up at night—and the conversations I'm having with enterprise leaders
+        </p>
+        
+        <div class="card-grid">
+          <div class="card">
+            <h3 class="card-title">The Hidden Economics of On-Premises AI</h3>
+            <p class="card-description">
+              Everyone's rushing to cloud AI without doing the math. I'm setting up NVIDIA DGX infrastructure to answer the real questions: What's the actual cost per inference? Where's the break-even point vs. cloud? When does data sovereignty trump convenience? Running hands-on experiments to understand what enterprise deployment actually costs—not what vendors promise.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">The Post-AI CIO Role</h3>
+            <p class="card-description">
+              If AI handles execution, what's left for the CIO? I'm watching the role transform from "keeper of systems" to "architect of capability." But most organizations aren't ready—they're hiring for the old role while needing the new one. What does leadership actually look like when AI does the technical work?
+            </p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">Why Culture Still Eats AI Strategy</h3>
+            <p class="card-description">
+              Every company can buy the same AI tools. But winners aren't determined by technology—they're determined by whether your culture can actually change how 25,000 people work daily. Technology is easy. Changing ingrained behaviors, incentive structures, and team dynamics? That's the real transformation challenge.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">Building Transformation Muscles That Survive Leadership Turnover</h3>
+            <p class="card-description">
+              Most transformations die when the champion leaves. I'm focused on a different question: How do you build organizational capabilities as muscle memory rather than one-time projects? What makes change stick when the next CIO arrives with their own agenda?
+            </p>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--bg-secondary); border-radius: 8px; border: 1px solid var(--border-color);">
+          <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.7;">
+            These aren't just abstract questions—they're the core of my speaking engagements, advisory work, and hands-on experimentation. If you're wrestling with any of these challenges, <a href="#engage" style="color: var(--text-primary); font-weight: 600;">let's talk</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Lab Section -->
+    <section id="lab" style="background: var(--bg-secondary);">
+      <div class="container">
+        <h2>🧪 AI Lab</h2>
+        <p class="section-intro">
+          Where theory meets hardware. Building on-premises AI infrastructure to understand what enterprise leaders actually need.
+        </p>
+
+        <div style="max-width: 900px; margin: 0 auto;">
+          <div style="background: var(--bg-primary); padding: 2.5rem; border-radius: 12px; border-left: 4px solid #1e90ff;">
+            <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--text-primary);">Why Run Local AI Infrastructure?</h3>
+            
+            <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem;">
+              Most executives talk about AI transformation while outsourcing everything to cloud providers. I'm taking a different approach: building hands-on experience with on-premises AI infrastructure to understand the real economics, security implications, and performance trade-offs that enterprise leaders face.
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+              <div>
+                <h4 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.1rem;">🔒 Data Sovereignty</h4>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                  Testing models without sending proprietary code or data to external APIs. Critical for regulated industries.
+                </p>
+              </div>
+
+              <div>
+                <h4 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.1rem;">💰 Real Economics</h4>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                  Understanding the true cost per inference, break-even points, and when cloud vs. on-prem makes sense.
+                </p>
+              </div>
+
+              <div>
+                <h4 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.1rem;">⚡ Performance Reality</h4>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
+                  Measuring actual latency, throughput, and reliability for enterprise-scale deployments.
+                </p>
+              </div>
+            </div>
+
+            <div style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+              <p style="color: var(--text-secondary); font-size: 1rem; margin-bottom: 1rem;">
+                <strong style="color: var(--text-primary);">Current Status:</strong> Setting up NVIDIA DGX infrastructure
+              </p>
+              <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7;">
+                Planning to run experiments on model fine-tuning, code generation, and enterprise AI deployment patterns. The goal isn't to build products—it's to understand what actually works at scale so I can advise organizations more effectively.
+              </p>
+            </div>
+          </div>
+
+          <div style="margin-top: 2rem; text-align: center; padding: 1.5rem; background: var(--bg-primary); border-radius: 8px;">
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+              💡 <strong>Interested in the economics and architecture of on-premises AI?</strong> This is a major focus of my 2026 speaking and advisory work.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Operations at Scale Dashboard -->
+    <LiveDashboard />
 
     <!-- Engage Section -->
     <section id="engage">
@@ -134,7 +218,7 @@ import LiveDashboard from '../components/LiveDashboard.astro';
             </div>
           </div>
           <div class="contact-info">
-            <p><strong>Email:</strong> <a href="mailto:dejon@dititalgaines.com">dejon@digitalgaines.com</a></p>
+            <p><strong>Email:</strong> <a href="mailto:dejon@digitalgaines.com">dejon@digitalgaines.com</a></p>
             <p class="location">Based in Lexington, Kentucky</p>
             <div class="contact-buttons">
               <a href="https://www.linkedin.com/in/dejon-gaines" target="_blank" class="btn btn-primary">Connect on LinkedIn</a>

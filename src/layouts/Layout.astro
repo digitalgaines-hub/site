@@ -550,59 +550,69 @@ const { title, description } = Astro.props;
     }
 
     @media (max-width: 768px) {
-        .container {
-            padding: 0 1.5rem;
-        }
-
-        .hero-grid {
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-
-        .hero-terminal {
-            order: -1;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-        }
-
-        h2 {
-            font-size: 2rem;
-        }
-
-        .subtitle {
-            font-size: 1.25rem;
-        }
-
-        .tagline {
-            font-size: 1.1rem;
-        }
-
-        .nav-links {
-            display: none;
-        }
-
-        .about-grid {
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-
-        .profile-image {
-            width: 150px;
-            height: 150px;
-        }
-
-        .hero-cta {
-            flex-direction: column;
-        }
-
-        .footer-content {
-            flex-direction: column;
-            gap: 1.5rem;
-        }
+    .container {
+        padding: 0 1.5rem;
     }
-    </style>
+
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .hero-terminal {
+        order: -1;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1.25rem;
+    }
+
+    .tagline {
+        font-size: 1.1rem;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .profile-image {
+        width: 150px;
+        height: 150px;
+    }
+
+    .hero-cta {
+        flex-direction: column;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    /* About section mobile - INDENTED TO MATCH */
+    #about > .container > div {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+    }
+    
+    #about img {
+        height: 350px !important;
+    }
+}
+</style>
 
 <script>
     function initTheme() {
