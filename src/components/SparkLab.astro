@@ -1,0 +1,685 @@
+---
+// SparkLab.astro
+// Live DGX metrics + controlled demo with example prompts only
+---
+
+<section id="spark-lab" style="background: var(--bg-secondary);">
+  <div class="container">
+    <div class="spark-lab-header">
+      <h2>⚡ Live Lab Access</h2>
+      <p class="section-intro">
+        Real-time DGX Spark utilization. Select an example prompt and watch the hardware respond.
+      </p>
+    </div>
+
+    <div class="spark-dashboard">
+      <!-- Left: Metrics Panel -->
+      <div class="metrics-panel">
+        <div class="metrics-title">DGX Spark Status</div>
+        
+        <!-- GPU Section -->
+        <div class="metric-group">
+          <div class="metric-label">GPU Utilization</div>
+          <div class="metric-bar-container">
+            <div class="metric-bar" id="gpu-bar">
+              <div class="metric-fill" id="gpu-fill" style="width: 0%"></div>
+            </div>
+            <div class="metric-value" id="gpu-value">---%</div>
+          </div>
+        </div>
+
+        <!-- Memory Section -->
+        <div class="metric-group">
+          <div class="metric-label">GPU Memory</div>
+          <div class="metric-bar-container">
+            <div class="metric-bar" id="mem-bar">
+              <div class="metric-fill" id="mem-fill" style="width: 0%"></div>
+            </div>
+            <div class="metric-value" id="mem-value">-- / --GB</div>
+          </div>
+        </div>
+
+        <!-- Temperature Section -->
+        <div class="metric-group">
+          <div class="metric-label">Temperature</div>
+          <div class="metric-value-large" id="temp-value">--°C</div>
+        </div>
+
+        <!-- Power Section -->
+        <div class="metric-group">
+          <div class="metric-label">Power Draw</div>
+          <div class="metric-value-large" id="power-value">--W</div>
+        </div>
+
+        <!-- Status -->
+        <div class="status-badge" id="status-badge">
+          <span class="status-dot"></span>
+          <span class="status-text">Connecting...</span>
+        </div>
+      </div>
+
+      <!-- Right: Terminal Section -->
+      <div class="terminal-panel">
+        <div class="terminal-header">
+          <span>spark.digitalgaines.com</span>
+          <span class="terminal-model" id="terminal-model">Loading...</span>
+        </div>
+
+        <!-- Example Prompts -->
+        <div class="examples-section">
+          <div class="examples-title">Try These Examples</div>
+          <div class="examples-grid">
+            <button class="example-btn" data-prompt="write a rust function that calculates fibonacci numbers">
+              Fibonacci (Rust)
+            </button>
+            <button class="example-btn" data-prompt="write a python function that reverses a string">
+              Reverse String (Python)
+            </button>
+            <button class="example-btn" data-prompt="write a javascript function that checks if a number is prime">
+              Prime Check (JS)
+            </button>
+            <button class="example-btn" data-prompt="write a go function that implements bubble sort">
+              Bubble Sort (Go)
+            </button>
+          </div>
+        </div>
+
+        <div class="terminal-output" id="terminal-output">
+          <div class="output-line welcome">
+            <span class="prompt">$</span>
+            <span class="text">Welcome to DGX Spark Lab</span>
+          </div>
+          <div class="output-line info">
+            <span class="text">Click an example prompt to see Code Llama in action</span>
+          </div>
+        </div>
+
+        <div class="terminal-footer">
+          <div class="footer-item">
+            <span class="footer-label">Latency</span>
+            <span class="footer-value" id="latency">--ms</span>
+          </div>
+          <div class="footer-item">
+            <span class="footer-label">Model</span>
+            <span class="footer-value" id="model-name">Loading...</span>
+          </div>
+          <div class="footer-item">
+            <span class="footer-label">Status</span>
+            <span class="footer-value" id="api-status">🟡 Loading</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lab-note">
+      <p>💡 <strong>What you're seeing:</strong> Real-time GPU utilization on Lenovo PGX (NVIDIA DGX Spark). Watch how the hardware responds to each prompt. This is on-premises AI infrastructure—no cloud dependency.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  :root {
+    --spark-primary: #00d9ff;
+    --spark-success: #00ff88;
+    --spark-warn: #ffaa00;
+    --spark-error: #ff4444;
+    --spark-bg-dark: #0a0e27;
+    --spark-bg-darker: #050810;
+    --spark-border: #1a2332;
+    --spark-glow: rgba(0, 217, 255, 0.1);
+  }
+
+  #spark-lab {
+    padding: 3rem 0;
+  }
+
+  .spark-lab-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .spark-lab-header h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  .spark-dashboard {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto 2rem;
+    background: linear-gradient(135deg, var(--spark-bg-darker) 0%, #0d1628 100%);
+    border: 1px solid var(--spark-border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 
+      0 0 40px var(--spark-glow),
+      inset 0 0 20px rgba(0, 217, 255, 0.03);
+  }
+
+  /* Metrics Panel */
+  .metrics-panel {
+    background: linear-gradient(180deg, rgba(0, 217, 255, 0.03) 0%, transparent 100%);
+    padding: 24px;
+    border-right: 1px solid var(--spark-border);
+    font-family: 'Fira Code', monospace;
+  }
+
+  .metrics-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--spark-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+
+  .metric-group {
+    margin-bottom: 24px;
+  }
+
+  .metric-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  .metric-bar-container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .metric-bar {
+    flex: 1;
+    height: 8px;
+    background: rgba(0, 217, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid var(--spark-border);
+  }
+
+  .metric-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--spark-primary), var(--spark-success));
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+
+  .metric-value {
+    font-size: 12px;
+    color: var(--spark-primary);
+    font-weight: 600;
+    min-width: 50px;
+    text-align: right;
+  }
+
+  .metric-value-large {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--spark-primary);
+    margin-top: 8px;
+  }
+
+  .status-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: rgba(0, 255, 136, 0.08);
+    border: 1px solid var(--spark-border);
+    border-radius: 8px;
+    margin-top: 24px;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--spark-success);
+    box-shadow: 0 0 10px var(--spark-success);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+      box-shadow: 0 0 10px var(--spark-success);
+    }
+    50% {
+      opacity: 0.6;
+      box-shadow: 0 0 5px var(--spark-success);
+    }
+  }
+
+  .status-text {
+    font-size: 12px;
+    color: var(--spark-success);
+    font-weight: 600;
+  }
+
+  /* Terminal Panel */
+  .terminal-panel {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background: var(--spark-bg-dark);
+  }
+
+  .terminal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: linear-gradient(90deg, rgba(0, 217, 255, 0.05) 0%, transparent 100%);
+    border-bottom: 1px solid var(--spark-border);
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-family: 'Fira Code', monospace;
+  }
+
+  .terminal-model {
+    color: var(--spark-primary);
+    font-weight: 600;
+  }
+
+  /* Examples Section */
+  .examples-section {
+    padding: 16px 20px;
+    background: rgba(0, 217, 255, 0.02);
+    border-bottom: 1px solid var(--spark-border);
+  }
+
+  .examples-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+
+  .examples-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .example-btn {
+    padding: 10px 12px;
+    background: rgba(0, 217, 255, 0.1);
+    border: 1px solid var(--spark-border);
+    color: var(--spark-primary);
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Fira Code', monospace;
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+
+  .example-btn:hover {
+    background: rgba(0, 217, 255, 0.2);
+    border-color: var(--spark-primary);
+    box-shadow: 0 0 10px rgba(0, 217, 255, 0.2);
+  }
+
+  .example-btn:active {
+    transform: scale(0.98);
+  }
+
+  .example-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .terminal-output {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    min-height: 180px;
+    max-height: 280px;
+  }
+
+  .terminal-output::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .terminal-output::-webkit-scrollbar-thumb {
+    background: var(--spark-border);
+    border-radius: 3px;
+  }
+
+  .output-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 1.5;
+    word-break: break-word;
+    white-space: pre-wrap;
+    font-family: 'Fira Code', monospace;
+  }
+
+  .prompt {
+    color: var(--spark-primary);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .output-line.welcome .text {
+    color: var(--spark-success);
+    font-weight: 500;
+  }
+
+  .output-line.info .text {
+    color: var(--text-secondary);
+    font-size: 11px;
+  }
+
+  .output-line.response .text {
+    color: var(--text-primary);
+    background: rgba(0, 217, 255, 0.08);
+    padding: 4px 8px;
+    border-radius: 3px;
+    border-left: 2px solid var(--spark-primary);
+  }
+
+  .terminal-footer {
+    display: flex;
+    gap: 20px;
+    padding: 12px 20px;
+    background: linear-gradient(90deg, rgba(0, 217, 255, 0.02) 0%, transparent 100%);
+    border-top: 1px solid var(--spark-border);
+    font-size: 11px;
+  }
+
+  .footer-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .footer-label {
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 10px;
+  }
+
+  .footer-value {
+    color: var(--spark-primary);
+    font-weight: 600;
+    font-family: 'Fira Code', monospace;
+  }
+
+  .lab-note {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    background: var(--bg-primary);
+    border-radius: 8px;
+    border-left: 4px solid var(--spark-primary);
+    font-size: 0.95rem;
+  }
+
+  .lab-note p {
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .spark-dashboard {
+      grid-template-columns: 1fr;
+    }
+
+    .metrics-panel {
+      border-right: none;
+      border-bottom: 1px solid var(--spark-border);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .metric-group {
+      margin-bottom: 0;
+    }
+
+    .status-badge {
+      grid-column: 1 / -1;
+      margin-top: 0;
+    }
+
+    .examples-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .spark-dashboard {
+      gap: 1rem;
+    }
+
+    .metrics-panel {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 16px;
+      gap: 16px;
+    }
+
+    .terminal-output {
+      min-height: 150px;
+      max-height: 200px;
+    }
+
+    .examples-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const API_BASE = 'https://spark.digitalgaines.com';
+  const METRICS_API = 'https://spark.digitalgaines.com';
+
+  const sparkLab = {
+    // DOM elements
+    gpuFill: document.getElementById('gpu-fill'),
+    gpuValue: document.getElementById('gpu-value'),
+    memFill: document.getElementById('mem-fill'),
+    memValue: document.getElementById('mem-value'),
+    tempValue: document.getElementById('temp-value'),
+    powerValue: document.getElementById('power-value'),
+    statusBadge: document.getElementById('status-badge'),
+    statusDot: document.querySelector('.status-dot'),
+    statusText: document.querySelector('.status-text'),
+    
+    output: document.getElementById('terminal-output'),
+    terminalModel: document.getElementById('terminal-model'),
+    latency: document.getElementById('latency'),
+    apiStatus: document.getElementById('api-status'),
+    modelName: document.getElementById('model-name'),
+
+    metricsInterval: null,
+    gpuBeforePrompt: 0,
+    isRunning: false,
+
+    async init() {
+      // Load models
+      await this.loadModels();
+      
+      // Start metrics polling
+      this.pollMetrics();
+      this.metricsInterval = setInterval(() => this.pollMetrics(), 2000);
+      
+      // Setup example buttons
+      document.querySelectorAll('.example-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (!this.isRunning) {
+            const prompt = btn.getAttribute('data-prompt');
+            this.sendPrompt(prompt, btn);
+          }
+        });
+      });
+    },
+
+    async pollMetrics() {
+      try {
+        const response = await fetch(`${METRICS_API}/api/status`);
+        if (!response.ok) throw new Error('Metrics unavailable');
+        
+        const data = await response.json();
+        this.updateMetrics(data);
+      } catch (error) {
+        this.setOffline();
+      }
+    },
+
+    updateMetrics(data) {
+      const gpu = data.gpu;
+      
+      // GPU Utilization
+      this.gpuFill.style.width = `${gpu.gpu_utilization}%`;
+      this.gpuValue.textContent = `${gpu.gpu_utilization.toFixed(0)}%`;
+      
+      // Memory
+      const memPercent = (gpu.memory_used_gb / gpu.memory_total_gb) * 100;
+      this.memFill.style.width = `${memPercent}%`;
+      this.memValue.textContent = `${gpu.memory_used_gb.toFixed(0)} / ${gpu.memory_total_gb.toFixed(0)}GB`;
+      
+      // Temperature
+      this.tempValue.textContent = `${gpu.temperature_c.toFixed(0)}°C`;
+      
+      // Power
+      this.powerValue.textContent = `${gpu.power_draw_w.toFixed(0)}W`;
+      
+      // Status
+      this.setOnline();
+    },
+
+    setOnline() {
+      this.statusDot.style.background = 'var(--spark-success)';
+      this.statusText.textContent = '🟢 Online';
+      this.apiStatus.textContent = '🟢 Online';
+    },
+
+    setOffline() {
+      this.statusDot.style.background = '#ff4444';
+      this.statusText.textContent = '🔴 Offline';
+      this.apiStatus.textContent = '🔴 Offline';
+    },
+
+    async loadModels() {
+      try {
+        const response = await fetch(`${API_BASE}/api/tags`);
+        if (!response.ok) throw new Error('API unavailable');
+        
+        const data = await response.json();
+        if (data.models?.length > 0) {
+          const modelName = data.models[0].name.split(':')[0];
+          this.terminalModel.textContent = modelName;
+          this.modelName.textContent = modelName;
+          this.setOnline();
+        }
+      } catch (error) {
+        this.terminalModel.textContent = 'Unavailable';
+        this.modelName.textContent = 'Unavailable';
+        this.setOffline();
+      }
+    },
+
+    async sendPrompt(prompt, button) {
+      this.isRunning = true;
+      button.disabled = true;
+
+      // Capture current GPU utilization
+      this.gpuBeforePrompt = parseFloat(this.gpuValue.textContent);
+
+      // Add user prompt
+      const userLine = document.createElement('div');
+      userLine.className = 'output-line';
+      userLine.innerHTML = `<span class="prompt">></span><span class="text">${this.escapeHtml(prompt)}</span>`;
+      this.output.appendChild(userLine);
+
+      // Loading
+      const loadingLine = document.createElement('div');
+      loadingLine.className = 'output-line info';
+      loadingLine.innerHTML = '<span class="text">Generating...</span>';
+      this.output.appendChild(loadingLine);
+
+      try {
+        const start = performance.now();
+        
+        const response = await fetch(`${API_BASE}/api/generate`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: 'codellama:34b',
+            prompt: prompt,
+            stream: false
+          })
+        });
+
+        const latency = Math.round(performance.now() - start);
+        this.latency.textContent = `${latency}ms`;
+
+        if (!response.ok) throw new Error(`Error: ${response.status}`);
+
+        const data = await response.json();
+        this.output.removeChild(loadingLine);
+
+        // Get GPU after
+        const gpuAfter = parseFloat(this.gpuValue.textContent);
+
+        // Add response (truncated to 200 chars for demo)
+        const responseLine = document.createElement('div');
+        responseLine.className = 'output-line response';
+        const responseText = data.response.substring(0, 250);
+        responseLine.innerHTML = `<span class="prompt">→</span><span class="text">${this.escapeHtml(responseText)}${data.response.length > 250 ? '...' : ''}</span>`;
+        this.output.appendChild(responseLine);
+
+        // Add GPU change indicator
+        if (this.gpuBeforePrompt !== gpuAfter) {
+          const gpuLine = document.createElement('div');
+          gpuLine.className = 'output-line info';
+          gpuLine.innerHTML = `<span class="text">[GPU: ${this.gpuBeforePrompt.toFixed(0)}% → ${gpuAfter.toFixed(0)}%]</span>`;
+          this.output.appendChild(gpuLine);
+        }
+
+        this.output.scrollTop = this.output.scrollHeight;
+      } catch (error) {
+        this.output.removeChild(loadingLine);
+        
+        const errorLine = document.createElement('div');
+        errorLine.className = 'output-line info';
+        errorLine.innerHTML = `<span class="text">✗ ${this.escapeHtml(error.message)}</span>`;
+        this.output.appendChild(errorLine);
+      } finally {
+        this.isRunning = false;
+        button.disabled = false;
+      }
+    },
+
+    escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+  };
+
+  // Initialize
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => sparkLab.init());
+  } else {
+    sparkLab.init();
+  }
+
+  // Cleanup
+  window.addEventListener('beforeunload', () => {
+    if (sparkLab.metricsInterval) clearInterval(sparkLab.metricsInterval);
+  });
+</script>

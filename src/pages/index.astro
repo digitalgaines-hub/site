@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Terminal from '../components/Terminal.astro';
 import InteractiveTerminal from '../components/InteractiveTerminal.astro';
 import LiveDashboard from '../components/LiveDashboard.astro';
+import SparkLab from '../components/SparkLab.astro';
 ---
 
 <Layout 
@@ -72,7 +73,7 @@ import LiveDashboard from '../components/LiveDashboard.astro';
               Leading technology transformation for 2,000+ enterprise clients across healthcare, financial services, and government. Orchestrating strategy for 65,000 employees with a focus on AI implementation, culture change, and sustainable competitive advantage.
             </p>
             <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.05rem;">
-              I don't just advise on AI transformation—I'm building my own on-premises AI infrastructure (NVIDIA DGX) to understand the real economics, security trade-offs, and performance implications that enterprise leaders face.
+              I don't just advise on AI transformation, I'm building my own on-premises AI infrastructure (NVIDIA DGX) to understand the real economics, security trade-offs, and performance implications that enterprise leaders face. See it live in the AI Lab section below.
             </p>
             <p style="color: var(--text-secondary); margin-top: 1.5rem; font-size: 0.95rem;">
               📍 Lexington, Kentucky | 🎓 McKinsey Executive Leadership | 🎤 Keynote Speaker
@@ -183,7 +184,7 @@ import LiveDashboard from '../components/LiveDashboard.astro';
   </div>
 </section>
 
-    <!-- AI Lab Section -->
+   <!-- AI Lab Section -->
     <section id="lab" style="background: var(--bg-secondary);">
       <div class="container">
         <h2>🧪 AI Lab</h2>
@@ -223,69 +224,18 @@ import LiveDashboard from '../components/LiveDashboard.astro';
             </div>
 
             <div style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
-              <!-- Status Badge -->
-              <div style="margin-bottom: 1.5rem; padding: 1rem; background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); border-left: 4px solid #00ff88; border-radius: 8px;">
+              <!-- Live Status -->
+              <div style="padding: 1.5rem; background: rgba(0, 255, 136, 0.08); border-left: 4px solid #00ff88; border-radius: 8px;">
                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
                   <span style="color: #00ff88; font-size: 1.2rem;">🟢</span>
-                  <strong style="color: #fff;">Lenovo PGX: ONLINE</strong>
-                  <span style="color: #aaa; font-size: 0.9rem; margin-left: auto;">Day 1 Complete</span>
+                  <strong style="color: var(--text-primary);">Infrastructure: LIVE</strong>
                 </div>
-                <div style="color: #ccc; font-size: 0.95rem; line-height: 1.6;">
-                  <strong>Hardware:</strong> Lenovo PGX (NVIDIA DGX Spark with GB10 GPU)<br>
-                  <strong>Model:</strong> Code Llama 34B (19GB) operational<br>
-                  <strong>First Inference:</strong> 50.3 seconds<br>
-                  <strong>Development:</strong> VS Code Remote SSH configured
-                </div>
-              </div>
-
-              <!-- Day 1 Results -->
-              <div style="margin-bottom: 1.5rem; padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 8px;">
-                <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem;">📊 Day 1 Results</h4>
-                <ul style="color: var(--text-secondary); line-height: 1.8; list-style: none; padding: 0; margin: 0; font-size: 0.95rem;">
-                  <li style="margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #00ff88;">→</span>
-                    Unboxed Lenovo PGX
-                  </li>
-                  <li style="margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #00ff88;">→</span>
-                    NVIDIA GB10 GPU verified and operational
-                  </li>
-                  <li style="margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #00ff88;">→</span>
-                    First local AI inference: Code Llama 34B (50.3s cold start)
-                  </li>
-                  <li style="margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #00ff88;">→</span>
-                    VS Code Remote SSH development environment configured
-                  </li>
-                  <li style="margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #00ff88;">→</span>
-                    Remote development from ThinkPad X9-14 Aura Edition
-                  </li>
-                </ul>
-              </div>
-
-              <!-- What's Next -->
-              <div style="padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px dashed var(--border-color);">
-                <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 1.1rem;">🚀 Coming Soon</h4>
-                <ul style="color: var(--text-secondary); line-height: 1.8; list-style: none; padding: 0; margin: 0; font-size: 0.95rem;">
-                  <li style="margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #888;">⏳</span>
-                    Fine-tuning models on transformation frameworks
-                  </li>
-                  <li style="margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #888;">⏳</span>
-                    Cost analysis: Local vs Cloud economics
-                  </li>
-                  <li style="margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #888;">⏳</span>
-                    Public API access via Cloudflare Tunnel
-                  </li>
-                  <li style="margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative;">
-                    <span style="position: absolute; left: 0; color: #888;">⏳</span>
-                    Interactive terminal integration with live DGX queries
-                  </li>
-                </ul>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin: 0.75rem 0 0.5rem 0; font-family: 'Fira Code', monospace;">
+                  Lenovo PGX (NVIDIA DGX Spark) | Code Llama 34B | Live via Cloudflare
+                </p>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin: 0;">
+                  <strong>Try the live terminal below →</strong>
+                </p>
               </div>
             </div>
 
@@ -299,7 +249,7 @@ import LiveDashboard from '../components/LiveDashboard.astro';
     </section>
 
     <!-- Operations at Scale Dashboard -->
-    <LiveDashboard />
+    <SparkLab />
 
     <!-- Engage Section -->
     <section id="engage">
