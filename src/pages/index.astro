@@ -4,6 +4,8 @@ import Terminal from '../components/Terminal.astro';
 import InteractiveTerminal from '../components/InteractiveTerminal.astro';
 import LiveDashboard from '../components/LiveDashboard.astro';
 import SparkLab from '../components/SparkLab.astro';
+import MultiAgentChat from '../components/MultiAgentChat.astro';
+
 ---
 
 <Layout 
@@ -184,69 +186,145 @@ import SparkLab from '../components/SparkLab.astro';
   </div>
 </section>
 
-   <!-- AI Lab Section -->
-    <section id="lab" style="background: var(--bg-secondary);">
-      <div class="container">
-        <h2>🧪 AI Lab</h2>
-        <p class="section-intro">
-          Where theory meets hardware. Building on-premises AI infrastructure to understand what enterprise leaders actually need.
+  <!-- AI Lab Section -->
+<section id="lab" style="background: var(--bg-secondary);">
+  <div class="container">
+    <h2>🧪 AI Lab</h2>
+    <p class="section-intro">
+      Where theory meets hardware. Multi-agent AI system running on DGX Spark with real-time metrics.
+    </p>
+
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <!-- Status Card -->
+      <div style="background: var(--bg-primary); padding: 2.5rem; border-radius: 12px; border-left: 4px solid #1e90ff; margin-bottom: 2rem;">
+        <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--text-primary);">Live Multi-Agent System</h3>
+        
+        <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem;">
+          Production-grade multi-agent AI system running locally on Lenovo PGX (NVIDIA DGX Spark). Four specialized agents orchestrated by a 120B parameter supervisor model—all running on 128GB of unified memory with no cloud dependency.
         </p>
 
-        <div style="max-width: 900px; margin: 0 auto;">
-          <div style="background: var(--bg-primary); padding: 2.5rem; border-radius: 12px; border-left: 4px solid #1e90ff;">
-            <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--text-primary);">Why Run Local AI Infrastructure?</h3>
-            
-            <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem;">
-              Most executives talk about AI transformation while outsourcing everything to cloud providers. I'm taking a different approach: building hands-on experience with on-premises AI infrastructure to understand the real economics, security implications, and performance trade-offs that enterprise leaders face.
-            </p>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
-              <div>
-                <h4 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.1rem;">🔒 Data Sovereignty</h4>
-                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
-                  Testing models without sending proprietary code or data to external APIs. Critical for regulated industries.
-                </p>
-              </div>
-
-              <div>
-                <h4 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.1rem;">💰 Real Economics</h4>
-                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
-                  Understanding the true cost per inference, break-even points, and when cloud vs. on-prem makes sense.
-                </p>
-              </div>
-
-              <div>
-                <h4 style="color: var(--text-primary); margin-bottom: 0.75rem; font-size: 1.1rem;">⚡ Performance Reality</h4>
-                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">
-                  Measuring actual latency, throughput, and reliability for enterprise-scale deployments.
-                </p>
-              </div>
-            </div>
-
-            <div style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
-              <!-- Live Status -->
-              <div style="padding: 1.5rem; background: rgba(0, 255, 136, 0.08); border-left: 4px solid #00ff88; border-radius: 8px;">
-                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                  <span style="color: #00ff88; font-size: 1.2rem;">🟢</span>
-                  <strong style="color: var(--text-primary);">Infrastructure: LIVE</strong>
-                </div>
-                <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin: 0.75rem 0 0.5rem 0; font-family: 'Fira Code', monospace;">
-                  Lenovo PGX (NVIDIA DGX Spark) | Code Llama 34B | Live via Cloudflare
-                </p>
-                <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin: 0;">
-                  <strong>Try the live terminal below →</strong>
-                </p>
-              </div>
-            </div>
-
-          <div style="margin-top: 2rem; text-align: center; padding: 1.5rem; background: var(--bg-primary); border-radius: 8px;">
-            <p style="color: var(--text-secondary); font-size: 0.9rem;">
-              💡 <strong>Interested in the economics and architecture of on-premises AI?</strong> This is a major focus of my 2026 speaking and advisory work.
-            </p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+          <div>
+            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem; font-size: 1rem;">🤖 Supervisor Agent</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">gpt-oss-120B orchestrates all agents</p>
+          </div>
+          <div>
+            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem; font-size: 1rem;">💻 Coding Agent</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">DeepSeek-Coder 6.7B</p>
+          </div>
+          <div>
+            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem; font-size: 1rem;">🔍 RAG Agent</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">Document search with Milvus</p>
+          </div>
+          <div>
+            <h4 style="color: var(--text-primary); margin-bottom: 0.5rem; font-size: 1rem;">🖼️ Vision Agent</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">Qwen2.5-VL image understanding</p>
           </div>
         </div>
       </div>
-    </section>
+
+      <!-- Multi-Agent Chat Component -->
+      <MultiAgentChat />
+
+      <!-- Info Notes -->
+      <div style="margin-top: 2rem; padding: 1.5rem; background: var(--bg-primary); border-radius: 8px; border-left: 4px solid #00d9ff;">
+        <p style="color: var(--text-secondary); font-size: 0.95rem; margin: 0;">
+          💡 <strong>What you're seeing:</strong> Real-time GPU metrics from the DGX Spark running a multi-agent AI system. The supervisor agent (120B parameters) orchestrates specialized agents for coding, document search, and image understanding—all running locally with no cloud dependency.
+        </p>
+      </div>
+
+      <div style="margin-top: 1.5rem; text-align: center; padding: 1.5rem; background: var(--bg-primary); border-radius: 8px;">
+        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+          💡 <strong>Interested in on-premises AI economics and multi-agent systems?</strong> This is a major focus of my 2026 speaking and advisory work.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+      box-shadow: 0 0 8px #00ff88;
+    }
+    50% {
+      opacity: 0.6;
+      box-shadow: 0 0 4px #00ff88;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .spark-dashboard {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>
+
+<script>
+  // Real-time metrics polling
+  const METRICS_API = 'https://spark.digitalgaines.com';
+
+  const metricsMonitor = {
+    gpuFill: document.getElementById('gpu-fill'),
+    gpuValue: document.getElementById('gpu-value'),
+    memFill: document.getElementById('mem-fill'),
+    memValue: document.getElementById('mem-value'),
+    tempValue: document.getElementById('temp-value'),
+    powerValue: document.getElementById('power-value'),
+    statusDot: document.querySelector('.status-dot'),
+    statusText: document.querySelector('.status-text'),
+
+    async init() {
+      this.pollMetrics();
+      setInterval(() => this.pollMetrics(), 3000);
+    },
+
+    async pollMetrics() {
+      try {
+        const response = await fetch(`${METRICS_API}/api/status`);
+        if (!response.ok) throw new Error('Offline');
+        
+        const data = await response.json();
+        this.updateMetrics(data);
+        this.setOnline();
+      } catch (error) {
+        this.setOffline();
+      }
+    },
+
+    updateMetrics(data) {
+      const gpu = data.gpu;
+      
+      this.gpuFill.style.width = `${gpu.gpu_utilization}%`;
+      this.gpuValue.textContent = `${gpu.gpu_utilization.toFixed(0)}%`;
+      
+      const memPercent = (gpu.memory_used_gb / gpu.memory_total_gb) * 100;
+      this.memFill.style.width = `${memPercent}%`;
+      this.memValue.textContent = `${gpu.memory_used_gb.toFixed(0)} / ${gpu.memory_total_gb.toFixed(0)}GB`;
+      
+      this.tempValue.textContent = `${gpu.temperature_c.toFixed(0)}°C`;
+      this.powerValue.textContent = `${gpu.power_draw_w.toFixed(0)}W`;
+    },
+
+    setOnline() {
+      this.statusDot.style.background = '#00ff88';
+      this.statusText.textContent = '🟢 Online';
+    },
+
+    setOffline() {
+      this.statusDot.style.background = '#ff4444';
+      this.statusText.textContent = '🔴 Offline';
+    }
+  };
+
+  // Initialize when page loads
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => metricsMonitor.init());
+  } else {
+    metricsMonitor.init();
+  }
+</script>
 
     <!-- Operations at Scale Dashboard -->
     <SparkLab />
