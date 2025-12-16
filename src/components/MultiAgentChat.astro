@@ -465,15 +465,22 @@
   // Initialize chat session
   async function initChat() {
     try {
-      const response = await fetch(`${API_BASE}/chat_id`, { method: 'POST' });
-      if (!response.ok) throw new Error('Failed to create chat session');
+      console.log('Attempting to connect to:', `${API_BASE}/chat_id`);
+      const response = await fetch(`${API_BASE}/chat_id`, { 
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      console.log('Response status:', response.status);
+      if (!response.ok) throw new Error(`Failed to create chat session: ${response.status}`);
       
       const data = await response.json();
+      console.log('Chat ID received:', data.chat_id);
       chatId = data.chat_id;
       
       connectWebSocket();
     } catch (error) {
-      addMessage('system', '⚠️', 'Failed to connect to backend. Please refresh the page.');
+      console.error('Init chat error:', error);
+      addMessage('system', '⚠️', `Failed to connect: ${error.message}`);
     }
   }
 
