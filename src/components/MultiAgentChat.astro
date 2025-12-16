@@ -510,14 +510,56 @@
 
   // Handle WebSocket messages
   function handleWebSocketMessage(data) {
-    if (data.type === 'response' || data.message) {
-      addMessage('assistant', '🤖', data.message || data.response || data.content);
-      isProcessing = false;
-      sendBtn.disabled = false;
-      chatInput.disabled = false;
-      chatInput.focus();
-    } else if (data.type === 'thinking') {
-      // Agent is thinking - could add a loading indicator
+    const msg = data;
+    const type = msg.type;
+    const text = msg.data || msg.token || msg.content || '';
+
+    console.log('WebSocket message:', type, text.substring(0, 100));
+
+    switch (type) {
+      case 'history':
+        // Initial history loaded
+        break;
+      
+      case 'token':
+      case 'ai_token':
+        // Streaming token from AI
+        if (text) {
+          // Append to last assistant message or create new one
+          const lastMsg = chatOutput.lastElementChild;
+          if (lastMsg && lastMsg.classList.contains('assistant')) {
+            const textSpan = lastMsg.querySelector('.message-text');
+            if (textSpan) textSpan.textContent += text;
+          } else {
+            addMessage('assistant', '🤖', text);
+          }
+        }
+        break;
+      
+      case 'end':
+      case 'complete':
+        // Response complete
+        isProcessing = false;
+        sendBtn.disabled = false;
+        chatInput.disabled = false;
+        chatInput.focus();
+        break;
+      
+      case 'error':
+        addMessage('system', '⚠️', `Error: ${text}`);
+        isProcessing = false;
+        sendBtn.disabled = false;
+        chatInput.disabled = false;
+        break;
+      
+      default:
+        // Any other message with content
+        if (text) {
+          addMessage('assistant', '🤖', text);
+          isProcessing = false;
+          sendBtn.disabled = false;
+          chatInput.disabled = false;
+        }
     }
   }
 
@@ -549,10 +591,9 @@
     sendBtn.disabled = true;
     chatInput.disabled = true;
 
-    // Send via WebSocket
+    // Send via WebSocket - backend expects { message: "text" }
     ws.send(JSON.stringify({
-      message: message,
-      agent: selectedAgent
+      message: message
     }));
   }
 
