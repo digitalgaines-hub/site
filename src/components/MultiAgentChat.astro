@@ -623,11 +623,48 @@
     return div.innerHTML;
   }
 
-  // Metrics polling (removed /status endpoint, keeping metrics display for future)
-  function setMetricsOffline() {
-    statusDot.style.background = '#ffaa00';
-    statusText.textContent = '🟡 System Running';
+ // Metrics polling
+  async function pollMetrics() {
+    try {
+      const response = await fetch(`${API_BASE}/status`);
+      if (!response.ok) throw new Error('Offline');
+      
+      const data = await response.json();
+      updateMetrics(data);
+      setOnline();
+    } catch (error) {
+      setOffline();
+    }
   }
+
+  function updateMetrics(data) {
+    const gpu = data.gpu;
+    
+    gpuFill.style.width = `${gpu.gpu_utilization}%`;
+    gpuValue.textContent = `${gpu.gpu_utilization.toFixed(0)}%`;
+    
+    const memPercent = (gpu.memory_used_gb / gpu.memory_total_gb) * 100;
+    memFill.style.width = `${memPercent}%`;
+    memValue.textContent = `${gpu.memory_used_gb.toFixed(0)} / ${gpu.memory_total_gb.toFixed(0)}GB`;
+    
+    tempValue.textContent = `${gpu.temperature_c.toFixed(0)}°C`;
+    powerValue.textContent = `${gpu.power_draw_w.toFixed(0)}W`;
+  }
+
+  function setOnline() {
+    statusDot.style.background = '#00ff88';
+    statusText.textContent = '🟢 Online';
+  }
+
+  function setOffline() {
+    statusDot.style.background = '#ff4444';
+    statusText.textContent = '🔴 Offline';
+  }
+
+  // Initialize
+  initChat();
+  pollMetrics();
+  setInterval(pollMetrics, 3000);
 
   // Initialize
   initChat();
