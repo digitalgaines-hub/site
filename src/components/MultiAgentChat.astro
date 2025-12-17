@@ -21,17 +21,7 @@
           </div>
         </div>
 
-        <!-- Memory Section -->
-        <div class="metric-group">
-          <div class="metric-label">GPU Memory</div>
-          <div class="metric-bar-container">
-            <div class="metric-bar">
-              <div class="metric-fill" id="mem-fill" style="width: 0%"></div>
-            </div>
-            <div class="metric-value" id="mem-value">-- / --GB</div>
-          </div>
-        </div>
-
+       
         <!-- Temperature Section -->
         <div class="metric-group">
           <div class="metric-label">Temperature</div>
@@ -455,8 +445,7 @@
   // Metrics elements
   const gpuFill = document.getElementById('gpu-fill');
   const gpuValue = document.getElementById('gpu-value');
-  const memFill = document.getElementById('mem-fill');
-  const memValue = document.getElementById('mem-value');
+  
   const tempValue = document.getElementById('temp-value');
   const powerValue = document.getElementById('power-value');
   const statusDot = document.querySelector('.status-dot');
@@ -643,10 +632,7 @@
     gpuFill.style.width = `${gpu.gpu_utilization}%`;
     gpuValue.textContent = `${gpu.gpu_utilization.toFixed(0)}%`;
     
-    const memPercent = (gpu.memory_used_gb / gpu.memory_total_gb) * 100;
-    memFill.style.width = `${memPercent}%`;
-    memValue.textContent = `${gpu.memory_used_gb.toFixed(0)} / ${gpu.memory_total_gb.toFixed(0)}GB`;
-    
+        
     tempValue.textContent = `${gpu.temperature_c.toFixed(0)}°C`;
     powerValue.textContent = `${gpu.power_draw_w.toFixed(0)}W`;
   }
