@@ -428,8 +428,7 @@
 </style>
 
 <script>
-  const API_BASE = 'https://spark.digitalgaines.com';
-  const WS_BASE = 'wss://spark.digitalgaines.com';
+ const API_KEY = '7e08526e6abf1202e50a23ba4c9dd3362a30e4fe0eea5d2a756339dd65c58b9b';
   
   let selectedAgent = null;
   let isProcessing = false;
@@ -456,9 +455,12 @@
     try {
       console.log('Attempting to connect to:', `${API_BASE}/chat_id`);
       const response = await fetch(`${API_BASE}/chat_id`, { 
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-      });
+  method: 'GET',
+  headers: { 
+    'Content-Type': 'application/json',
+    'X-API-Key': API_KEY
+  }
+});
       console.log('Response status:', response.status);
       if (!response.ok) throw new Error(`Failed to create chat session: ${response.status}`);
       
@@ -477,7 +479,7 @@
   function connectWebSocket() {
     if (!chatId) return;
 
-    ws = new WebSocket(`${WS_BASE}/ws/chat/${chatId}`);
+    ws = new WebSocket(`${WS_BASE}/ws/chat/${chatId}?api_key=${API_KEY}`);
 
     ws.onopen = () => {
       addMessage('system', '✓', 'Connected to multi-agent system.');
@@ -615,8 +617,9 @@
  // Metrics polling
   async function pollMetrics() {
     try {
-      const response = await fetch(`${API_BASE}/status`);
-      if (!response.ok) throw new Error('Offline');
+      const response = await fetch(`${API_BASE}/status`, {
+  headers: { 'X-API-Key': API_KEY }
+});
       
       const data = await response.json();
       updateMetrics(data);
