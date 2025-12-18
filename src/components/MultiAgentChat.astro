@@ -2,6 +2,10 @@
 // MultiAgentChat.astro
 // Integrated multi-agent chat system with WebSocket backend
 ---
+<script>
+  const API_BASE = 'https://spark.digitalgaines.com';
+  const WS_BASE = 'wss://spark.digitalgaines.com';
+  const API_KEY = '7e08526e6abf1202e50a23ba4c9dd3362a30e4fe0eea5d2a756339dd65c58b9b';
 
 <section id="multi-agent-lab" style="background: var(--bg-secondary);">
   <div class="container">
@@ -429,7 +433,7 @@
 
 <script>
  const API_KEY = '7e08526e6abf1202e50a23ba4c9dd3362a30e4fe0eea5d2a756339dd65c58b9b';
- 
+
   
   let selectedAgent = null;
   let isProcessing = false;
@@ -656,7 +660,4 @@
   pollMetrics();
   setInterval(pollMetrics, 3000);
 
-  // Initialize
-  initChat();
-  setMetricsOffline();
 </script>
