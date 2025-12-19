@@ -246,10 +246,10 @@
   }
 
   .agent-tiles {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  padding: 16px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    padding: 16px;
     background: rgba(0, 217, 255, 0.02);
     border-bottom: 1px solid var(--agent-border);
   }
@@ -428,12 +428,10 @@
 </style>
 
 <script>
- const API_BASE = 'https://spark.digitalgaines.com';
-const WS_BASE = 'wss://spark.digitalgaines.com';
-const API_KEY = '14b7ae8302feed7b313aa7c42a7b66a8504c8ce62058ea9107d5df2c57cc845e';
- 
+  const API_BASE = 'https://spark.digitalgaines.com';
+  const WS_BASE = 'wss://spark.digitalgaines.com';
+  const API_KEY = '14b7ae8302feed7b313aa7c42a7b66a8504c8ce62058ea9107d5df2c57cc845e';
 
-  
   let selectedAgent = null;
   let isProcessing = false;
   let chatId = null;
@@ -448,23 +446,22 @@ const API_KEY = '14b7ae8302feed7b313aa7c42a7b66a8504c8ce62058ea9107d5df2c57cc845
   // Metrics elements
   const gpuFill = document.getElementById('gpu-fill');
   const gpuValue = document.getElementById('gpu-value');
-  
   const tempValue = document.getElementById('temp-value');
   const powerValue = document.getElementById('power-value');
   const statusDot = document.querySelector('.status-dot');
   const statusText = document.querySelector('.status-text');
 
-  // Initialize chat session
+  // Initialize chat session - ONLY when agent is selected
   async function initChat() {
     try {
       console.log('Attempting to connect to:', `${API_BASE}/chat_id`);
-     const response = await fetch(`${API_BASE}/chat_id`, { 
-  method: 'GET',
-  headers: { 
-    'Content-Type': 'application/json',
-    'X-API-Key': API_KEY
-  }
-});
+      const response = await fetch(`${API_BASE}/chat_id`, { 
+        method: 'GET',
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-API-Key': API_KEY
+        }
+      });
       console.log('Response status:', response.status);
       if (!response.ok) throw new Error(`Failed to create chat session: ${response.status}`);
       
@@ -495,10 +492,12 @@ const API_KEY = '14b7ae8302feed7b313aa7c42a7b66a8504c8ce62058ea9107d5df2c57cc845
     };
 
     ws.onerror = () => {
+      console.error('WebSocket error');
       addMessage('system', '⚠️', 'WebSocket error. Reconnecting...');
     };
 
     ws.onclose = () => {
+      console.log('WebSocket closed');
       addMessage('system', '⚠️', 'Connection closed.');
     };
   }
@@ -513,14 +512,11 @@ const API_KEY = '14b7ae8302feed7b313aa7c42a7b66a8504c8ce62058ea9107d5df2c57cc845
 
     switch (type) {
       case 'history':
-        // Initial history loaded
         break;
       
       case 'token':
       case 'ai_token':
-        // Streaming token from AI
         if (text) {
-          // Append to last assistant message or create new one
           const lastMsg = chatOutput.lastElementChild;
           if (lastMsg && lastMsg.classList.contains('assistant')) {
             const textSpan = lastMsg.querySelector('.message-text');
@@ -533,7 +529,6 @@ const API_KEY = '14b7ae8302feed7b313aa7c42a7b66a8504c8ce62058ea9107d5df2c57cc845
       
       case 'end':
       case 'complete':
-        // Response complete
         isProcessing = false;
         sendBtn.disabled = false;
         chatInput.disabled = false;
@@ -548,7 +543,6 @@ const API_KEY = '14b7ae8302feed7b313aa7c42a7b66a8504c8ce62058ea9107d5df2c57cc845
         break;
       
       default:
-        // Any other message with content
         if (text) {
           addMessage('assistant', '🤖', text);
           isProcessing = false;
@@ -558,7 +552,7 @@ const API_KEY = '14b7ae8302feed7b313aa7c42a7b66a8504c8ce62058ea9107d5df2c57cc845
     }
   }
 
-  // Agent selection
+  // Agent selection - SINGLE event listener setup
   agentTiles.forEach(tile => {
     tile.addEventListener('click', () => {
       agentTiles.forEach(t => t.classList.remove('active'));
@@ -571,6 +565,9 @@ const API_KEY = '14b7ae8302feed7b313aa7c42a7b66a8504c8ce62058ea9107d5df2c57cc845
       chatInput.focus();
 
       addMessage('system', '✓', `${tile.querySelector('.agent-name').textContent} selected.`);
+      
+      // Initialize chat AFTER agent is selected
+      initChat();
     });
   });
 
@@ -586,7 +583,6 @@ const API_KEY = '14b7ae8302feed7b313aa7c42a7b66a8504c8ce62058ea9107d5df2c57cc845
     sendBtn.disabled = true;
     chatInput.disabled = true;
 
-    // Send via WebSocket - backend expects { message: "text" }
     ws.send(JSON.stringify({
       message: message
     }));
@@ -618,12 +614,12 @@ const API_KEY = '14b7ae8302feed7b313aa7c42a7b66a8504c8ce62058ea9107d5df2c57cc845
     return div.innerHTML;
   }
 
- // Metrics polling
+  // Metrics polling
   async function pollMetrics() {
     try {
       const response = await fetch(`${API_BASE}/status`, {
-  headers: { 'X-API-Key': API_KEY }
-});
+        headers: { 'X-API-Key': API_KEY }
+      });
       
       const data = await response.json();
       updateMetrics(data);
@@ -639,7 +635,6 @@ const API_KEY = '14b7ae8302feed7b313aa7c42a7b66a8504c8ce62058ea9107d5df2c57cc845
     gpuFill.style.width = `${gpu.gpu_utilization}%`;
     gpuValue.textContent = `${gpu.gpu_utilization.toFixed(0)}%`;
     
-        
     tempValue.textContent = `${gpu.temperature_c.toFixed(0)}°C`;
     powerValue.textContent = `${gpu.power_draw_w.toFixed(0)}W`;
   }
@@ -654,9 +649,7 @@ const API_KEY = '14b7ae8302feed7b313aa7c42a7b66a8504c8ce62058ea9107d5df2c57cc845
     statusText.textContent = '🔴 Offline';
   }
 
-  // Initialize
-  initChat();
+  // Initialize metrics polling on page load
   pollMetrics();
   setInterval(pollMetrics, 3000);
-
 </script>
