@@ -1,6 +1,6 @@
 ---
 // MultiAgentChat.astro
-// Integrated multi-agent chat system with WebSocket backend
+// Integrated multi-agent chat system with HTTP POST backend (Cloudflare compatible)
 ---
 
 <section id="multi-agent-lab" style="background: var(--bg-secondary);">
@@ -21,7 +21,6 @@
           </div>
         </div>
 
-       
         <!-- Temperature Section -->
         <div class="metric-group">
           <div class="metric-label">Temperature</div>
@@ -429,13 +428,11 @@
 
 <script>
   const API_BASE = 'https://spark.digitalgaines.com';
-  const WS_BASE = 'wss://spark.digitalgaines.com';
   const API_KEY = '14b7ae8302feed7b313aa7c42a7b66a8504c8ce62058ea9107d5df2c57cc845e';
 
   let selectedAgent = null;
   let isProcessing = false;
   let chatId = null;
-  let ws = null;
 
   // DOM elements
   const chatOutput = document.getElementById('chat-output');
@@ -451,7 +448,7 @@
   const statusDot = document.querySelector('.status-dot');
   const statusText = document.querySelector('.status-text');
 
-  // Initialize chat session - ONLY when agent is selected
+  // Initialize chat session
   async function initChat() {
     try {
       console.log('Attempting to connect to:', `${API_BASE}/chat_id`);
@@ -469,90 +466,55 @@
       console.log('Chat ID received:', data.chat_id);
       chatId = data.chat_id;
       
-      connectWebSocket();
+      addMessage('system', '✓', 'Connected to multi-agent system.');
     } catch (error) {
       console.error('Init chat error:', error);
       addMessage('system', '⚠️', `Failed to connect: ${error.message}`);
     }
   }
 
-  // Connect WebSocket
-  function connectWebSocket() {
-    if (!chatId) return;
+  // Send message via HTTP POST
+  async function sendMessage() {
+    if (!selectedAgent || isProcessing || !chatInput.value.trim() || !chatId) return;
 
-    ws = new WebSocket(`${WS_BASE}/ws/chat/${chatId}?api_key=${API_KEY}`);
+    const message = chatInput.value.trim();
+    chatInput.value = '';
+    
+    addMessage('user', '👤', message);
+    isProcessing = true;
+    sendBtn.disabled = true;
+    chatInput.disabled = true;
 
-    ws.onopen = () => {
-      addMessage('system', '✓', 'Connected to multi-agent system.');
-    };
+    try {
+      const response = await fetch(`${API_BASE}/chat/${chatId}/message`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-Key': API_KEY
+        },
+        body: JSON.stringify({ message: message, agent: selectedAgent })
+      });
 
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      handleWebSocketMessage(data);
-    };
-
-    ws.onerror = () => {
-      console.error('WebSocket error');
-      addMessage('system', '⚠️', 'WebSocket error. Reconnecting...');
-    };
-
-    ws.onclose = () => {
-      console.log('WebSocket closed');
-      addMessage('system', '⚠️', 'Connection closed.');
-    };
-  }
-
-  // Handle WebSocket messages
-  function handleWebSocketMessage(data) {
-    const msg = data;
-    const type = msg.type;
-    const text = msg.data || msg.token || msg.content || '';
-
-    console.log('WebSocket message:', type, text.substring(0, 100));
-
-    switch (type) {
-      case 'history':
-        break;
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status}`);
+      }
       
-      case 'token':
-      case 'ai_token':
-        if (text) {
-          const lastMsg = chatOutput.lastElementChild;
-          if (lastMsg && lastMsg.classList.contains('assistant')) {
-            const textSpan = lastMsg.querySelector('.message-text');
-            if (textSpan) textSpan.textContent += text;
-          } else {
-            addMessage('assistant', '🤖', text);
-          }
-        }
-        break;
+      const data = await response.json();
+      const responseText = data.response || data.message || 'No response';
+      addMessage('assistant', '🤖', responseText);
       
-      case 'end':
-      case 'complete':
-        isProcessing = false;
-        sendBtn.disabled = false;
-        chatInput.disabled = false;
-        chatInput.focus();
-        break;
-      
-      case 'error':
-        addMessage('system', '⚠️', `Error: ${text}`);
-        isProcessing = false;
-        sendBtn.disabled = false;
-        chatInput.disabled = false;
-        break;
-      
-      default:
-        if (text) {
-          addMessage('assistant', '🤖', text);
-          isProcessing = false;
-          sendBtn.disabled = false;
-          chatInput.disabled = false;
-        }
+    } catch (error) {
+      console.error('Send message error:', error);
+      addMessage('system', '⚠️', `Error: ${error.message}`);
+    } finally {
+      isProcessing = false;
+      sendBtn.disabled = false;
+      chatInput.disabled = false;
+      chatInput.focus();
     }
   }
 
-  // Agent selection - SINGLE event listener setup
+  // Agent selection
   agentTiles.forEach(tile => {
     tile.addEventListener('click', () => {
       agentTiles.forEach(t => t.classList.remove('active'));
@@ -571,23 +533,7 @@
     });
   });
 
-  // Send message
-  async function sendMessage() {
-    if (!selectedAgent || isProcessing || !chatInput.value.trim() || !ws) return;
-
-    const message = chatInput.value.trim();
-    chatInput.value = '';
-    
-    addMessage('user', '👤', message);
-    isProcessing = true;
-    sendBtn.disabled = true;
-    chatInput.disabled = true;
-
-    ws.send(JSON.stringify({
-      message: message
-    }));
-  }
-
+  // Event listeners
   sendBtn.addEventListener('click', sendMessage);
   chatInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
