@@ -429,8 +429,8 @@
 
 <script>
  const API_BASE = 'https://spark.digitalgaines.com';
-  const WS_BASE = 'wss://spark.digitalgaines.com';
-  const API_KEY = '7e08526e6abf1202e50a23ba4c9dd3362a30e4fe0eea5d2a756339dd65c58b9b';
+const WS_BASE = 'wss://spark.digitalgaines.com';
+const API_KEY = '14b7ae8302feed7b313aa7c42a7b66a8504c8ce62058ea9107d5df2c57cc845e';
  
 
   
@@ -458,10 +458,11 @@
   async function initChat() {
     try {
       console.log('Attempting to connect to:', `${API_BASE}/chat_id`);
-      const response = await fetch(`${API_BASE}/chat_id`, { 
+     const response = await fetch(`${API_BASE}/chat_id`, { 
   method: 'GET',
   headers: { 
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'X-API-Key': API_KEY
   }
 });
       console.log('Response status:', response.status);
