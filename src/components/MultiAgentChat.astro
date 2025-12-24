@@ -1,5 +1,3 @@
-# Create a clean MultiAgentChat.astro file
-@"
 ---
 // MultiAgentChat.astro - WebSocket version
 ---
@@ -9,6 +7,7 @@
     <div class="agent-dashboard">
       <div class="metrics-panel">
         <div class="metrics-title">DGX Spark Status</div>
+        
         <div class="metric-group">
           <div class="metric-label">GPU Utilization</div>
           <div class="metric-bar-container">
@@ -18,14 +17,17 @@
             <div class="metric-value" id="gpu-value">---%</div>
           </div>
         </div>
+
         <div class="metric-group">
           <div class="metric-label">Temperature</div>
           <div class="metric-value-large" id="temp-value">--°C</div>
         </div>
+
         <div class="metric-group">
           <div class="metric-label">Power Draw</div>
           <div class="metric-value-large" id="power-value">--W</div>
         </div>
+
         <div class="status-badge">
           <span class="status-dot"></span>
           <span class="status-text">Connecting...</span>
@@ -76,9 +78,7 @@
             placeholder="Select an agent first..."
             disabled
           />
-          <button id="send-btn" class="send-btn" disabled>
-            <span>→</span>
-          </button>
+          <button id="send-btn" class="send-btn" disabled>→</button>
         </div>
       </div>
     </div>
@@ -95,6 +95,7 @@
   }
 
   #multi-agent-lab { padding: 0; }
+
   .agent-dashboard {
     display: grid;
     grid-template-columns: 280px 1fr;
@@ -125,6 +126,7 @@
   }
 
   .metric-group { margin-bottom: 20px; }
+
   .metric-label {
     font-size: 11px;
     color: var(--text-secondary);
@@ -133,7 +135,12 @@
     margin-bottom: 6px;
   }
 
-  .metric-bar-container { display: flex; gap: 10px; align-items: center; }
+  .metric-bar-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
   .metric-bar {
     flex: 1;
     height: 6px;
@@ -184,7 +191,11 @@
     animation: pulse 2s ease-in-out infinite;
   }
 
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
   .status-text {
     font-size: 11px;
     color: var(--agent-success);
@@ -211,6 +222,7 @@
   }
 
   .agent-count { color: var(--agent-primary); font-weight: 600; }
+
   .agent-tiles {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -242,6 +254,7 @@
   }
 
   .agent-icon { font-size: 32px; margin-bottom: 8px; }
+
   .agent-name {
     font-size: 14px;
     font-weight: 600;
@@ -292,6 +305,7 @@
   }
 
   .message-icon { font-size: 16px; flex-shrink: 0; }
+
   .message-text {
     color: var(--text-primary);
     line-height: 1.5;
@@ -360,7 +374,6 @@
 <script>
   const API_BASE = 'https://spark.digitalgaines.com';
   const WS_BASE = 'wss://spark.digitalgaines.com';
-
   let selectedAgent = null;
   let isProcessing = false;
   let chatId = null;
@@ -379,19 +392,20 @@
 
   async function initChat() {
     try {
-      const response = await fetch(`\${API_BASE}/chat_id`);
+      const response = await fetch(API_BASE + '/chat_id');
       if (!response.ok) throw new Error('Failed to create chat');
       const data = await response.json();
       chatId = data.chat_id;
       connectWebSocket();
     } catch (error) {
-      addMessage('system', '⚠️', \`Connection failed: \${error.message}\`);
+      addMessage('system', '⚠️', 'Connection failed: ' + error.message);
     }
   }
 
   function connectWebSocket() {
     if (!chatId) return;
-    ws = new WebSocket(`\${WS_BASE}/ws/chat/\${chatId}`);
+    const wsUrl = WS_BASE + '/ws/chat/' + chatId;
+    ws = new WebSocket(wsUrl);
 
     ws.onopen = () => {
       addMessage('system', '✓', 'Connected to multi-agent system.');
@@ -403,31 +417,25 @@
         const type = data.type;
         const content = data.content || data.data || '';
 
-        switch (type) {
-          case 'token':
-          case 'message':
-            if (content) {
-              const lastMsg = chatOutput.lastElementChild;
-              if (lastMsg && lastMsg.classList.contains('assistant')) {
-                const textSpan = lastMsg.querySelector('.message-text');
-                if (textSpan) textSpan.textContent += content;
-              } else {
-                addMessage('assistant', '🤖', content);
-              }
+        if (type === 'token' || type === 'message') {
+          if (content) {
+            const lastMsg = chatOutput.lastElementChild;
+            if (lastMsg && lastMsg.classList.contains('assistant')) {
+              const textSpan = lastMsg.querySelector('.message-text');
+              if (textSpan) textSpan.textContent += content;
+            } else {
+              addMessage('assistant', '🤖', content);
             }
-            break;
-          case 'end':
-          case 'complete':
-            isProcessing = false;
-            sendBtn.disabled = false;
-            chatInput.disabled = false;
-            break;
-          case 'error':
-            addMessage('system', '⚠️', \`Error: \${content}\`);
-            isProcessing = false;
-            sendBtn.disabled = false;
-            chatInput.disabled = false;
-            break;
+          }
+        } else if (type === 'end' || type === 'complete') {
+          isProcessing = false;
+          sendBtn.disabled = false;
+          chatInput.disabled = false;
+        } else if (type === 'error') {
+          addMessage('system', '⚠️', 'Error: ' + content);
+          isProcessing = false;
+          sendBtn.disabled = false;
+          chatInput.disabled = false;
         }
       } catch (e) {
         console.error('Parse error:', e);
@@ -451,7 +459,8 @@
       chatInput.disabled = false;
       sendBtn.disabled = false;
       chatInput.placeholder = 'Type your message...';
-      addMessage('system', '✓', \`\${tile.querySelector('.agent-name').textContent} selected.\`);
+      const agentName = tile.querySelector('.agent-name').textContent;
+      addMessage('system', '✓', agentName + ' selected.');
       initChat();
     });
   });
@@ -477,8 +486,8 @@
 
   function addMessage(type, icon, text) {
     const msg = document.createElement('div');
-    msg.className = \`chat-message \${type}\`;
-    msg.innerHTML = \`<span class="message-icon">\${icon}</span><span class="message-text">\${escapeHtml(text)}</span>\`;
+    msg.className = 'chat-message ' + type;
+    msg.innerHTML = '<span class="message-icon">' + icon + '</span><span class="message-text">' + escapeHtml(text) + '</span>';
     chatOutput.appendChild(msg);
     chatOutput.scrollTop = chatOutput.scrollHeight;
   }
@@ -491,13 +500,13 @@
 
   async function pollMetrics() {
     try {
-      const response = await fetch(`\${API_BASE}/status`);
+      const response = await fetch(API_BASE + '/status');
       const data = await response.json();
       const gpu = data.gpu;
-      gpuFill.style.width = \`\${gpu.gpu_utilization}%\`;
-      gpuValue.textContent = \`\${gpu.gpu_utilization.toFixed(0)}%\`;
-      tempValue.textContent = \`\${gpu.temperature_c.toFixed(0)}°C\`;
-      powerValue.textContent = \`\${gpu.power_draw_w.toFixed(0)}W\`;
+      gpuFill.style.width = gpu.gpu_utilization + '%';
+      gpuValue.textContent = gpu.gpu_utilization.toFixed(0) + '%';
+      tempValue.textContent = gpu.temperature_c.toFixed(0) + '°C';
+      powerValue.textContent = gpu.power_draw_w.toFixed(0) + 'W';
       statusDot.style.background = '#00ff88';
       statusText.textContent = '🟢 Online';
     } catch (error) {
@@ -509,4 +518,3 @@
   pollMetrics();
   setInterval(pollMetrics, 3000);
 </script>
-"@ | Set-Content src/components/MultiAgentChat.astro -Encoding UTF8
