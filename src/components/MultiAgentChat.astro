@@ -1,7 +1,5 @@
-cd /path/to/your/digitalgaines-website
-
-# Update MultiAgentChat.astro to use WebSocket
-cat > src/components/MultiAgentChat.astro << 'EOF'
+# Create a clean MultiAgentChat.astro file
+@"
 ---
 // MultiAgentChat.astro - WebSocket version
 ---
@@ -9,11 +7,8 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
 <section id="multi-agent-lab" style="background: var(--bg-secondary);">
   <div class="container">
     <div class="agent-dashboard">
-      <!-- Left: Metrics Panel -->
       <div class="metrics-panel">
         <div class="metrics-title">DGX Spark Status</div>
-        
-        <!-- GPU Section -->
         <div class="metric-group">
           <div class="metric-label">GPU Utilization</div>
           <div class="metric-bar-container">
@@ -23,34 +18,26 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
             <div class="metric-value" id="gpu-value">---%</div>
           </div>
         </div>
-
-        <!-- Temperature Section -->
         <div class="metric-group">
           <div class="metric-label">Temperature</div>
           <div class="metric-value-large" id="temp-value">--°C</div>
         </div>
-
-        <!-- Power Section -->
         <div class="metric-group">
           <div class="metric-label">Power Draw</div>
           <div class="metric-value-large" id="power-value">--W</div>
         </div>
-
-        <!-- Status -->
         <div class="status-badge">
           <span class="status-dot"></span>
           <span class="status-text">Connecting...</span>
         </div>
       </div>
 
-      <!-- Right: Multi-Agent Chat Panel -->
       <div class="chat-panel">
         <div class="chat-header">
           <span>Multi-Agent Chat System</span>
           <span class="agent-count">4 Specialized Agents</span>
         </div>
 
-        <!-- Agent Selection Tiles -->
         <div class="agent-tiles">
           <button class="agent-tile" data-agent="rag">
             <div class="agent-icon">🔍</div>
@@ -74,7 +61,6 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
           </button>
         </div>
 
-        <!-- Chat Output -->
         <div class="chat-output" id="chat-output">
           <div class="chat-message system">
             <span class="message-icon">⚡</span>
@@ -82,7 +68,6 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
           </div>
         </div>
 
-        <!-- Chat Input -->
         <div class="chat-input-wrapper">
           <input 
             type="text" 
@@ -109,10 +94,7 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
     --agent-border: #1a2332;
   }
 
-  #multi-agent-lab {
-    padding: 0;
-  }
-
+  #multi-agent-lab { padding: 0; }
   .agent-dashboard {
     display: grid;
     grid-template-columns: 280px 1fr;
@@ -126,7 +108,6 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
     box-shadow: 0 0 40px rgba(0, 217, 255, 0.1);
   }
 
-  /* Metrics Panel */
   .metrics-panel {
     background: linear-gradient(180deg, rgba(0, 217, 255, 0.03) 0%, transparent 100%);
     padding: 20px;
@@ -143,10 +124,7 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
     margin-bottom: 18px;
   }
 
-  .metric-group {
-    margin-bottom: 20px;
-  }
-
+  .metric-group { margin-bottom: 20px; }
   .metric-label {
     font-size: 11px;
     color: var(--text-secondary);
@@ -155,12 +133,7 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
     margin-bottom: 6px;
   }
 
-  .metric-bar-container {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-  }
-
+  .metric-bar-container { display: flex; gap: 10px; align-items: center; }
   .metric-bar {
     flex: 1;
     height: 6px;
@@ -211,18 +184,13 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
     animation: pulse 2s ease-in-out infinite;
   }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
-  }
-
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
   .status-text {
     font-size: 11px;
     color: var(--agent-success);
     font-weight: 600;
   }
 
-  /* Chat Panel */
   .chat-panel {
     display: flex;
     flex-direction: column;
@@ -242,11 +210,7 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
     font-family: 'Fira Code', monospace;
   }
 
-  .agent-count {
-    color: var(--agent-primary);
-    font-weight: 600;
-  }
-
+  .agent-count { color: var(--agent-primary); font-weight: 600; }
   .agent-tiles {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -277,11 +241,7 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
     border-color: var(--agent-primary);
   }
 
-  .agent-icon {
-    font-size: 32px;
-    margin-bottom: 8px;
-  }
-
+  .agent-icon { font-size: 32px; margin-bottom: 8px; }
   .agent-name {
     font-size: 14px;
     font-weight: 600;
@@ -303,14 +263,8 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
     gap: 12px;
   }
 
-  .chat-output::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .chat-output::-webkit-scrollbar-thumb {
-    background: var(--agent-border);
-    border-radius: 3px;
-  }
+  .chat-output::-webkit-scrollbar { width: 6px; }
+  .chat-output::-webkit-scrollbar-thumb { background: var(--agent-border); border-radius: 3px; }
 
   .chat-message {
     display: flex;
@@ -337,11 +291,7 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
     border-left: 3px solid var(--agent-primary);
   }
 
-  .message-icon {
-    font-size: 16px;
-    flex-shrink: 0;
-  }
-
+  .message-icon { font-size: 16px; flex-shrink: 0; }
   .message-text {
     color: var(--text-primary);
     line-height: 1.5;
@@ -375,10 +325,7 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
     background: rgba(0, 217, 255, 0.08);
   }
 
-  .chat-input:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+  .chat-input:disabled { opacity: 0.5; cursor: not-allowed; }
 
   .send-btn {
     padding: 10px 18px;
@@ -392,20 +339,11 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
     transition: all 0.2s ease;
   }
 
-  .send-btn:hover:not(:disabled) {
-    transform: scale(1.05);
-  }
-
-  .send-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+  .send-btn:hover:not(:disabled) { transform: scale(1.05); }
+  .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
   @media (max-width: 1024px) {
-    .agent-dashboard {
-      grid-template-columns: 1fr;
-    }
-
+    .agent-dashboard { grid-template-columns: 1fr; }
     .metrics-panel {
       border-right: none;
       border-bottom: 1px solid var(--agent-border);
@@ -413,19 +351,9 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
     }
-
-    .metric-group {
-      margin-bottom: 0;
-    }
-
-    .status-badge {
-      grid-column: 1 / -1;
-      margin-top: 0;
-    }
-
-    .agent-tiles {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .metric-group { margin-bottom: 0; }
+    .status-badge { grid-column: 1 / -1; margin-top: 0; }
+    .agent-tiles { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 
@@ -438,13 +366,10 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
   let chatId = null;
   let ws = null;
 
-  // DOM elements
   const chatOutput = document.getElementById('chat-output');
   const chatInput = document.getElementById('chat-input');
   const sendBtn = document.getElementById('send-btn');
   const agentTiles = document.querySelectorAll('.agent-tile');
-
-  // Metrics elements
   const gpuFill = document.getElementById('gpu-fill');
   const gpuValue = document.getElementById('gpu-value');
   const tempValue = document.getElementById('temp-value');
@@ -452,135 +377,94 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
   const statusDot = document.querySelector('.status-dot');
   const statusText = document.querySelector('.status-text');
 
-  // Initialize chat session
   async function initChat() {
     try {
-      console.log('Creating chat session...');
-      const response = await fetch(`${API_BASE}/chat_id`);
-      if (!response.ok) throw new Error(`Failed to create chat: ${response.status}`);
-      
+      const response = await fetch(`\${API_BASE}/chat_id`);
+      if (!response.ok) throw new Error('Failed to create chat');
       const data = await response.json();
       chatId = data.chat_id;
-      console.log('Chat ID:', chatId);
-      
       connectWebSocket();
     } catch (error) {
-      console.error('Init error:', error);
-      addMessage('system', '⚠️', `Connection failed: ${error.message}`);
+      addMessage('system', '⚠️', \`Connection failed: \${error.message}\`);
     }
   }
 
-  // Connect to WebSocket
   function connectWebSocket() {
     if (!chatId) return;
-
-    const wsUrl = `${WS_BASE}/ws/chat/${chatId}`;
-    console.log('Connecting to:', wsUrl);
-    
-    ws = new WebSocket(wsUrl);
+    ws = new WebSocket(`\${WS_BASE}/ws/chat/\${chatId}`);
 
     ws.onopen = () => {
-      console.log('WebSocket connected');
       addMessage('system', '✓', 'Connected to multi-agent system.');
     };
 
     ws.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
-        handleWebSocketMessage(data);
+        const type = data.type;
+        const content = data.content || data.data || '';
+
+        switch (type) {
+          case 'token':
+          case 'message':
+            if (content) {
+              const lastMsg = chatOutput.lastElementChild;
+              if (lastMsg && lastMsg.classList.contains('assistant')) {
+                const textSpan = lastMsg.querySelector('.message-text');
+                if (textSpan) textSpan.textContent += content;
+              } else {
+                addMessage('assistant', '🤖', content);
+              }
+            }
+            break;
+          case 'end':
+          case 'complete':
+            isProcessing = false;
+            sendBtn.disabled = false;
+            chatInput.disabled = false;
+            break;
+          case 'error':
+            addMessage('system', '⚠️', \`Error: \${content}\`);
+            isProcessing = false;
+            sendBtn.disabled = false;
+            chatInput.disabled = false;
+            break;
+        }
       } catch (e) {
         console.error('Parse error:', e);
       }
     };
 
-    ws.onerror = (error) => {
-      console.error('WebSocket error:', error);
+    ws.onerror = () => {
       addMessage('system', '⚠️', 'Connection error');
     };
 
     ws.onclose = () => {
-      console.log('WebSocket closed');
       addMessage('system', '⚠️', 'Connection closed');
     };
   }
 
-  // Handle WebSocket messages
-  function handleWebSocketMessage(data) {
-    const type = data.type;
-    const content = data.content || data.data || '';
-
-    console.log('Message:', type, content.substring(0, 50));
-
-    switch (type) {
-      case 'history':
-        // Initial message history
-        break;
-      
-      case 'token':
-      case 'message':
-        // Streaming response
-        if (content) {
-          const lastMsg = chatOutput.lastElementChild;
-          if (lastMsg && lastMsg.classList.contains('assistant')) {
-            const textSpan = lastMsg.querySelector('.message-text');
-            if (textSpan) textSpan.textContent += content;
-          } else {
-            addMessage('assistant', '🤖', content);
-          }
-        }
-        break;
-      
-      case 'end':
-      case 'complete':
-        // Response finished
-        isProcessing = false;
-        sendBtn.disabled = false;
-        chatInput.disabled = false;
-        chatInput.focus();
-        break;
-      
-      case 'error':
-        addMessage('system', '⚠️', `Error: ${content}`);
-        isProcessing = false;
-        sendBtn.disabled = false;
-        chatInput.disabled = false;
-        break;
-    }
-  }
-
-  // Agent selection
   agentTiles.forEach(tile => {
     tile.addEventListener('click', () => {
       agentTiles.forEach(t => t.classList.remove('active'));
       tile.classList.add('active');
-      
       selectedAgent = tile.getAttribute('data-agent');
       chatInput.disabled = false;
       sendBtn.disabled = false;
       chatInput.placeholder = 'Type your message...';
-      chatInput.focus();
-
-      addMessage('system', '✓', `${tile.querySelector('.agent-name').textContent} selected.`);
+      addMessage('system', '✓', \`\${tile.querySelector('.agent-name').textContent} selected.\`);
       initChat();
     });
   });
 
-  // Send message
   function sendMessage() {
     if (!selectedAgent || isProcessing || !chatInput.value.trim() || !ws) return;
-
     const message = chatInput.value.trim();
     chatInput.value = '';
-    
     addMessage('user', '👤', message);
     isProcessing = true;
     sendBtn.disabled = true;
     chatInput.disabled = true;
-
-    ws.send(JSON.stringify({
-      message: message,
-      agent: selectedAgent
-    }));
+    ws.send(JSON.stringify({ message: message, agent: selectedAgent }));
   }
 
   sendBtn.addEventListener('click', sendMessage);
@@ -591,14 +475,10 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
     }
   });
 
-  // Add message to chat
   function addMessage(type, icon, text) {
     const msg = document.createElement('div');
-    msg.className = `chat-message ${type}`;
-    msg.innerHTML = `
-      <span class="message-icon">${icon}</span>
-      <span class="message-text">${escapeHtml(text)}</span>
-    `;
+    msg.className = \`chat-message \${type}\`;
+    msg.innerHTML = \`<span class="message-icon">\${icon}</span><span class="message-text">\${escapeHtml(text)}</span>\`;
     chatOutput.appendChild(msg);
     chatOutput.scrollTop = chatOutput.scrollHeight;
   }
@@ -609,38 +489,24 @@ cat > src/components/MultiAgentChat.astro << 'EOF'
     return div.innerHTML;
   }
 
-  // Metrics polling
   async function pollMetrics() {
     try {
-      const response = await fetch(`${API_BASE}/status`);
+      const response = await fetch(`\${API_BASE}/status`);
       const data = await response.json();
-      updateMetrics(data);
-      setOnline();
+      const gpu = data.gpu;
+      gpuFill.style.width = \`\${gpu.gpu_utilization}%\`;
+      gpuValue.textContent = \`\${gpu.gpu_utilization.toFixed(0)}%\`;
+      tempValue.textContent = \`\${gpu.temperature_c.toFixed(0)}°C\`;
+      powerValue.textContent = \`\${gpu.power_draw_w.toFixed(0)}W\`;
+      statusDot.style.background = '#00ff88';
+      statusText.textContent = '🟢 Online';
     } catch (error) {
-      setOffline();
+      statusDot.style.background = '#ff4444';
+      statusText.textContent = '🔴 Offline';
     }
   }
 
-  function updateMetrics(data) {
-    const gpu = data.gpu;
-    gpuFill.style.width = `${gpu.gpu_utilization}%`;
-    gpuValue.textContent = `${gpu.gpu_utilization.toFixed(0)}%`;
-    tempValue.textContent = `${gpu.temperature_c.toFixed(0)}°C`;
-    powerValue.textContent = `${gpu.power_draw_w.toFixed(0)}W`;
-  }
-
-  function setOnline() {
-    statusDot.style.background = '#00ff88';
-    statusText.textContent = '🟢 Online';
-  }
-
-  function setOffline() {
-    statusDot.style.background = '#ff4444';
-    statusText.textContent = '🔴 Offline';
-  }
-
-  // Initialize metrics polling
   pollMetrics();
   setInterval(pollMetrics, 3000);
 </script>
-EOF
+"@ | Set-Content src/components/MultiAgentChat.astro -Encoding UTF8
