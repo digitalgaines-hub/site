@@ -1,6 +1,9 @@
+cd /path/to/your/digitalgaines-website
+
+# Update MultiAgentChat.astro to use WebSocket
+cat > src/components/MultiAgentChat.astro << 'EOF'
 ---
-// MultiAgentChat.astro
-// Integrated multi-agent chat system with HTTP POST backend (Cloudflare compatible)
+// MultiAgentChat.astro - WebSocket version
 ---
 
 <section id="multi-agent-lab" style="background: var(--bg-secondary);">
@@ -428,11 +431,12 @@
 
 <script>
   const API_BASE = 'https://spark.digitalgaines.com';
-  const API_KEY = '14b7ae8302feed7b313aa7c42a7b66a8504c8ce62058ea9107d5df2c57cc845e';
+  const WS_BASE = 'wss://spark.digitalgaines.com';
 
   let selectedAgent = null;
   let isProcessing = false;
   let chatId = null;
+  let ws = null;
 
   // DOM elements
   const chatOutput = document.getElementById('chat-output');
@@ -451,66 +455,96 @@
   // Initialize chat session
   async function initChat() {
     try {
-      console.log('Attempting to connect to:', `${API_BASE}/chat_id`);
-      const response = await fetch(`${API_BASE}/chat_id`, { 
-        method: 'GET',
-        headers: { 
-          'Content-Type': 'application/json',
-          'X-API-Key': API_KEY
-        }
-      });
-      console.log('Response status:', response.status);
-      if (!response.ok) throw new Error(`Failed to create chat session: ${response.status}`);
+      console.log('Creating chat session...');
+      const response = await fetch(`${API_BASE}/chat_id`);
+      if (!response.ok) throw new Error(`Failed to create chat: ${response.status}`);
       
       const data = await response.json();
-      console.log('Chat ID received:', data.chat_id);
       chatId = data.chat_id;
+      console.log('Chat ID:', chatId);
       
-      addMessage('system', '✓', 'Connected to multi-agent system.');
+      connectWebSocket();
     } catch (error) {
-      console.error('Init chat error:', error);
-      addMessage('system', '⚠️', `Failed to connect: ${error.message}`);
+      console.error('Init error:', error);
+      addMessage('system', '⚠️', `Connection failed: ${error.message}`);
     }
   }
 
-  // Send message via HTTP POST
-  async function sendMessage() {
-    if (!selectedAgent || isProcessing || !chatInput.value.trim() || !chatId) return;
+  // Connect to WebSocket
+  function connectWebSocket() {
+    if (!chatId) return;
 
-    const message = chatInput.value.trim();
-    chatInput.value = '';
+    const wsUrl = `${WS_BASE}/ws/chat/${chatId}`;
+    console.log('Connecting to:', wsUrl);
     
-    addMessage('user', '👤', message);
-    isProcessing = true;
-    sendBtn.disabled = true;
-    chatInput.disabled = true;
+    ws = new WebSocket(wsUrl);
 
-    try {
-      const response = await fetch(`${API_BASE}/chat/${chatId}/message`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-API-Key': API_KEY
-        },
-        body: JSON.stringify({ message: message, agent: selectedAgent })
-      });
+    ws.onopen = () => {
+      console.log('WebSocket connected');
+      addMessage('system', '✓', 'Connected to multi-agent system.');
+    };
 
-      if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`);
+    ws.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        handleWebSocketMessage(data);
+      } catch (e) {
+        console.error('Parse error:', e);
       }
+    };
+
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+      addMessage('system', '⚠️', 'Connection error');
+    };
+
+    ws.onclose = () => {
+      console.log('WebSocket closed');
+      addMessage('system', '⚠️', 'Connection closed');
+    };
+  }
+
+  // Handle WebSocket messages
+  function handleWebSocketMessage(data) {
+    const type = data.type;
+    const content = data.content || data.data || '';
+
+    console.log('Message:', type, content.substring(0, 50));
+
+    switch (type) {
+      case 'history':
+        // Initial message history
+        break;
       
-      const data = await response.json();
-      const responseText = data.response || data.message || 'No response';
-      addMessage('assistant', '🤖', responseText);
+      case 'token':
+      case 'message':
+        // Streaming response
+        if (content) {
+          const lastMsg = chatOutput.lastElementChild;
+          if (lastMsg && lastMsg.classList.contains('assistant')) {
+            const textSpan = lastMsg.querySelector('.message-text');
+            if (textSpan) textSpan.textContent += content;
+          } else {
+            addMessage('assistant', '🤖', content);
+          }
+        }
+        break;
       
-    } catch (error) {
-      console.error('Send message error:', error);
-      addMessage('system', '⚠️', `Error: ${error.message}`);
-    } finally {
-      isProcessing = false;
-      sendBtn.disabled = false;
-      chatInput.disabled = false;
-      chatInput.focus();
+      case 'end':
+      case 'complete':
+        // Response finished
+        isProcessing = false;
+        sendBtn.disabled = false;
+        chatInput.disabled = false;
+        chatInput.focus();
+        break;
+      
+      case 'error':
+        addMessage('system', '⚠️', `Error: ${content}`);
+        isProcessing = false;
+        sendBtn.disabled = false;
+        chatInput.disabled = false;
+        break;
     }
   }
 
@@ -527,13 +561,28 @@
       chatInput.focus();
 
       addMessage('system', '✓', `${tile.querySelector('.agent-name').textContent} selected.`);
-      
-      // Initialize chat AFTER agent is selected
       initChat();
     });
   });
 
-  // Event listeners
+  // Send message
+  function sendMessage() {
+    if (!selectedAgent || isProcessing || !chatInput.value.trim() || !ws) return;
+
+    const message = chatInput.value.trim();
+    chatInput.value = '';
+    
+    addMessage('user', '👤', message);
+    isProcessing = true;
+    sendBtn.disabled = true;
+    chatInput.disabled = true;
+
+    ws.send(JSON.stringify({
+      message: message,
+      agent: selectedAgent
+    }));
+  }
+
   sendBtn.addEventListener('click', sendMessage);
   chatInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -563,10 +612,7 @@
   // Metrics polling
   async function pollMetrics() {
     try {
-      const response = await fetch(`${API_BASE}/status`, {
-        headers: { 'X-API-Key': API_KEY }
-      });
-      
+      const response = await fetch(`${API_BASE}/status`);
       const data = await response.json();
       updateMetrics(data);
       setOnline();
@@ -577,10 +623,8 @@
 
   function updateMetrics(data) {
     const gpu = data.gpu;
-    
     gpuFill.style.width = `${gpu.gpu_utilization}%`;
     gpuValue.textContent = `${gpu.gpu_utilization.toFixed(0)}%`;
-    
     tempValue.textContent = `${gpu.temperature_c.toFixed(0)}°C`;
     powerValue.textContent = `${gpu.power_draw_w.toFixed(0)}W`;
   }
@@ -595,7 +639,8 @@
     statusText.textContent = '🔴 Offline';
   }
 
-  // Initialize metrics polling on page load
+  // Initialize metrics polling
   pollMetrics();
   setInterval(pollMetrics, 3000);
 </script>
+EOF
