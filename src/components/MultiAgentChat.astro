@@ -313,6 +313,75 @@
     white-space: pre-wrap;
   }
 
+  .message-text h1,
+  .message-text h2,
+  .message-text h3 {
+    margin: 12px 0 8px 0;
+    font-weight: 700;
+    color: var(--agent-primary);
+  }
+
+  .message-text h1 { font-size: 18px; }
+  .message-text h2 { font-size: 16px; }
+  .message-text h3 { font-size: 14px; }
+
+  .message-text strong {
+    font-weight: 600;
+    color: var(--agent-primary);
+  }
+
+  .message-text em {
+    font-style: italic;
+    color: var(--agent-success);
+  }
+
+  .message-text code {
+    background: rgba(0, 217, 255, 0.15);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    color: var(--agent-primary);
+  }
+
+  .message-text pre {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--agent-border);
+    border-radius: 6px;
+    padding: 12px;
+    margin: 8px 0;
+    overflow-x: auto;
+  }
+
+  .message-text pre code {
+    background: none;
+    padding: 0;
+    color: var(--text-primary);
+    font-size: 11px;
+  }
+
+  .message-text ul {
+    list-style: none;
+    padding-left: 20px;
+    margin: 8px 0;
+  }
+
+  .message-text li {
+    margin: 4px 0;
+    padding-left: 8px;
+  }
+
+  .message-text li:before {
+    content: "▸ ";
+    color: var(--agent-primary);
+    font-weight: bold;
+    margin-right: 8px;
+  }
+
+  .message-text p {
+    margin: 8px 0;
+  }
+
   .chat-input-wrapper {
     display: flex;
     gap: 8px;
@@ -487,9 +556,59 @@
   function addMessage(type, icon, text) {
     const msg = document.createElement('div');
     msg.className = 'chat-message ' + type;
-    msg.innerHTML = '<span class="message-icon">' + icon + '</span><span class="message-text">' + escapeHtml(text) + '</span>';
+    const iconSpan = document.createElement('span');
+    iconSpan.className = 'message-icon';
+    iconSpan.textContent = icon;
+    
+    const textSpan = document.createElement('span');
+    textSpan.className = 'message-text';
+    
+    // For assistant messages, render markdown; for others, escape HTML
+    if (type === 'assistant') {
+      textSpan.innerHTML = markdownToHtml(text);
+    } else {
+      textSpan.textContent = text;
+    }
+    
+    msg.appendChild(iconSpan);
+    msg.appendChild(textSpan);
     chatOutput.appendChild(msg);
     chatOutput.scrollTop = chatOutput.scrollHeight;
+  }
+
+  function markdownToHtml(text) {
+    // Escape HTML first
+    let html = escapeHtml(text);
+    
+    // Convert markdown to HTML
+    // Headers
+    html = html.replace(/^### (.*?)$/gm, '<h3>$1</h3>');
+    html = html.replace(/^## (.*?)$/gm, '<h2>$1</h2>');
+    html = html.replace(/^# (.*?)$/gm, '<h1>$1</h1>');
+    
+    // Bold
+    html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/__(.*?)__/g, '<strong>$1</strong>');
+    
+    // Italic
+    html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    html = html.replace(/_(.*?)_/g, '<em>$1</em>');
+    
+    // Code blocks
+    html = html.replace(/```(.*?)```/gs, '<pre><code>$1</code></pre>');
+    
+    // Inline code
+    html = html.replace(/`(.*?)`/g, '<code>$1</code>');
+    
+    // Lists - unordered
+    html = html.replace(/^\* (.*?)$/gm, '<li>$1</li>');
+    html = html.replace(/(<li>.*?<\/li>)/s, '<ul>$1</ul>');
+    
+    // Line breaks
+    html = html.replace(/\n\n/g, '</p><p>');
+    html = '<p>' + html + '</p>';
+    
+    return html;
   }
 
   function escapeHtml(text) {
