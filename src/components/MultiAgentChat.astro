@@ -491,9 +491,20 @@
             const lastMsg = chatOutput.lastElementChild;
             if (lastMsg && lastMsg.classList.contains('assistant')) {
               const textSpan = lastMsg.querySelector('.message-text');
-              if (textSpan) textSpan.textContent += content;
+              if (textSpan) {
+                // Store raw text and re-render markdown
+                if (!textSpan.dataset.rawText) textSpan.dataset.rawText = '';
+                textSpan.dataset.rawText += content;
+                textSpan.innerHTML = markdownToHtml(textSpan.dataset.rawText);
+              }
             } else {
-              addMessage('assistant', '🤖', content);
+              addMessage('assistant', '🤖', '');
+              // Add content to the newly created message
+              const newMsg = chatOutput.lastElementChild.querySelector('.message-text');
+              if (newMsg) {
+                newMsg.dataset.rawText = content;
+                newMsg.innerHTML = markdownToHtml(content);
+              }
             }
           }
         } else if (type === 'end' || type === 'complete') {
