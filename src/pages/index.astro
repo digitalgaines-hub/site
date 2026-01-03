@@ -252,75 +252,7 @@ import MultiAgentChat from '../components/MultiAgentChat.astro';
   }
 </style>
 
-<script>
- // Real-time metrics polling
-const METRICS_API = 'https://spark.digitalgaines.com';  // No port - goes through Cloudflare tunnel
-const API_KEY = '14b7ae8302feed7b313aa7c42a7b66a8504c8ce62058ea9107d5df2c57cc845e';
 
-const metricsMonitor = {
-  gpuFill: document.getElementById('gpu-fill'),
-  gpuValue: document.getElementById('gpu-value'),
-  memFill: document.getElementById('mem-fill'),
-  memValue: document.getElementById('mem-value'),
-  tempValue: document.getElementById('temp-value'),
-  powerValue: document.getElementById('power-value'),
-  statusDot: document.querySelector('.status-dot'),
-  statusText: document.querySelector('.status-text'),
-
-  async init() {
-    this.pollMetrics();
-    setInterval(() => this.pollMetrics(), 3000);
-  },
-
-  async pollMetrics() {
-    try {
-      const response = await fetch(`${METRICS_API}/status`, {
-  headers: {
-    'X-API-Key': API_KEY
-  }
-});
-      if (!response.ok) throw new Error('Offline');
-      
-      const data = await response.json();
-      this.updateMetrics(data);
-      this.setOnline();
-    } catch (error) {
-      this.setOffline();
-    }
-  },
-
-  updateMetrics(data) {
-    const gpu = data.gpu;
-    
-    this.gpuFill.style.width = `${gpu.gpu_utilization}%`;
-    this.gpuValue.textContent = `${gpu.gpu_utilization.toFixed(0)}%`;
-    
-    const memPercent = (gpu.memory_used_gb / gpu.memory_total_gb) * 100;
-    this.memFill.style.width = `${memPercent}%`;
-    this.memValue.textContent = `${gpu.memory_used_gb.toFixed(0)} / ${gpu.memory_total_gb.toFixed(0)}GB`;
-    
-    this.tempValue.textContent = `${gpu.temperature_c.toFixed(0)}°C`;
-    this.powerValue.textContent = `${gpu.power_draw_w.toFixed(0)}W`;
-  },
-
-  setOnline() {
-    this.statusDot.style.background = '#00ff88';
-    this.statusText.textContent = '🟢 Online';
-  },
-
-  setOffline() {
-    this.statusDot.style.background = '#ff4444';
-    this.statusText.textContent = '🔴 Offline';
-  }
-};
-
-// Initialize when page loads
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => metricsMonitor.init());
-} else {
-  metricsMonitor.init();
-}
-</script>
 
     
 
