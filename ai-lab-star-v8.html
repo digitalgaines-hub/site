@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Lab — Star Architecture v8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-primary: #08090e;
+    --bg-secondary: #0d0e15;
+    --bg-card: #11121b;
+    --bg-layer: #141520;
+    --text-primary: #e2e2ec;
+    --text-secondary: #5c5c78;
+    --text-dim: #3a3a50;
+    --border-color: #1a1b2a;
+    --blue: #3b82f6;
+    --cyan: #06b6d4;
+    --green: #10b981;
+    --purple: #8b5cf6;
+    --orange: #f59e0b;
+    --red: #ef4444;
+    --teal: #14b8a6;
+    --pink: #ec4899;
+    --yellow: #eab308;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg-primary); color: var(--text-primary); font-family: 'Inter', sans-serif; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+  .ai-lab { padding: 5rem 0; background: var(--bg-secondary); }
+  .ai-lab h2 { font-size: 2rem; font-weight: 600; margin-bottom: 0.75rem; text-align: center; }
+  .section-intro { color: var(--text-secondary); text-align: center; max-width: 700px; margin: 0 auto 3rem; line-height: 1.7; font-size: 1.05rem; }
+
+  .monitor { background: var(--bg-primary); border-radius: 16px; border: 1px solid var(--border-color); overflow: hidden; margin-bottom: 2rem; }
+  .monitor-bar { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.5rem; border-bottom: 1px solid var(--border-color); background: rgba(255,255,255,0.01); }
+  .monitor-bar-left { display: flex; align-items: center; gap: 0.75rem; }
+  .monitor-status { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px rgba(16,185,129,0.5); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 8px rgba(16,185,129,0.5)} 50%{box-shadow:0 0 14px rgba(16,185,129,0.2)} }
+  .monitor-title { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 500; color: var(--text-secondary); letter-spacing: 0.04em; }
+  .monitor-badges { display: flex; gap: 0.75rem; align-items: center; }
+  .m-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; font-weight: 500; padding: 0.2rem 0.55rem; border-radius: 4px; }
+  .m-badge.latency { color: var(--green); background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.12); }
+  .m-badge.turn-badge { transition: all 0.6s; }
+  .m-badge.caller-active { color: var(--blue); background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.2); }
+  .m-badge.agent-active { color: var(--cyan); background: rgba(6,182,212,0.08); border: 1px solid rgba(6,182,212,0.2); }
+
+  #star-canvas { display: block; width: 100%; height: 480px; }
+
+  .transcript-strip { padding: 0.75rem 1.5rem; border-top: 1px solid var(--border-color); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; display: flex; gap: 2rem; min-height: 52px; align-items: center; background: rgba(255,255,255,0.008); }
+  .ts-line { display: flex; gap: 0.5rem; transition: opacity 0.5s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
+  .ts-line.dim { opacity: 0.2; }
+  .ts-role { font-weight: 600; flex-shrink: 0; }
+  .ts-role.cr { color: var(--blue); }
+  .ts-role.ar { color: var(--cyan); }
+  .ts-text { color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; }
+
+  .platform-layers { padding: 1.5rem; border-top: 1px solid var(--border-color); }
+  .layer-row { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; align-items: stretch; }
+  .layer-row:last-child { margin-bottom: 0; }
+  .layer-tag-col { flex: 0 0 120px; display: flex; align-items: center; }
+  .layer-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; padding: 0.2rem 0.5rem; border-radius: 3px; white-space: nowrap; }
+  .layer-tag.rt { color: var(--purple); background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.12); }
+  .layer-tag.ob { color: var(--teal); background: rgba(20,184,166,0.06); border: 1px solid rgba(20,184,166,0.1); }
+  .layer-blocks { flex: 1; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .l-block { background: var(--bg-layer); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.6rem 0.85rem; flex: 1; min-width: 140px; position: relative; transition: border-color 0.3s; }
+  .l-block:hover { border-color: rgba(255,255,255,0.06); }
+  .l-block-title { font-size: 0.7rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.15rem; }
+  .l-block-desc { font-size: 0.6rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+  .l-dot { position: absolute; top: 0.55rem; right: 0.55rem; width: 4px; height: 4px; border-radius: 50%; opacity: 0.3; animation: ldot 3s infinite; }
+  .l-dot.purple { background: var(--purple); }
+  .l-dot.teal { background: var(--teal); }
+  .l-block:nth-child(1) .l-dot { animation-delay: 0s; }
+  .l-block:nth-child(2) .l-dot { animation-delay: 0.7s; }
+  .l-block:nth-child(3) .l-dot { animation-delay: 1.4s; }
+  .l-block:nth-child(4) .l-dot { animation-delay: 0.3s; }
+  @keyframes ldot { 0%,100%{opacity:0.15} 50%{opacity:0.55;box-shadow:0 0 4px currentColor} }
+
+  .kpi-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.25rem; padding-top: 0.85rem; margin-top: 0.75rem; border-top: 1px solid var(--border-color); }
+  .kpi { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--text-dim); display: flex; align-items: center; gap: 0.35rem; }
+  .kpi-d { width: 5px; height: 5px; border-radius: 50%; }
+  .kpi-d.o { background: var(--orange); } .kpi-d.g { background: var(--green); } .kpi-d.b { background: var(--blue); } .kpi-d.p { background: var(--pink); }
+
+  .explore-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; margin-bottom: 2rem; }
+  .explore-card { padding: 1.5rem; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-color); transition: border-color 0.3s, transform 0.2s; }
+  .explore-card:hover { border-color: rgba(59,130,246,0.25); transform: translateY(-2px); }
+  .explore-card h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary); }
+  .explore-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+  .info-note { margin-top: 2rem; padding: 1.5rem; background: var(--bg-primary); border-radius: 8px; border-left: 4px solid var(--cyan); }
+  .info-note p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; margin: 0; }
+
+  @media (max-width: 768px) {
+    #star-canvas { height: 400px; }
+    .layer-tag-col { flex: 0 0 80px; }
+    .l-block { min-width: 100px; }
+    .monitor-bar { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+    .transcript-strip { flex-direction: column; gap: 0.5rem; }
+    .explore-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<section class="ai-lab" id="lab">
+  <div class="container">
+    <h2>🧪 AI Lab</h2>
+    <p class="section-intro">This is where I pressure-test what everyone else is pitching. Real hardware, real workloads, real results — not vendor demos.</p>
+
+    <div class="monitor">
+      <div class="monitor-bar">
+        <div class="monitor-bar-left">
+          <span class="monitor-status"></span>
+          <span class="monitor-title">AI Agent Platform · Local Hardware</span>
+        </div>
+        <div class="monitor-badges">
+          <span class="m-badge turn-badge caller-active" id="turn-badge">● Caller Speaking</span>
+          <span class="m-badge latency">⚡ <span id="latency-val">---ms</span></span>
+        </div>
+      </div>
+
+      <canvas id="star-canvas"></canvas>
+
+      <div class="transcript-strip">
+        <div class="ts-line" id="ts-caller"><span class="ts-role cr">CALLER</span><span class="ts-text" id="ts-caller-text"></span></div>
+        <div class="ts-line dim" id="ts-agent"><span class="ts-role ar">AGENT</span><span class="ts-text" id="ts-agent-text"></span></div>
+      </div>
+
+      <div class="platform-layers">
+        <div class="layer-row">
+          <div class="layer-tag-col"><span class="layer-tag rt">Agent Runtime</span></div>
+          <div class="layer-blocks">
+            <div class="l-block"><div class="l-dot purple"></div><div class="l-block-title">Tool Orchestration</div><div class="l-block-desc">Multi-step workflow execution</div></div>
+            <div class="l-block"><div class="l-dot purple"></div><div class="l-block-title">Persistent Memory</div><div class="l-block-desc">Cross-session context</div></div>
+            <div class="l-block"><div class="l-dot purple"></div><div class="l-block-title">Knowledge Base</div><div class="l-block-desc">SOPs · Policies · Scripts</div></div>
+            <div class="l-block"><div class="l-dot purple"></div><div class="l-block-title">Voice Activity Detection</div><div class="l-block-desc">Natural turn-taking</div></div>
+          </div>
+        </div>
+        <div class="layer-row">
+          <div class="layer-tag-col"><span class="layer-tag ob">Observability</span></div>
+          <div class="layer-blocks">
+            <div class="l-block"><div class="l-dot teal"></div><div class="l-block-title">Session Replay</div><div class="l-block-desc">Full interaction trace</div></div>
+            <div class="l-block"><div class="l-dot teal"></div><div class="l-block-title">Performance</div><div class="l-block-desc">AHT · Accuracy · ROI</div></div>
+            <div class="l-block"><div class="l-dot teal"></div><div class="l-block-title">Error Taxonomy</div><div class="l-block-desc">Failure classification</div></div>
+            <div class="l-block"><div class="l-dot teal"></div><div class="l-block-title">Decision Trace</div><div class="l-block-desc">Reasoning audit</div></div>
+          </div>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi"><span class="kpi-d o"></span> Sub-3s Conversational Latency</div>
+          <div class="kpi"><span class="kpi-d g"></span> 4-6 Week Deployment</div>
+          <div class="kpi"><span class="kpi-d b"></span> 40-60% Cost Reduction</div>
+          <div class="kpi"><span class="kpi-d p"></span> Multiple Concurrent Agents</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="explore-grid">
+      <div class="explore-card"><h4>🎙️ Conversational AI at the Edge</h4><p>Full voice pipelines running on local hardware. No cloud round-trips, no per-call API costs, no data leaving the building. Testing where the performance ceiling actually is.</p></div>
+      <div class="explore-card"><h4>🤖 AI Workflow Automation</h4><p>Exploring how AI agents can handle complex, multi-step processes in enterprise environments — reducing integration timelines from months to weeks. Particularly focused on what this unlocks in regulated industries like healthcare and government.</p></div>
+      <div class="explore-card"><h4>💰 The Real Economics of Inference</h4><p>Running production workloads locally to answer the questions vendors won't: actual cost per interaction, break-even points between on-prem and cloud, and where data sovereignty becomes non-negotiable.</p></div>
+    </div>
+
+    <div class="info-note"><p>💡 <strong>What you're seeing:</strong> A visualization of the AI agent platform running on an NVIDIA DGX Spark in my home office. I validate architectures on my own hardware before recommending them to enterprise clients. Opinions grounded in production workloads, not whitepapers.</p></div>
+  </div>
+</section>
+
+<script>
+(function() {
+  const canvas = document.getElementById('star-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, dpr, time = 0;
+  let isCallerTurn = true, turnTimer = 0;
+  const TURN_DUR = 5.0;
+  let turnBlend = 1; // 1 = caller, 0 = agent
+
+  // Orchestration phase within a turn
+  // Caller turn: 0-30% audio in, 30-70% brain processing (spokes fire), 70-100% transition
+  // Agent turn: 0-30% brain assembles, 30-70% TTS fires, 70-100% audio out to caller
+  let phaseT = 0;
+
+  // Layout positions (computed on resize)
+  let layout = {};
+
+  function resize() {
+    dpr = window.devicePixelRatio || 1;
+    const rect = canvas.parentElement.getBoundingClientRect();
+    W = rect.width; H = rect.height || 480;
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    computeLayout();
+  }
+
+  function computeLayout() {
+    const cx = W * 0.48; // brain center — slightly left of center to give spokes room
+    const cy = H * 0.5;
+    const brainR = Math.min(W, H) * 0.09;
+    const spokeR = Math.min(W, H) * 0.30; // distance from brain to spoke nodes
+
+    layout = {
+      // Caller
+      caller: { x: W * 0.06, y: cy, r: 20 },
+      // PSTN
+      pstn: { x: W * 0.20, y: cy, r: 16 },
+      // Brain (center hero)
+      brain: { x: cx, y: cy, r: brainR },
+      // Star nodes — arranged in arc on right side
+      spokes: [
+        { id: 'stt',       label: 'Speech-to-Text',     shortLabel: 'STT',      angle: -1.2,  color: {r:139,g:92,b:246},  desc: 'Real-time transcription' },
+        { id: 'knowledge', label: 'Knowledge Base',      shortLabel: 'Knowledge', angle: -0.55, color: {r:245,g:158,b:11},  desc: 'SOPs · Policies · Scripts' },
+        { id: 'memory',    label: 'Persistent Memory',   shortLabel: 'Memory',    angle: 0.1,   color: {r:59,g:130,b:246},  desc: 'Cross-session context' },
+        { id: 'tools',     label: 'Tool Orchestration',  shortLabel: 'Tools',     angle: 0.55,  color: {r:236,g:72,b:153},  desc: 'Workflow execution' },
+        { id: 'tts',       label: 'Text-to-Speech',      shortLabel: 'TTS',       angle: 1.2,   color: {r:6,g:182,b:212},   desc: 'Voice synthesis' },
+      ],
+      spokeR: spokeR,
+    };
+
+    // Compute spoke positions
+    for (const s of layout.spokes) {
+      s.x = cx + Math.cos(s.angle) * spokeR;
+      s.y = cy + Math.sin(s.angle) * spokeR;
+      s.r = 22;
+    }
+  }
+
+  // ============================================
+  // DRAW: CALLER ICON
+  // ============================================
+  function drawCaller(x, y, r, alpha, t) {
+    const a = alpha;
+    // Outer circle
+    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(59,130,246,${0.06 * a})`;
+    ctx.fill();
+    ctx.strokeStyle = `rgba(59,130,246,${0.2 * a})`;
+    ctx.lineWidth = 1.5; ctx.stroke();
+
+    // Person icon
+    ctx.fillStyle = `rgba(59,130,246,${0.55 * a})`;
+    ctx.beginPath(); ctx.arc(x, y - 5, 5, 0, Math.PI * 2); ctx.fill();
+    ctx.strokeStyle = `rgba(59,130,246,${0.55 * a})`;
+    ctx.lineWidth = 2; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.arc(x, y + 12, 11, Math.PI + 0.4, -0.4); ctx.stroke();
+
+    // Label
+    ctx.font = '600 8px "JetBrains Mono", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = `rgba(59,130,246,${0.35 * a})`;
+    ctx.fillText('CALLER', x, y + r + 16);
+
+    // Sound waves when speaking
+    if (a > 0.5) {
+      for (let i = 1; i <= 3; i++) {
+        const wa = 0.15 * (1 - i * 0.25) * (0.5 + 0.5 * Math.sin(t * 3 + i));
+        ctx.beginPath(); ctx.arc(x + r + 2, y, r * 0.3 + i * 6, -0.5, 0.5);
+        ctx.strokeStyle = `rgba(59,130,246,${wa * a})`; ctx.lineWidth = 1.5; ctx.stroke();
+      }
+    }
+  }
+
+  // ============================================
+  // DRAW: PSTN NODE
+  // ============================================
+  function drawPSTN(x, y, r, alpha, t) {
+    const a = alpha;
+    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(120,120,160,${0.05 * a})`;
+    ctx.fill();
+    ctx.strokeStyle = `rgba(120,120,160,${0.15 * a})`;
+    ctx.lineWidth = 1.5; ctx.stroke();
+
+    // Phone icon
+    ctx.strokeStyle = `rgba(120,120,160,${0.45 * a})`;
+    ctx.lineWidth = 1.5; ctx.lineCap = 'round';
+    // Handset
+    ctx.beginPath();
+    ctx.moveTo(x - 5, y - 6); ctx.quadraticCurveTo(x - 7, y, x - 5, y + 6);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x + 5, y - 6); ctx.quadraticCurveTo(x + 7, y, x + 5, y + 6);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x - 5, y - 6); ctx.lineTo(x + 5, y - 6);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x - 5, y + 6); ctx.lineTo(x + 5, y + 6);
+    ctx.stroke();
+
+    ctx.font = '500 7px "JetBrains Mono", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = `rgba(120,120,160,${0.3 * a})`;
+    ctx.fillText('PSTN', x, y + r + 14);
+  }
+
+  // ============================================
+  // DRAW: BRAIN (the hero)
+  // ============================================
+  function drawBrain(x, y, r, t) {
+    // Outer glow — always on
+    const g1 = ctx.createRadialGradient(x, y, r * 0.3, x, y, r * 3);
+    g1.addColorStop(0, 'rgba(16,185,129,0.06)');
+    g1.addColorStop(0.5, 'rgba(16,185,129,0.02)');
+    g1.addColorStop(1, 'rgba(16,185,129,0)');
+    ctx.fillStyle = g1;
+    ctx.fillRect(x - r * 3, y - r * 3, r * 6, r * 6);
+
+    // Breathing ring
+    const breathe = 1 + 0.04 * Math.sin(t * 1.5);
+    ctx.beginPath(); ctx.arc(x, y, r * breathe, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(16,185,129,0.04)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(16,185,129,0.2)';
+    ctx.lineWidth = 2; ctx.stroke();
+
+    // Inner ring
+    ctx.beginPath(); ctx.arc(x, y, r * 0.7, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(16,185,129,0.08)';
+    ctx.lineWidth = 1; ctx.stroke();
+
+    // Spinning arcs
+    ctx.save(); ctx.translate(x, y); ctx.rotate(t * 0.6);
+    for (let i = 0; i < 3; i++) {
+      const arcR = r * (0.85 + i * 0.12);
+      const startA = i * 2.1;
+      ctx.beginPath(); ctx.arc(0, 0, arcR, startA, startA + 0.9);
+      ctx.strokeStyle = `rgba(16,185,129,${0.15 - i * 0.03})`;
+      ctx.lineWidth = 1.5; ctx.stroke();
+    }
+    ctx.restore();
+
+    // Neural network inside
+    const layers = [
+      [{dx:-10,dy:-10},{dx:-10,dy:0},{dx:-10,dy:10}],
+      [{dx:0,dy:-14},{dx:0,dy:-4},{dx:0,dy:4},{dx:0,dy:14}],
+      [{dx:10,dy:-10},{dx:10,dy:0},{dx:10,dy:10}],
+    ];
+
+    for (let l = 0; l < layers.length - 1; l++) {
+      for (const n1 of layers[l]) {
+        for (const n2 of layers[l+1]) {
+          const pulse = 0.08 + 0.12 * Math.max(0, Math.sin(t * 3.5 + n1.dy * 0.3 + n2.dx * 0.2));
+          ctx.beginPath(); ctx.moveTo(x+n1.dx, y+n1.dy); ctx.lineTo(x+n2.dx, y+n2.dy);
+          ctx.strokeStyle = `rgba(16,185,129,${pulse})`; ctx.lineWidth = 1; ctx.stroke();
+        }
+      }
+    }
+    for (const layer of layers) {
+      for (const n of layer) {
+        const ps = 2.2 + Math.sin(t * 4 + n.dx + n.dy) * 1;
+        ctx.beginPath(); ctx.arc(x+n.dx, y+n.dy, ps, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(16,185,129,${0.5 + 0.2 * Math.sin(t*3 + n.dx)})`;
+        ctx.fill();
+      }
+    }
+
+    // Label
+    ctx.font = '700 9px "JetBrains Mono", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(16,185,129,0.4)';
+    ctx.fillText('AI REASONING', x, y + r + 18);
+  }
+
+  // ============================================
+  // DRAW: SPOKE NODE
+  // ============================================
+  function drawSpokeNode(spoke, alpha, t) {
+    const { x, y, r, color: {r: cr, g, b}, shortLabel, desc } = spoke;
+    const a = alpha;
+
+    // Glow when active
+    if (a > 0.3) {
+      const sg = ctx.createRadialGradient(x, y, r * 0.3, x, y, r * 2);
+      sg.addColorStop(0, `rgba(${cr},${g},${b},${0.06 * a})`);
+      sg.addColorStop(1, `rgba(${cr},${g},${b},0)`);
+      ctx.fillStyle = sg;
+      ctx.fillRect(x - r*2, y - r*2, r*4, r*4);
+    }
+
+    // Circle
+    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${cr},${g},${b},${0.05 * a})`;
+    ctx.fill();
+    ctx.strokeStyle = `rgba(${cr},${g},${b},${(0.1 + 0.15 * a)})`;
+    ctx.lineWidth = 1.5; ctx.stroke();
+
+    // Activity ring
+    if (a > 0.3) {
+      ctx.save(); ctx.translate(x, y); ctx.rotate(t * 1.2 + spoke.angle);
+      ctx.beginPath(); ctx.arc(0, 0, r + 4, -0.3, 0.7);
+      ctx.strokeStyle = `rgba(${cr},${g},${b},${0.2 * a})`; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.restore();
+    }
+
+    // Icon dot
+    ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${cr},${g},${b},${0.3 + 0.4 * a})`;
+    ctx.fill();
+
+    // Label
+    ctx.font = '600 7.5px "JetBrains Mono", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = `rgba(${cr},${g},${b},${0.25 + 0.3 * a})`;
+    ctx.fillText(shortLabel, x, y + r + 14);
+
+    // Desc
+    ctx.font = '400 6.5px "JetBrains Mono", monospace';
+    ctx.fillStyle = `rgba(${cr},${g},${b},${0.12 + 0.15 * a})`;
+    ctx.fillText(desc, x, y + r + 25);
+  }
+
+  // ============================================
+  // DRAW: CONNECTION LINE + PARTICLES
+  // ============================================
+  function drawConnection(x1, y1, x2, y2, color, alpha, particleDir, t, speed, count) {
+    const {r,g,b} = color;
+    const a = alpha;
+
+    // Line
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2);
+    ctx.strokeStyle = `rgba(${r},${g},${b},${0.04 + 0.08 * a})`;
+    ctx.lineWidth = 1; ctx.stroke();
+
+    // Particles
+    if (a > 0.1) {
+      for (let i = 0; i < count; i++) {
+        let pt = ((t * speed + i * (1 / count)) % 1);
+        if (particleDir < 0) pt = 1 - pt;
+        const px = x1 + (x2 - x1) * pt;
+        const py = y1 + (y2 - y1) * pt;
+        const pa = Math.sin(pt * Math.PI) * 0.6 * a;
+
+        ctx.beginPath(); ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${r},${g},${b},${pa * 0.15})`; ctx.fill();
+        ctx.beginPath(); ctx.arc(px, py, 1.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${r},${g},${b},${pa})`; ctx.fill();
+        ctx.beginPath(); ctx.arc(px, py, 0.8, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${pa * 0.5})`; ctx.fill();
+      }
+    }
+  }
+
+  // ============================================
+  // ORCHESTRATION SEQUENCE
+  // ============================================
+  function getSpokeActivity(spokeId, turnPhase, isCaller) {
+    // turnPhase: 0-1 within a turn
+    // Returns 0-1 alpha for spoke activity
+    if (isCaller) {
+      // Caller turn sequence:
+      // 0.0-0.2: Audio flowing in, STT activates
+      // 0.2-0.5: Knowledge + Memory fire (parallel lookup)
+      // 0.5-0.8: Tools may fire
+      // 0.8-1.0: cooling down
+      switch(spokeId) {
+        case 'stt':       return turnPhase < 0.5 ? smoothStep(turnPhase, 0, 0.15) : smoothStep(1 - turnPhase, 0, 0.2);
+        case 'knowledge': return turnPhase > 0.15 && turnPhase < 0.7 ? smoothStep(turnPhase - 0.15, 0, 0.15) * smoothStep(0.7 - turnPhase, 0, 0.1) : 0;
+        case 'memory':    return turnPhase > 0.2 && turnPhase < 0.75 ? smoothStep(turnPhase - 0.2, 0, 0.15) * smoothStep(0.75 - turnPhase, 0, 0.1) : 0;
+        case 'tools':     return turnPhase > 0.4 && turnPhase < 0.8 ? smoothStep(turnPhase - 0.4, 0, 0.15) * smoothStep(0.8 - turnPhase, 0, 0.1) * 0.6 : 0;
+        case 'tts':       return 0;
+      }
+    } else {
+      // Agent turn sequence:
+      // 0.0-0.3: Brain assembling, tools may still fire
+      // 0.3-0.7: TTS activates, generating speech
+      // 0.7-1.0: Audio flowing back to caller
+      switch(spokeId) {
+        case 'stt':       return 0;
+        case 'knowledge': return turnPhase < 0.3 ? smoothStep(0.3 - turnPhase, 0, 0.15) * 0.4 : 0;
+        case 'memory':    return turnPhase < 0.25 ? smoothStep(0.25 - turnPhase, 0, 0.15) * 0.3 : 0;
+        case 'tools':     return turnPhase > 0.05 && turnPhase < 0.4 ? smoothStep(turnPhase - 0.05, 0, 0.15) * smoothStep(0.4 - turnPhase, 0, 0.1) * 0.5 : 0;
+        case 'tts':       return turnPhase > 0.2 && turnPhase < 0.9 ? smoothStep(turnPhase - 0.2, 0, 0.2) * smoothStep(0.9 - turnPhase, 0, 0.15) : 0;
+      }
+    }
+    return 0;
+  }
+
+  function smoothStep(x, edge0, edge1) {
+    const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
+    return t * t * (3 - 2 * t);
+  }
+
+  // ============================================
+  // MAIN RENDER
+  // ============================================
+  let lastT = 0, latC = 0;
+  function jitter(b, r) { return b + Math.floor(Math.random() * r) - Math.floor(r / 2); }
+
+  function render(ts) {
+    const dt = Math.min((ts - lastT) / 1000, 0.05); lastT = ts; time += dt;
+    turnTimer += dt;
+
+    if (turnTimer > TURN_DUR) { turnTimer = 0; isCallerTurn = !isCallerTurn; updateTurnUI(); }
+
+    const target = isCallerTurn ? 1 : 0;
+    turnBlend += (target - turnBlend) * dt * 3;
+    phaseT = turnTimer / TURN_DUR; // 0-1 within current turn
+
+    latC += dt;
+    if (latC > 3) { latC = 0; const s=jitter(85,20),l=jitter(220,60),t2=jitter(140,30); const el=document.getElementById('latency-val'); if(el)el.textContent=(s+l+t2)+'ms'; }
+
+    ctx.clearRect(0, 0, W, H);
+
+    const L = layout;
+    const brX = L.brain.x, brY = L.brain.y;
+
+    // ---- Connections: Caller → PSTN → Brain ----
+    const ingressAlpha = 0.3 + 0.7 * turnBlend;
+    const egressAlpha = 0.3 + 0.7 * (1 - turnBlend);
+
+    // Caller → PSTN
+    drawConnection(L.caller.x + L.caller.r + 4, L.caller.y,
+                   L.pstn.x - L.pstn.r - 4, L.pstn.y,
+                   {r:100,g:100,b:140}, ingressAlpha, 1, time, 0.4, 4);
+
+    // PSTN → Brain
+    drawConnection(L.pstn.x + L.pstn.r + 4, L.pstn.y,
+                   brX - L.brain.r - 4, brY,
+                   {r:100,g:100,b:140}, ingressAlpha, 1, time, 0.35, 5);
+
+    // Brain → PSTN (return path, agent turn)
+    if (egressAlpha > 0.35) {
+      drawConnection(brX - L.brain.r - 4, brY + 8,
+                     L.pstn.x + L.pstn.r + 4, L.pstn.y + 8,
+                     {r:6,g:182,b:212}, egressAlpha * (phaseT > 0.5 ? smoothStep(phaseT, 0.5, 0.7) : 0), -1, time, 0.35, 4);
+      // PSTN → Caller (return)
+      drawConnection(L.pstn.x - L.pstn.r - 4, L.pstn.y + 8,
+                     L.caller.x + L.caller.r + 4, L.caller.y + 8,
+                     {r:6,g:182,b:212}, egressAlpha * (phaseT > 0.6 ? smoothStep(phaseT, 0.6, 0.8) : 0), -1, time, 0.4, 3);
+    }
+
+    // ---- Brain → Spoke connections ----
+    for (const spoke of L.spokes) {
+      const act = getSpokeActivity(spoke.id, phaseT, isCallerTurn);
+      // Direction: brain→spoke for queries, spoke→brain for responses
+      const dir = (spoke.id === 'tts') ? 1 : (spoke.id === 'stt' ? -1 : 0);
+      // For knowledge/memory/tools: bidirectional — show outbound query
+      const particleDir = dir === 0 ? 1 : dir;
+
+      drawConnection(brX + Math.cos(spoke.angle) * (L.brain.r + 4),
+                     brY + Math.sin(spoke.angle) * (L.brain.r + 4),
+                     spoke.x - Math.cos(spoke.angle) * (spoke.r + 4),
+                     spoke.y - Math.sin(spoke.angle) * (spoke.r + 4),
+                     spoke.color, act, particleDir, time, 0.35, 5);
+
+      // Return particles for bidirectional spokes
+      if (dir === 0 && act > 0.2) {
+        drawConnection(spoke.x - Math.cos(spoke.angle) * (spoke.r + 4),
+                       spoke.y - Math.sin(spoke.angle) * (spoke.r + 4) + 4,
+                       brX + Math.cos(spoke.angle) * (L.brain.r + 4),
+                       brY + Math.sin(spoke.angle) * (L.brain.r + 4) + 4,
+                       spoke.color, act * 0.5, -1, time + 0.5, 0.3, 3);
+      }
+    }
+
+    // ---- Draw nodes ----
+    drawCaller(L.caller.x, L.caller.y, L.caller.r, 0.4 + 0.6 * turnBlend, time);
+    drawPSTN(L.pstn.x, L.pstn.y, L.pstn.r, 0.5 + 0.5 * Math.max(turnBlend, 1 - turnBlend), time);
+    drawBrain(brX, brY, L.brain.r, time);
+
+    for (const spoke of L.spokes) {
+      const act = getSpokeActivity(spoke.id, phaseT, isCallerTurn);
+      drawSpokeNode(spoke, 0.15 + 0.85 * act, time);
+    }
+
+    requestAnimationFrame(render);
+  }
+
+  // Turn UI
+  const turnBadge = document.getElementById('turn-badge');
+  const tsCaller = document.getElementById('ts-caller');
+  const tsAgent = document.getElementById('ts-agent');
+  function updateTurnUI() {
+    if (turnBadge) { turnBadge.textContent = isCallerTurn ? '● Caller Speaking' : '● Agent Responding'; turnBadge.className = 'm-badge turn-badge ' + (isCallerTurn ? 'caller-active' : 'agent-active'); }
+    if (tsCaller) tsCaller.classList.toggle('dim', !isCallerTurn);
+    if (tsAgent) tsAgent.classList.toggle('dim', isCallerTurn);
+  }
+
+  // Transcript
+  const convs = [
+    {c:"Hi, I need to check the status of my application.",a:"I've pulled up your account — your application was approved on February 28th."},
+    {c:"Can you update my mailing address?",a:"Done. I've updated your address and sent a confirmation to your email on file."},
+    {c:"I'm calling about my enrollment for next quarter.",a:"I see your enrollment record. You're set for the March cohort — would you like to make changes?"},
+    {c:"What documents do I need to submit?",a:"Based on your case type, you'll need two forms of ID and proof of residence."},
+    {c:"I was told someone would call me back yesterday.",a:"I apologize for the delay. I have your case notes — let me get this resolved right now."},
+  ];
+  let ci = 0;
+  function showConv() {
+    const c = convs[ci];
+    const ct = document.getElementById('ts-caller-text'), at = document.getElementById('ts-agent-text');
+    if (ct) ct.textContent = c.c; if (at) at.textContent = c.a;
+    ci = (ci + 1) % convs.length;
+  }
+  showConv(); setInterval(showConv, TURN_DUR * 2 * 1000);
+
+  resize(); updateTurnUI(); requestAnimationFrame(render);
+  window.addEventListener('resize', resize);
+})();
+</script>
+</body>
+</html>
