@@ -46,10 +46,9 @@ import LivingLoop from '../components/LivingLoop.astro';
               That's the experiment I'm living. This site is where I write down what I'm learning.
             </p>
             <div class="impact-areas">
-              <span class="impact-item">Rapid Value Delivery</span>
-              <span class="impact-item">AI at Scale</span>
-              <span class="impact-item">Culture &amp; Change</span>
-              <span class="impact-item">Executive Leadership</span>
+              <span class="impact-item">Agentic AI in Production</span>
+              <span class="impact-item">The Small Model Thesis</span>
+              <span class="impact-item">AI in Everyday Life</span>
             </div>
             <div class="hero-cta">
               <a href="#engage" class="btn btn-primary">Let's Talk</a>
@@ -161,12 +160,6 @@ import LivingLoop from '../components/LivingLoop.astro';
       <div class="lab-stat"><span class="ls-v">128GB</span><span class="ls-k">unified memory at the edge</span></div>
       <div class="lab-stat"><span class="ls-v">0</span><span class="ls-k">cloud round-trips required for a conversation</span></div>
       <div class="lab-stat"><span class="ls-v">1</span><span class="ls-k">human, many agents</span></div>
-    </div>
-
-    <div class="explore-grid">
-      <div class="explore-card"><h4>🎙️ Conversational AI at the Edge</h4><p>Full voice pipelines running on local hardware. No cloud round-trips, no per-call API costs, no data leaving the building. Testing where the performance ceiling actually is.</p></div>
-      <div class="explore-card"><h4>🤖 AI Workflow Automation</h4><p>Exploring how AI agents can handle complex, multi-step processes in enterprise environments — reducing integration timelines from months to weeks. Particularly focused on what this unlocks in regulated industries like healthcare and government.</p></div>
-      <div class="explore-card"><h4>💰 The Real Economics of Inference</h4><p>Running production workloads locally to answer the questions vendors won't: actual cost per interaction, break-even points between on-prem and cloud, and where data sovereignty becomes non-negotiable.</p></div>
     </div>
 
     <div class="lab-footnote">
@@ -323,6 +316,12 @@ import LivingLoop from '../components/LivingLoop.astro';
     letter-spacing: 0.01em;
     margin-bottom: 1.5rem;
   }
+  /* Three chips on one row: the hero grid column caps at 536px, and the
+     inherited chip sizing needs 606px. Trimmed to ~516px, scoped to the hero.
+     Below the container's max width the column narrows and they wrap. */
+  .hero-content .impact-areas { gap: 0.65rem; }
+  .hero-content .impact-item { font-size: 0.85rem; padding: 0.4rem 0.7rem; }
+
   .hero-content .tagline { font-size: 1.1rem; margin-bottom: 1.25rem; }
   .hero-content .tagline:last-of-type { margin-bottom: 2rem; }
 
@@ -394,12 +393,6 @@ import LivingLoop from '../components/LivingLoop.astro';
   }
   .ls-k { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; }
 
-  .explore-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-  .explore-card { padding: 1.5rem; background: var(--bg-primary); border-radius: 12px; border: 1px solid var(--border-color); transition: border-color 0.3s, transform 0.2s; }
-  .explore-card:hover { border-color: rgba(59,130,246,0.35); transform: translateY(-2px); }
-  .explore-card h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary); }
-  .explore-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
-
   .lab-footnote {
     margin-top: 2rem;
     padding: 1.5rem;
@@ -439,7 +432,25 @@ import LivingLoop from '../components/LivingLoop.astro';
   .note-card h3 { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); line-height: 1.45; margin-bottom: 0.6rem; }
   .note-card p { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.65; margin: 0; }
 
+  /* ---- Focus + Connect card grids ----
+     Scoped to these two sections only. The global .card-grid rule in
+     Layout.astro stays single-column so Events (and anything else using it)
+     is unaffected. Grid items stretch by default, so cards are equal height. */
+  #focus .card-grid,
+  #engage .card-grid { align-items: stretch; }
+
+  @media (min-width: 700px) {
+    #focus .card-grid,
+    #engage .card-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 900px) {
+    #focus .card-grid,
+    #engage .card-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
   /* ---- Connect ---- */
+  #engage .contact-info { margin-top: 3rem; }
+  #engage .location { margin-bottom: 1rem; }
   .contact-buttons { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
 
   /* ---- Events ---- */
@@ -448,7 +459,7 @@ import LivingLoop from '../components/LivingLoop.astro';
   .booking-line a:hover { color: var(--accent-color); }
 
   @media (max-width: 768px) {
-    .explore-grid, .notes-grid { grid-template-columns: 1fr; }
+    .notes-grid { grid-template-columns: 1fr; }
     .lab-stats { grid-template-columns: 1fr 1fr; }
   }
 </style>
