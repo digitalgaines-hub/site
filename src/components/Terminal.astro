@@ -136,80 +136,32 @@
 
 <script>
     function initTerminal() {
+        // The four-line loop story. Lines 1-3 are typed after the static `$`
+        // prompt; the closing result appears as output beneath the last line
+        // (skipCommand) so all four read in order, then the cycle repeats.
         const commands = [
-    {
-        command: "# Analyzing enterprise transformation requirements...",
-        output: "→ Assessment complete: 3 key bottlenecks identified",
-        delay: 2500
-    },
-    {
-        command: "terraform init transformation-strategy",
-        output: "✓ Enterprise transformation framework initialized",
-        delay: 3500
-    },
-    {
-        command: "# Evaluating customer experience platform needs...",
-        output: "→ Target: 25,000 associates | Current gap: 78%",
-        delay: 2500
-    },
-    {
-        command: "kubectl scale deployment/cx-platform --replicas=25000",
-        output: "✓ 25K associates empowered with AI-powered platform",
-        delay: 4000
-    },
-    {
-        command: "# Identifying language barriers in global operations...",
-        output: "→ 47 languages detected | Translation latency: Critical",
-        delay: 2500
-    },
-    {
-        command: "ansible-playbook ai-translation.yml --extra-vars='impact=global'",
-        output: "✓ Real-time translation: Breaking language barriers at scale",
-        delay: 4000
-    },
-    {
-        command: "# Calculating optimization opportunities...",
-        output: "→ Significant cost reduction potential identified",
-        delay: 2500
-    },
-    {
-        command: "terraform apply cost-optimization --auto-approve",
-        output: "✓ 8-figure annual savings achieved | ROI: 8X+",
-        delay: 4000
-    },
-    {
-        command: "# Planning multi-cloud enterprise architecture...",
-        output: "→ Designing for: Enterprise-scale | 2K+ clients",
-        delay: 2500
-    },
-    {
-        command: "aws cloudformation deploy --stack-name multi-cloud-enterprise",
-        output: "⣾ Deploying infrastructure... █████████░ 90%",
-        delay: 2000,
-        hasProgress: true
-    },
-    {
-        command: "",
-        output: "✓ Multi-cloud architecture operational | Zero downtime achieved",
-        delay: 4000,
-        skipCommand: true
-    },
-    {
-        command: "helm install agile-transformation --set culture=innovation",
-        output: "✓ 60% faster deployments | 100-point NPS increase",
-        delay: 4000
-    },
-    {
-        command: "# Analyzing customer experience metrics...",
-        output: "→ First-call resolution: Below industry standard",
-        delay: 2500
-    },
-    {
-        command: "docker-compose up data-driven-cx --scale",
-        output: "✓ 45% improvement in first-call resolution",
-        delay: 4000
-    }
-];
+            {
+                command: "./run --loop=self-improving",
+                output: "",
+                delay: 1800
+            },
+            {
+                command: "# inner loop: conversation \u00b7 <1s",
+                output: "",
+                delay: 1600
+            },
+            {
+                command: "# outer loop: capture \u2192 score \u2192 learn \u2192 improve",
+                output: "",
+                delay: 900
+            },
+            {
+                command: "",
+                output: "\u2713 core v0.48 shipped \u2014 next call inherits",
+                delay: 4000,
+                skipCommand: true
+            }
+        ];
 
         let currentIndex = 0;
         const commandElement = document.getElementById('animated-command');
