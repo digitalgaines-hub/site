@@ -2,11 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import Terminal from '../components/Terminal.astro';
 import InteractiveTerminal from '../components/InteractiveTerminal.astro';
+import LivingLoop from '../components/LivingLoop.astro';
 ---
 
 <Layout 
     title="DeJon Gaines | Technology Transformation Leader" 
-    description="Challenging how enterprises think about technology transformation"
+    description="Enterprise AI by day. Personal AI by conviction."
 >
   <!-- Navigation -->
   <nav>
@@ -15,8 +16,10 @@ import InteractiveTerminal from '../components/InteractiveTerminal.astro';
         <a href="/" class="logo">DG</a>
         <div class="nav-links">
           <a href="#about">About</a>
-          <a href="#focus">Current Focus</a>
-          <a href="#lab">AI Lab</a>
+          <a href="#focus">Focus</a>
+          <a href="#lab">The Lab</a>
+          <a href="#notes">Field Notes</a>
+          <a href="#events">Events</a>
           <a href="#engage">Connect</a>
           <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
         </div>
@@ -32,18 +35,24 @@ import InteractiveTerminal from '../components/InteractiveTerminal.astro';
           <div class="hero-content">
             <h1><span class="gradient-name">DeJon Gaines</span></h1>
             <div class="subtitle">Chief Technology Officer | AI &amp; CX Transformation</div>
+            <div class="subtitle-alt">Enterprise AI by day. Personal AI by conviction.</div>
             <p class="tagline">
-              Digital transformation used to mean 18-month roadmaps and PowerPoint milestones. Now I'm seeing enterprises generate measurable value in days, sometimes hours. That shift changes everything about how leaders should think about AI investment.
+              Digital transformation used to mean 18-month roadmaps and PowerPoint milestones. Now I watch enterprises generate measurable value in days, sometimes hours.
+            </p>
+            <p class="tagline">
+              But the shift I can't stop thinking about is smaller, and closer to home: what happens when one person puts real AI infrastructure into their own life. Not a chatbot tab in a browser — an AI chief of staff I built and host myself, running on a supercomputer next to my desk.
+            </p>
+            <p class="tagline">
+              That's the experiment I'm living. This site is where I write down what I'm learning.
             </p>
             <div class="impact-areas">
-              <span class="impact-item">Rapid Value Delivery</span>
-<span class="impact-item">AI at Scale</span>
-<span class="impact-item">Culture & Change</span>
-<span class="impact-item">Executive Leadership</span>
+              <span class="impact-item">Agentic AI in Production</span>
+              <span class="impact-item">The Small Model Thesis</span>
+              <span class="impact-item">AI in Everyday Life</span>
             </div>
             <div class="hero-cta">
-              <a href="#about" class="btn btn-primary">About Me</a>
-              <a href="#engage" class="btn btn-outline">Let's Talk</a>
+              <a href="#engage" class="btn btn-primary">Let's Talk</a>
+              <a href="#lab" class="btn btn-outline">See the Lab</a>
             </div>
           </div>
           <div class="hero-terminal">
@@ -68,13 +77,16 @@ import InteractiveTerminal from '../components/InteractiveTerminal.astro';
           
           <div>
             <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.05rem; margin-bottom: 1rem;">
-              My career began during a pivotal shift in technology: the transition from analog to digital operations in the early 2000s. It wasn't a single moment. It was a ripple that spread across industries worldwide, reshaping how organizations operated. Watching that wave taught me that transformation is never just about technology. It's about timing, scale, and adaptability. That insight drives how I lead today: blending strategic vision with hands-on execution, validating emerging technologies before recommending them, and ensuring every initiative delivers measurable business impact.
+              I've spent twenty years inside technology transformations — first watching the analog world go digital in the early 2000s, then helping thousands of commercial and public-sector clients navigate what came after. The lesson never changed: transformation is never just about technology. It's about timing, scale, and adaptability.
+            </p>
+            <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.05rem; margin-bottom: 1rem;">
+              Lately the most interesting timing question isn't in the enterprise at all. Enterprises adopt AI with committees, pilots, and procurement cycles. A person adopts AI at the speed of curiosity. The gap between those two speeds is where I spend most of my thinking — because the individual who runs their life on AI today is the customer, employee, and executive every company will meet tomorrow.
             </p>
             <p style="color: var(--text-secondary); line-height: 1.8; font-size: 1.05rem;">
-              I've spent 20 years putting that lesson into practice across global operations, helping thousands of clients in commercial and public sectors navigate their most complex challenges. I thrive at the intersection of business and technology. Every transformation is an opportunity to learn, stay curious, and create lasting impact.
+              So I run the experiment on myself. My calendar, inbox, research, and household operations run through an AI I built and host at home. It makes me sharper at the day job, and it makes me a more honest advisor: I never recommend a pattern I haven't lived with.
             </p>
             <p style="color: var(--text-secondary); margin-top: 1.5rem; font-size: 0.95rem;">
-              📍 Lexington, Kentucky | 🎓 McKinsey Executive Leadership | 🎤 Keynote Speaker
+              20+ years enterprise technology · McKinsey Executive Leadership program · Lexington, Kentucky
             </p>
           </div>
         </div>
@@ -93,14 +105,21 @@ import InteractiveTerminal from '../components/InteractiveTerminal.astro';
           <div class="card">
             <h3 class="card-title">Agentic AI in Production</h3>
             <p class="card-description">
-              Everyone's demoing agents. I'm deploying them — handling live customer calls, making decisions in real-time, and completing work autonomously. The gap between "impressive demo" and "production-grade" is where the real engineering lives.
+              Live-call handling agents with autonomous decision-making, deployed in real contact-center environments. The platforms have shipped; the scarce skill now is operating them — tuning against live conversations, proving quality with evidence, earning the right to automate the next call type. The gap between demo and production is where most AI initiatives die; I work in that gap.
             </p>
           </div>
 
           <div class="card">
             <h3 class="card-title">The Small Model Thesis</h3>
             <p class="card-description">
-              The industry is chasing parameter counts. I'm running 14B-class models that outperform 70B+ for domain-specific workloads — faster inference, lower cost, multiple concurrent agents on a single box. Purpose-trained beats general-purpose at production scale.
+              Purpose-trained 14B-class models are outperforming giants on domain-specific work — faster inference, better economics. The same thesis powers my house: small local models handle voice and latency-sensitive work; frontier models handle heavy reasoning. Purpose-trained beats general-purpose at production scale, whether production is a call center or a kitchen.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title">AI in Everyday Life</h3>
+            <p class="card-description">
+              The most under-reported AI story is personal: people quietly using AI to manage health, money, family logistics, and learning. I'm building and documenting a full personal AI stack — and mapping what individual adoption tells us about where the enterprise wave goes next.
             </p>
           </div>
         </div>
@@ -112,56 +131,89 @@ import InteractiveTerminal from '../components/InteractiveTerminal.astro';
         </div>
       </div>
     </section>
-<!-- Upcoming Engagements Section -->
+
+  <!-- The Lab Section -->
+<section class="ai-lab" id="lab">
+  <div class="container">
+    <h2>🧪 The Lab</h2>
+    <p class="section-intro">This is where I pressure-test what everyone else is pitching. Real hardware, real workloads, real results — not vendor demos.</p>
+
+    <p class="lab-intro">
+      Most AI labs live in datacenters. Mine lives in my home office in Lexington: an NVIDIA DGX Spark (GB10, 128GB unified memory) running a stack I've built to answer one question — how much of a life can one person delegate to AI they own and host themselves?
+    </p>
+
+    <LivingLoop />
+
+    <p class="ll-caption">
+      A conversation is the inner loop: speech in, reasoning across knowledge, memory, and tools, speech out — in under a second. The outer loop is what separates a production system from a demo: every conversation is captured and scored against evidence, and what's learned flows back in — better prompts, better routing, better answers. The next conversation is better than the last, provably, release over release. And the same two loops run at both scales: enterprise, and the machine next to my desk.
+    </p>
+
+    <div class="cos-block">
+      <h3>The chief-of-staff experiment</h3>
+      <p>
+        The centerpiece is an AI chief of staff I built and host myself. It talks with me in real time — a voice loop with sub-3-second round-trips, running entirely on local models, so the conversation never leaves the house — and it quietly keeps the operational side of my life moving so my attention goes where it matters.
+      </p>
+    </div>
+
+    <div class="lab-stats">
+      <div class="lab-stat"><span class="ls-v">&lt;3s</span><span class="ls-k">voice round-trip, fully local</span></div>
+      <div class="lab-stat"><span class="ls-v">128GB</span><span class="ls-k">unified memory at the edge</span></div>
+      <div class="lab-stat"><span class="ls-v">0</span><span class="ls-k">cloud round-trips required for a conversation</span></div>
+      <div class="lab-stat"><span class="ls-v">1</span><span class="ls-k">human, many agents</span></div>
+    </div>
+
+    <div class="lab-footnote">
+      <p>The same architecture patterns — edge inference, agent orchestration, small-model economics — are what I deploy for enterprises through Digital Gaines LLC: conversational AI platforms in weeks, not quarters, at 40–60% lower inference cost.</p>
+    </div>
+  </div>
+</section>
+
+    <!-- Field Notes Section -->
+    <section id="notes">
+      <div class="container">
+        <h2>Field Notes</h2>
+        <p class="section-intro">
+          Writing from inside the experiment — what the personal AI stack actually does, what it costs, and what it predicts. <span class="notes-soon">Coming soon.</span>
+        </p>
+
+        <div class="notes-grid">
+          <article class="note-card">
+            <span class="note-badge">Coming soon</span>
+            <h3>"I Hired an AI Chief of Staff. I Also Built It."</h3>
+            <p>What changes when your assistant lives in your house, not in a browser tab.</p>
+          </article>
+          <article class="note-card">
+            <span class="note-badge">Coming soon</span>
+            <h3>"The Kitchen-Table Datacenter"</h3>
+            <p>What a DGX Spark at home actually costs, actually does, and actually can't.</p>
+          </article>
+          <article class="note-card">
+            <span class="note-badge">Coming soon</span>
+            <h3>"Enterprises Buy AI. People Adopt It."</h3>
+            <p>Why individual adoption runs years ahead of corporate adoption, and what that predicts.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+<!-- Events Section -->
 <section id="events" style="background: var(--bg-secondary);">
   <div class="container">
-    <h2>Upcoming Engagements</h2>
+    <h2>Events</h2>
     <p class="section-intro">
-      	Where I'll be in early 2026. Exploring what's next, pressure-testing new ideas, and connecting with leaders who are building, not just buying.
+      Where I'll be, and where I've been. Pressure-testing new ideas and connecting with leaders who are building, not just buying.
     </p>
-    
+
+    <p style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.25rem;">Upcoming</p>
+
     <div class="card-grid">
-      <!-- Event 4: Microsoft AI Tour Atlanta -->
-      <div class="card" style="border-left: 4px solid #00a4ef;">
-        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-          <span style="font-size: 2rem;">🤖</span>
-          <div>
-            <h3 class="card-title" style="margin: 0;">Microsoft AI Tour</h3>
-            <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">April 29, 2026 | Atlanta, GA</p>
-          </div>
-        </div>
-        <p class="card-description">
-          Returning to the Microsoft AI Tour, this time in Atlanta. A chance to see how the enterprise AI conversation has evolved since January and connect with practitioners across the Southeast region.
-        </p>
-        <div style="margin-top: 1rem;">
-          <span style="color: var(--text-secondary); font-size: 0.85rem;">📍 Atlanta, GA</span>
-        </div>
-      </div>
-
-      <!-- Event 5: CCW Las Vegas -->
-      <div class="card" style="border-left: 4px solid #00a4ef;">
-        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-          <span style="font-size: 2rem;">🎯</span>
-          <div>
-            <h3 class="card-title" style="margin: 0;">CCW Las Vegas 2026</h3>
-            <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">June 2026 | Las Vegas, NV</p>
-          </div>
-        </div>
-        <p class="card-description">
-          Customer Contact Week — the largest global gathering for customer contact and CX leaders. Senior executives, industry innovators, and emerging disruptors focused on the future of customer contact. A critical pulse check on where the industry is actually heading.
-        </p>
-        <div style="margin-top: 1rem;">
-          <span style="color: var(--text-secondary); font-size: 0.85rem;">📍 Las Vegas, NV</span>
-        </div>
-      </div>
-
-      <!-- Event 6: Genesys Xperience -->
+      <!-- Genesys Xperience -->
       <div class="card" style="border-left: 4px solid #00a4ef;">
         <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
           <span style="font-size: 2rem;">🌐</span>
           <div>
             <h3 class="card-title" style="margin: 0;">Genesys Xperience</h3>
-            <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">September 1–3, 2026 | Las Vegas, NV</p>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">September 1–3, 2026 | Wynn Las Vegas | Las Vegas, NV</p>
           </div>
         </div>
         <p class="card-description">
@@ -172,6 +224,10 @@ import InteractiveTerminal from '../components/InteractiveTerminal.astro';
         </div>
       </div>
     </div>
+
+    <p class="booking-line">
+      <a href="#engage"><em>Booking Q4 2026 / 2027 — speaking on agentic AI and personal AI infrastructure →</em></a>
+    </p>
 
     <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: var(--bg-primary); border-radius: 8px; border: 1px solid var(--border-color);">
       <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.7;">
@@ -184,436 +240,15 @@ import InteractiveTerminal from '../components/InteractiveTerminal.astro';
     <div style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
       <p style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem;">Recent</p>
       <ul style="list-style: none; padding: 0; margin: 0;">
-        <li style="color: var(--text-muted); font-size: 0.9rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">Lenovo Tech World @ CES — Las Vegas, NV — January 6, 2026</li>
-        <li style="color: var(--text-muted); font-size: 0.9rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">The DEX Advantage — Cincinnati, OH — January 14, 2026</li>
-        <li style="color: var(--text-muted); font-size: 0.9rem; padding: 0.5rem 0;">Microsoft AI Tour — New York, NY — January 21, 2026</li>
+        <li style="color: var(--text-muted); font-size: 0.9rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">CCW Las Vegas 2026 — June 2026 · Las Vegas, NV</li>
+        <li style="color: var(--text-muted); font-size: 0.9rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">Microsoft AI Tour — April 29, 2026 · Atlanta, GA</li>
+        <li style="color: var(--text-muted); font-size: 0.9rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">Microsoft AI Tour — January 21, 2026 · New York, NY</li>
+        <li style="color: var(--text-muted); font-size: 0.9rem; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color);">The DEX Advantage — January 14, 2026 · Cincinnati, OH</li>
+        <li style="color: var(--text-muted); font-size: 0.9rem; padding: 0.5rem 0;">Lenovo Tech World @ CES — January 6, 2026 · Las Vegas, NV</li>
       </ul>
     </div>
   </div>
 </section>
-
-  <!-- AI Lab Section -->
-<section class="ai-lab" id="lab">
-  <div class="container">
-    <h2>🧪 AI Lab</h2>
-    <p class="section-intro">This is where I pressure-test what everyone else is pitching. Real hardware, real workloads, real results — not vendor demos.</p>
-
-    <div class="monitor">
-      <div class="monitor-bar">
-        <div class="monitor-bar-left">
-          <span class="monitor-status"></span>
-          <span class="monitor-title">AI Agent Platform · Local Hardware</span>
-        </div>
-        <div class="monitor-badges">
-          <span class="m-badge turn-badge caller-active" id="turn-badge">● Caller Speaking</span>
-          <span class="m-badge latency">⚡ <span id="latency-val">---ms</span></span>
-        </div>
-      </div>
-
-      <canvas id="star-canvas"></canvas>
-
-      <div class="transcript-strip">
-        <div class="ts-line" id="ts-caller"><span class="ts-role cr">CALLER</span><span class="ts-text" id="ts-caller-text"></span></div>
-        <div class="ts-line dim" id="ts-agent"><span class="ts-role ar">AGENT</span><span class="ts-text" id="ts-agent-text"></span></div>
-      </div>
-
-      <div class="platform-layers">
-        <div class="layer-row">
-          <div class="layer-tag-col"><span class="layer-tag rt">Agent Runtime</span></div>
-          <div class="layer-blocks">
-            <div class="l-block"><div class="l-dot purple"></div><div class="l-block-title">Tool Orchestration</div><div class="l-block-desc">Multi-step workflow execution</div></div>
-            <div class="l-block"><div class="l-dot purple"></div><div class="l-block-title">Persistent Memory</div><div class="l-block-desc">Cross-session context</div></div>
-            <div class="l-block"><div class="l-dot purple"></div><div class="l-block-title">Knowledge Base</div><div class="l-block-desc">SOPs · Policies · Scripts</div></div>
-            <div class="l-block"><div class="l-dot purple"></div><div class="l-block-title">Voice Activity Detection</div><div class="l-block-desc">Natural turn-taking</div></div>
-          </div>
-        </div>
-        <div class="layer-row">
-          <div class="layer-tag-col"><span class="layer-tag ob">Observability</span></div>
-          <div class="layer-blocks">
-            <div class="l-block"><div class="l-dot teal"></div><div class="l-block-title">Session Replay</div><div class="l-block-desc">Full interaction trace</div></div>
-            <div class="l-block"><div class="l-dot teal"></div><div class="l-block-title">Performance</div><div class="l-block-desc">AHT · Accuracy · ROI</div></div>
-            <div class="l-block"><div class="l-dot teal"></div><div class="l-block-title">Error Taxonomy</div><div class="l-block-desc">Failure classification</div></div>
-            <div class="l-block"><div class="l-dot teal"></div><div class="l-block-title">Decision Trace</div><div class="l-block-desc">Reasoning audit</div></div>
-          </div>
-        </div>
-        <div class="kpi-row">
-          <div class="kpi"><span class="kpi-d o"></span> Sub-3s Conversational Latency</div>
-          <div class="kpi"><span class="kpi-d g"></span> 4-6 Week Deployment</div>
-          <div class="kpi"><span class="kpi-d b"></span> 40-60% Cost Reduction</div>
-          <div class="kpi"><span class="kpi-d p"></span> Multiple Concurrent Agents</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="explore-grid">
-      <div class="explore-card"><h4>🎙️ Conversational AI at the Edge</h4><p>Full voice pipelines running on local hardware. No cloud round-trips, no per-call API costs, no data leaving the building. Testing where the performance ceiling actually is.</p></div>
-      <div class="explore-card"><h4>🤖 AI Workflow Automation</h4><p>Exploring how AI agents can handle complex, multi-step processes in enterprise environments — reducing integration timelines from months to weeks. Particularly focused on what this unlocks in regulated industries like healthcare and government.</p></div>
-      <div class="explore-card"><h4>💰 The Real Economics of Inference</h4><p>Running production workloads locally to answer the questions vendors won't: actual cost per interaction, break-even points between on-prem and cloud, and where data sovereignty becomes non-negotiable.</p></div>
-    </div>
-
-    <div class="info-note"><p>💡 <strong>What you're seeing:</strong> A visualization of the AI agent platform running on an NVIDIA DGX Spark in my home office. I validate architectures on my own hardware before recommending them to enterprise clients. Opinions grounded in production workloads, not whitepapers.</p></div>
-  </div>
-</section>
-
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
-
-  /* AI Lab section — color tokens scoped so they don't affect the rest of the site */
-  #lab {
-    --bg-card: #11121b;
-    --bg-layer: #141520;
-    --blue: #3b82f6;
-    --cyan: #06b6d4;
-    --green: #10b981;
-    --purple: #8b5cf6;
-    --orange: #f59e0b;
-    --red: #ef4444;
-    --teal: #14b8a6;
-    --pink: #ec4899;
-    --yellow: #eab308;
-  }
-
-  .ai-lab { background: var(--bg-secondary); }
-  .ai-lab h2 { font-size: 2rem; font-weight: 600; margin-bottom: 0.75rem; text-align: center; }
-  .ai-lab .section-intro { text-align: center; max-width: 700px; margin: 0 auto 3rem; }
-
-  .monitor { background: var(--bg-primary); border-radius: 16px; border: 1px solid var(--border-color); overflow: hidden; margin-bottom: 2rem; }
-  .monitor-bar { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.5rem; border-bottom: 1px solid var(--border-color); background: rgba(255,255,255,0.01); }
-  .monitor-bar-left { display: flex; align-items: center; gap: 0.75rem; }
-  .monitor-status { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px rgba(16,185,129,0.5); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{box-shadow:0 0 8px rgba(16,185,129,0.5)} 50%{box-shadow:0 0 14px rgba(16,185,129,0.2)} }
-  .monitor-title { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 500; color: var(--text-secondary); letter-spacing: 0.04em; }
-  .monitor-badges { display: flex; gap: 0.75rem; align-items: center; }
-  .m-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; font-weight: 500; padding: 0.2rem 0.55rem; border-radius: 4px; }
-  .m-badge.latency { color: var(--green); background: rgba(16,185,129,0.06); border: 1px solid rgba(16,185,129,0.12); }
-  .m-badge.turn-badge { transition: all 0.6s; }
-  .m-badge.caller-active { color: var(--blue); background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.2); }
-  .m-badge.agent-active { color: var(--cyan); background: rgba(6,182,212,0.08); border: 1px solid rgba(6,182,212,0.2); }
-
-  #star-canvas { display: block; width: 100%; height: 480px; }
-
-  .transcript-strip { padding: 0.75rem 1.5rem; border-top: 1px solid var(--border-color); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; display: flex; gap: 2rem; min-height: 52px; align-items: center; background: rgba(255,255,255,0.008); }
-  .ts-line { display: flex; gap: 0.5rem; transition: opacity 0.5s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
-  .ts-line.dim { opacity: 0.2; }
-  .ts-role { font-weight: 600; flex-shrink: 0; }
-  .ts-role.cr { color: var(--blue); }
-  .ts-role.ar { color: var(--cyan); }
-  .ts-text { color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; }
-
-  .platform-layers { padding: 1.5rem; border-top: 1px solid var(--border-color); }
-  .layer-row { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; align-items: stretch; }
-  .layer-row:last-child { margin-bottom: 0; }
-  .layer-tag-col { flex: 0 0 120px; display: flex; align-items: center; }
-  .layer-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; padding: 0.2rem 0.5rem; border-radius: 3px; white-space: nowrap; }
-  .layer-tag.rt { color: var(--purple); background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.12); }
-  .layer-tag.ob { color: var(--teal); background: rgba(20,184,166,0.06); border: 1px solid rgba(20,184,166,0.1); }
-  .layer-blocks { flex: 1; display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .l-block { background: var(--bg-layer); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.6rem 0.85rem; flex: 1; min-width: 140px; position: relative; transition: border-color 0.3s; }
-  .l-block:hover { border-color: rgba(255,255,255,0.06); }
-  .l-block-title { font-size: 0.7rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.15rem; }
-  .l-block-desc { font-size: 0.6rem; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
-  .l-dot { position: absolute; top: 0.55rem; right: 0.55rem; width: 4px; height: 4px; border-radius: 50%; opacity: 0.3; animation: ldot 3s infinite; }
-  .l-dot.purple { background: var(--purple); }
-  .l-dot.teal { background: var(--teal); }
-  .l-block:nth-child(1) .l-dot { animation-delay: 0s; }
-  .l-block:nth-child(2) .l-dot { animation-delay: 0.7s; }
-  .l-block:nth-child(3) .l-dot { animation-delay: 1.4s; }
-  .l-block:nth-child(4) .l-dot { animation-delay: 0.3s; }
-  @keyframes ldot { 0%,100%{opacity:0.15} 50%{opacity:0.55} }
-
-  .kpi-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.25rem; padding-top: 0.85rem; margin-top: 0.75rem; border-top: 1px solid var(--border-color); }
-  .kpi { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.35rem; }
-  .kpi-d { width: 5px; height: 5px; border-radius: 50%; }
-  .kpi-d.o { background: var(--orange); }
-  .kpi-d.g { background: var(--green); }
-  .kpi-d.b { background: var(--blue); }
-  .kpi-d.p { background: var(--pink); }
-
-  .explore-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; margin-bottom: 2rem; }
-  .explore-card { padding: 1.5rem; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-color); transition: border-color 0.3s, transform 0.2s; }
-  .explore-card:hover { border-color: rgba(59,130,246,0.25); transform: translateY(-2px); }
-  .explore-card h4 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary); }
-  .explore-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
-
-  .info-note { margin-top: 2rem; padding: 1.5rem; background: var(--bg-primary); border-radius: 8px; border-left: 4px solid var(--cyan); }
-  .info-note p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; margin: 0; }
-
-  @media (max-width: 768px) {
-    #star-canvas { height: 400px; }
-    .layer-tag-col { flex: 0 0 80px; }
-    .l-block { min-width: 100px; }
-    .monitor-bar { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
-    .transcript-strip { flex-direction: column; gap: 0.5rem; }
-    .explore-grid { grid-template-columns: 1fr; }
-  }
-</style>
-
-<script is:inline>
-(function() {
-  const canvas = document.getElementById('star-canvas');
-  const ctx = canvas.getContext('2d');
-  let W, H, dpr, time = 0;
-  let isCallerTurn = true, turnTimer = 0;
-  const TURN_DUR = 5.0;
-  let turnBlend = 1;
-  let phaseT = 0;
-  let layout = {};
-
-  function resize() {
-    dpr = window.devicePixelRatio || 1;
-    const rect = canvas.parentElement.getBoundingClientRect();
-    W = rect.width; H = rect.height || 480;
-    canvas.width = W * dpr; canvas.height = H * dpr;
-    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    computeLayout();
-  }
-
-  function computeLayout() {
-    const cx = W * 0.48;
-    const cy = H * 0.5;
-    const brainR = Math.min(W, H) * 0.09;
-    const spokeR = Math.min(W, H) * 0.30;
-
-    layout = {
-      caller: { x: W * 0.06, y: cy, r: 20 },
-      pstn: { x: W * 0.20, y: cy, r: 16 },
-      brain: { x: cx, y: cy, r: brainR },
-      spokes: [
-        { id: 'stt',       label: 'Speech-to-Text',    shortLabel: 'STT',      angle: -1.2,  color: {r:139,g:92,b:246},  desc: 'Real-time transcription' },
-        { id: 'knowledge', label: 'Knowledge Base',     shortLabel: 'Knowledge', angle: -0.55, color: {r:245,g:158,b:11},  desc: 'SOPs · Policies · Scripts' },
-        { id: 'memory',    label: 'Persistent Memory',  shortLabel: 'Memory',    angle: 0.1,   color: {r:59,g:130,b:246},  desc: 'Cross-session context' },
-        { id: 'tools',     label: 'Tool Orchestration', shortLabel: 'Tools',     angle: 0.55,  color: {r:236,g:72,b:153},  desc: 'Workflow execution' },
-        { id: 'tts',       label: 'Text-to-Speech',     shortLabel: 'TTS',       angle: 1.2,   color: {r:6,g:182,b:212},   desc: 'Voice synthesis' },
-      ],
-      spokeR: spokeR,
-    };
-
-    for (const s of layout.spokes) {
-      s.x = cx + Math.cos(s.angle) * spokeR;
-      s.y = cy + Math.sin(s.angle) * spokeR;
-      s.r = 22;
-    }
-  }
-
-  function drawCaller(x, y, r, alpha, t) {
-    const a = alpha;
-    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(59,130,246,${0.09 * a})`; ctx.fill();
-    ctx.strokeStyle = `rgba(59,130,246,${0.30 * a})`; ctx.lineWidth = 1.5; ctx.stroke();
-    ctx.fillStyle = `rgba(59,130,246,${0.80 * a})`;
-    ctx.beginPath(); ctx.arc(x, y - 5, 5, 0, Math.PI * 2); ctx.fill();
-    ctx.strokeStyle = `rgba(59,130,246,${0.80 * a})`; ctx.lineWidth = 2; ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.arc(x, y + 12, 11, Math.PI + 0.4, -0.4); ctx.stroke();
-    ctx.font = '600 8px "JetBrains Mono", monospace'; ctx.textAlign = 'center';
-    ctx.fillStyle = `rgba(59,130,246,${0.55 * a})`; ctx.fillText('CALLER', x, y + r + 16);
-    if (a > 0.5) {
-      for (let i = 1; i <= 3; i++) {
-        const wa = 0.25 * (1 - i * 0.25) * (0.5 + 0.5 * Math.sin(t * 3 + i));
-        ctx.beginPath(); ctx.arc(x + r + 2, y, r * 0.3 + i * 6, -0.5, 0.5);
-        ctx.strokeStyle = `rgba(59,130,246,${wa * a})`; ctx.lineWidth = 1.5; ctx.stroke();
-      }
-    }
-  }
-
-  function drawPSTN(x, y, r, alpha) {
-    const a = alpha;
-    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(120,120,160,${0.08 * a})`; ctx.fill();
-    ctx.strokeStyle = `rgba(120,120,160,${0.23 * a})`; ctx.lineWidth = 1.5; ctx.stroke();
-    ctx.strokeStyle = `rgba(120,120,160,${0.68 * a})`; ctx.lineWidth = 1.5; ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(x - 5, y - 6); ctx.quadraticCurveTo(x - 7, y, x - 5, y + 6); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(x + 5, y - 6); ctx.quadraticCurveTo(x + 7, y, x + 5, y + 6); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(x - 5, y - 6); ctx.lineTo(x + 5, y - 6); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(x - 5, y + 6); ctx.lineTo(x + 5, y + 6); ctx.stroke();
-    ctx.font = '500 7px "JetBrains Mono", monospace'; ctx.textAlign = 'center';
-    ctx.fillStyle = `rgba(120,120,160,${0.45 * a})`; ctx.fillText('PSTN', x, y + r + 14);
-  }
-
-  function drawBrain(x, y, r, t) {
-    const g1 = ctx.createRadialGradient(x, y, r * 0.3, x, y, r * 3);
-    g1.addColorStop(0, 'rgba(16,185,129,0.12)'); g1.addColorStop(0.5, 'rgba(16,185,129,0.05)'); g1.addColorStop(1, 'rgba(16,185,129,0)');
-    ctx.fillStyle = g1; ctx.fillRect(x - r * 3, y - r * 3, r * 6, r * 6);
-    const breathe = 1 + 0.04 * Math.sin(t * 1.5);
-    ctx.beginPath(); ctx.arc(x, y, r * breathe, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(16,185,129,0.10)'; ctx.fill();
-    ctx.strokeStyle = 'rgba(16,185,129,0.35)'; ctx.lineWidth = 2; ctx.stroke();
-    ctx.beginPath(); ctx.arc(x, y, r * 0.7, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(16,185,129,0.08)'; ctx.lineWidth = 1; ctx.stroke();
-    ctx.save(); ctx.translate(x, y); ctx.rotate(t * 0.6);
-    for (let i = 0; i < 3; i++) {
-      const arcR = r * (0.85 + i * 0.12); const startA = i * 2.1;
-      ctx.beginPath(); ctx.arc(0, 0, arcR, startA, startA + 0.9);
-      ctx.strokeStyle = `rgba(16,185,129,${0.15 - i * 0.03})`; ctx.lineWidth = 1.5; ctx.stroke();
-    }
-    ctx.restore();
-    const layers = [
-      [{dx:-10,dy:-10},{dx:-10,dy:0},{dx:-10,dy:10}],
-      [{dx:0,dy:-14},{dx:0,dy:-4},{dx:0,dy:4},{dx:0,dy:14}],
-      [{dx:10,dy:-10},{dx:10,dy:0},{dx:10,dy:10}],
-    ];
-    for (let l = 0; l < layers.length - 1; l++) {
-      for (const n1 of layers[l]) {
-        for (const n2 of layers[l+1]) {
-          const pulse = 0.15 + 0.25 * Math.max(0, Math.sin(t * 3.5 + n1.dy * 0.3 + n2.dx * 0.2));
-          ctx.beginPath(); ctx.moveTo(x+n1.dx, y+n1.dy); ctx.lineTo(x+n2.dx, y+n2.dy);
-          ctx.strokeStyle = `rgba(16,185,129,${pulse})`; ctx.lineWidth = 1; ctx.stroke();
-        }
-      }
-    }
-    for (const layer of layers) {
-      for (const n of layer) {
-        const ps = 2.2 + Math.sin(t * 4 + n.dx + n.dy) * 1;
-        ctx.beginPath(); ctx.arc(x+n.dx, y+n.dy, ps, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(16,185,129,${0.7 + 0.2 * Math.sin(t*3 + n.dx)})`; ctx.fill();
-      }
-    }
-    ctx.font = '700 9px "JetBrains Mono", monospace'; ctx.textAlign = 'center';
-    ctx.fillStyle = 'rgba(16,185,129,0.75)'; ctx.fillText('AI REASONING', x, y + r + 18);
-  }
-
-  function drawSpokeNode(spoke, alpha, t) {
-    const { x, y, r, color: {r: cr, g, b}, shortLabel, desc } = spoke;
-    const a = alpha;
-    if (a > 0.3) {
-      const sg = ctx.createRadialGradient(x, y, r * 0.3, x, y, r * 2);
-      sg.addColorStop(0, `rgba(${cr},${g},${b},${0.15 * a})`); sg.addColorStop(1, `rgba(${cr},${g},${b},0)`);
-      ctx.fillStyle = sg; ctx.fillRect(x - r*2, y - r*2, r*4, r*4);
-    }
-    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${cr},${g},${b},${0.12 * a})`; ctx.fill();
-    ctx.strokeStyle = `rgba(${cr},${g},${b},${(0.25 + 0.15 * a)})`; ctx.lineWidth = 1.5; ctx.stroke();
-    if (a > 0.3) {
-      ctx.save(); ctx.translate(x, y); ctx.rotate(t * 1.2 + spoke.angle);
-      ctx.beginPath(); ctx.arc(0, 0, r + 4, -0.3, 0.7);
-      ctx.strokeStyle = `rgba(${cr},${g},${b},${0.2 * a})`; ctx.lineWidth = 1.5; ctx.stroke();
-      ctx.restore();
-    }
-    ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(${cr},${g},${b},${0.3 + 0.4 * a})`; ctx.fill();
-    ctx.font = '600 7.5px "JetBrains Mono", monospace'; ctx.textAlign = 'center';
-    ctx.fillStyle = `rgba(${cr},${g},${b},${0.50 + 0.40 * a})`; ctx.fillText(shortLabel, x, y + r + 14);
-    ctx.font = '400 6.5px "JetBrains Mono", monospace';
-    ctx.fillStyle = `rgba(${cr},${g},${b},${0.25 + 0.25 * a})`; ctx.fillText(desc, x, y + r + 25);
-  }
-
-  function drawConnection(x1, y1, x2, y2, color, alpha, particleDir, t, speed, count) {
-    const {r,g,b} = color; const a = alpha;
-    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2);
-    ctx.strokeStyle = `rgba(${r},${g},${b},${0.10 + 0.20 * a})`; ctx.lineWidth = 1; ctx.stroke();
-    if (a > 0.1) {
-      for (let i = 0; i < count; i++) {
-        let pt = ((t * speed + i * (1 / count)) % 1);
-        if (particleDir < 0) pt = 1 - pt;
-        const px = x1 + (x2 - x1) * pt; const py = y1 + (y2 - y1) * pt;
-        const pa = Math.sin(pt * Math.PI) * 0.85 * a;
-        ctx.beginPath(); ctx.arc(px, py, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${r},${g},${b},${pa * 0.35})`; ctx.fill();
-        ctx.beginPath(); ctx.arc(px, py, 1.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${r},${g},${b},${pa})`; ctx.fill();
-        ctx.beginPath(); ctx.arc(px, py, 0.8, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${pa * 0.5})`; ctx.fill();
-      }
-    }
-  }
-
-  function getSpokeActivity(spokeId, turnPhase, isCaller) {
-    if (isCaller) {
-      switch(spokeId) {
-        case 'stt':       return turnPhase < 0.5 ? smoothStep(turnPhase, 0, 0.15) : smoothStep(1 - turnPhase, 0, 0.2);
-        case 'knowledge': return turnPhase > 0.15 && turnPhase < 0.7 ? smoothStep(turnPhase - 0.15, 0, 0.15) * smoothStep(0.7 - turnPhase, 0, 0.1) : 0;
-        case 'memory':    return turnPhase > 0.2 && turnPhase < 0.75 ? smoothStep(turnPhase - 0.2, 0, 0.15) * smoothStep(0.75 - turnPhase, 0, 0.1) : 0;
-        case 'tools':     return turnPhase > 0.4 && turnPhase < 0.8 ? smoothStep(turnPhase - 0.4, 0, 0.15) * smoothStep(0.8 - turnPhase, 0, 0.1) * 0.6 : 0;
-        case 'tts':       return 0;
-      }
-    } else {
-      switch(spokeId) {
-        case 'stt':       return 0;
-        case 'knowledge': return turnPhase < 0.3 ? smoothStep(0.3 - turnPhase, 0, 0.15) * 0.4 : 0;
-        case 'memory':    return turnPhase < 0.25 ? smoothStep(0.25 - turnPhase, 0, 0.15) * 0.3 : 0;
-        case 'tools':     return turnPhase > 0.05 && turnPhase < 0.4 ? smoothStep(turnPhase - 0.05, 0, 0.15) * smoothStep(0.4 - turnPhase, 0, 0.1) * 0.5 : 0;
-        case 'tts':       return turnPhase > 0.2 && turnPhase < 0.9 ? smoothStep(turnPhase - 0.2, 0, 0.2) * smoothStep(0.9 - turnPhase, 0, 0.15) : 0;
-      }
-    }
-    return 0;
-  }
-
-  function smoothStep(x, edge0, edge1) {
-    const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
-    return t * t * (3 - 2 * t);
-  }
-
-  let lastT = 0, latC = 0;
-  function jitter(b, r) { return b + Math.floor(Math.random() * r) - Math.floor(r / 2); }
-
-  function render(ts) {
-    const dt = Math.min((ts - lastT) / 1000, 0.05); lastT = ts; time += dt;
-    turnTimer += dt;
-    if (turnTimer > TURN_DUR) { turnTimer = 0; isCallerTurn = !isCallerTurn; updateTurnUI(); }
-    const target = isCallerTurn ? 1 : 0;
-    turnBlend += (target - turnBlend) * dt * 3;
-    phaseT = turnTimer / TURN_DUR;
-    latC += dt;
-    if (latC > 3) { latC = 0; const s=jitter(85,20),l=jitter(220,60),t2=jitter(140,30); const el=document.getElementById('latency-val'); if(el)el.textContent=(s+l+t2)+'ms'; }
-    ctx.clearRect(0, 0, W, H);
-    const L = layout;
-    const brX = L.brain.x, brY = L.brain.y;
-    const ingressAlpha = 0.3 + 0.7 * turnBlend;
-    const egressAlpha = 0.3 + 0.7 * (1 - turnBlend);
-    drawConnection(L.caller.x + L.caller.r + 4, L.caller.y, L.pstn.x - L.pstn.r - 4, L.pstn.y, {r:100,g:100,b:140}, ingressAlpha, 1, time, 0.4, 4);
-    drawConnection(L.pstn.x + L.pstn.r + 4, L.pstn.y, brX - L.brain.r - 4, brY, {r:100,g:100,b:140}, ingressAlpha, 1, time, 0.35, 5);
-    if (egressAlpha > 0.35) {
-      drawConnection(brX - L.brain.r - 4, brY + 8, L.pstn.x + L.pstn.r + 4, L.pstn.y + 8, {r:6,g:182,b:212}, egressAlpha * (phaseT > 0.5 ? smoothStep(phaseT, 0.5, 0.7) : 0), -1, time, 0.35, 4);
-      drawConnection(L.pstn.x - L.pstn.r - 4, L.pstn.y + 8, L.caller.x + L.caller.r + 4, L.caller.y + 8, {r:6,g:182,b:212}, egressAlpha * (phaseT > 0.6 ? smoothStep(phaseT, 0.6, 0.8) : 0), -1, time, 0.4, 3);
-    }
-    for (const spoke of L.spokes) {
-      const act = getSpokeActivity(spoke.id, phaseT, isCallerTurn);
-      const dir = (spoke.id === 'tts') ? 1 : (spoke.id === 'stt' ? -1 : 0);
-      const particleDir = dir === 0 ? 1 : dir;
-      drawConnection(brX + Math.cos(spoke.angle) * (L.brain.r + 4), brY + Math.sin(spoke.angle) * (L.brain.r + 4), spoke.x - Math.cos(spoke.angle) * (spoke.r + 4), spoke.y - Math.sin(spoke.angle) * (spoke.r + 4), spoke.color, act, particleDir, time, 0.35, 5);
-      if (dir === 0 && act > 0.2) {
-        drawConnection(spoke.x - Math.cos(spoke.angle) * (spoke.r + 4), spoke.y - Math.sin(spoke.angle) * (spoke.r + 4) + 4, brX + Math.cos(spoke.angle) * (L.brain.r + 4), brY + Math.sin(spoke.angle) * (L.brain.r + 4) + 4, spoke.color, act * 0.5, -1, time + 0.5, 0.3, 3);
-      }
-    }
-    drawCaller(L.caller.x, L.caller.y, L.caller.r, 0.4 + 0.6 * turnBlend, time);
-    drawPSTN(L.pstn.x, L.pstn.y, L.pstn.r, 0.5 + 0.5 * Math.max(turnBlend, 1 - turnBlend));
-    drawBrain(brX, brY, L.brain.r, time);
-    for (const spoke of L.spokes) {
-      const act = getSpokeActivity(spoke.id, phaseT, isCallerTurn);
-      drawSpokeNode(spoke, 0.15 + 0.85 * act, time);
-    }
-    requestAnimationFrame(render);
-  }
-
-  const turnBadge = document.getElementById('turn-badge');
-  const tsCaller = document.getElementById('ts-caller');
-  const tsAgent = document.getElementById('ts-agent');
-  function updateTurnUI() {
-    if (turnBadge) { turnBadge.textContent = isCallerTurn ? '● Caller Speaking' : '● Agent Responding'; turnBadge.className = 'm-badge turn-badge ' + (isCallerTurn ? 'caller-active' : 'agent-active'); }
-    if (tsCaller) tsCaller.classList.toggle('dim', !isCallerTurn);
-    if (tsAgent) tsAgent.classList.toggle('dim', isCallerTurn);
-  }
-
-  const convs = [
-    {c:"Hi, I need to check the status of my application.",a:"I've pulled up your account — your application was approved on February 28th."},
-    {c:"Can you update my mailing address?",a:"Done. I've updated your address and sent a confirmation to your email on file."},
-    {c:"I'm calling about my enrollment for next quarter.",a:"I see your enrollment record. You're set for the March cohort — would you like to make changes?"},
-    {c:"What documents do I need to submit?",a:"Based on your case type, you'll need two forms of ID and proof of residence."},
-    {c:"I was told someone would call me back yesterday.",a:"I apologize for the delay. I have your case notes — let me get this resolved right now."},
-  ];
-  let ci = 0;
-  function showConv() {
-    const c = convs[ci];
-    const ct = document.getElementById('ts-caller-text'), at = document.getElementById('ts-agent-text');
-    if (ct) ct.textContent = c.c; if (at) at.textContent = c.a;
-    ci = (ci + 1) % convs.length;
-  }
-  showConv(); setInterval(showConv, TURN_DUR * 2 * 1000);
-
-  resize(); updateTurnUI(); requestAnimationFrame(render);
-  window.addEventListener('resize', resize);
-})();
-</script>
 
     <!-- Engage Section -->
     <section id="engage">
@@ -625,29 +260,29 @@ import InteractiveTerminal from '../components/InteractiveTerminal.astro';
           </p>
           <div class="card-grid">
             <div class="card">
-              <h3 class="card-title">Speaking & Workshops</h3>
+              <h3 class="card-title">Speaking &amp; Workshops</h3>
               <p class="card-description">
-                I speak about what I'm learning: AI deployment realities, the culture side of transformation, and what it takes to lead technology at scale. Every talk is grounded in experience from real implementations, not slide decks borrowed from last year.
+                Agentic AI in production, the small-model thesis, and a newer talk I'm loving: what happens when AI moves into everyday life.
               </p>
             </div>
             <div class="card">
               <h3 class="card-title">Advisory</h3>
               <p class="card-description">
-                I work with leadership teams who want a thought partner, not a vendor. Whether it's pressure-testing an AI strategy or thinking through a transformation roadmap, I bring a practitioner's perspective.
+                AI strategy, platform modernization, and CX transformation through Digital Gaines LLC.
               </p>
             </div>
             <div class="card">
-              <h3 class="card-title">Conversations</h3>
+              <h3 class="card-title">Peer Conversations</h3>
               <p class="card-description">
-                Some of my best thinking has come from casual exchanges with peers. If something on this site resonated or you're working through a challenge, reach out. No agenda required.
+                If you're running your own personal-AI experiment, I want to compare notes. Seriously.
               </p>
             </div>
           </div>
           <div class="contact-info">
             <p class="location">Based in Lexington, Kentucky</p>
             <div class="contact-buttons">
-              <a href="https://www.linkedin.com/in/dejon-gaines" target="_blank" class="btn btn-primary">Connect on LinkedIn</a>
-              
+              <a href="https://www.linkedin.com/in/dejon-gaines" target="_blank" class="btn btn-primary">Get in Touch</a>
+              <a href="https://www.linkedin.com/in/dejon-gaines" target="_blank" class="btn btn-outline">LinkedIn</a>
             </div>
           </div>
         </div>
@@ -669,4 +304,163 @@ import InteractiveTerminal from '../components/InteractiveTerminal.astro';
     </div>
   </footer>
   <InteractiveTerminal />
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  /* ---- Hero ---- */
+  .subtitle-alt {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.01em;
+    margin-bottom: 1.5rem;
+  }
+  /* Three chips on one row: the hero grid column caps at 536px, and the
+     inherited chip sizing needs 606px. Trimmed to ~516px, scoped to the hero.
+     Below the container's max width the column narrows and they wrap. */
+  .hero-content .impact-areas { gap: 0.65rem; }
+  .hero-content .impact-item { font-size: 0.85rem; padding: 0.4rem 0.7rem; }
+
+  .hero-content .tagline { font-size: 1.1rem; margin-bottom: 1.25rem; }
+  .hero-content .tagline:last-of-type { margin-bottom: 2rem; }
+
+  /* ---- The Lab ---- */
+  .ai-lab { background: var(--bg-secondary); }
+  .ai-lab h2 { font-size: 2rem; font-weight: 600; margin-bottom: 0.75rem; text-align: center; }
+  .ai-lab h2::after { left: 50%; transform: translateX(-50%); }
+  .ai-lab .section-intro { text-align: center; max-width: 700px; margin: 0 auto 1.5rem; }
+
+  .lab-intro {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 2.5rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  .ll-caption {
+    max-width: 860px;
+    margin: 1.75rem auto 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    text-align: center;
+  }
+
+  .cos-block {
+    max-width: 860px;
+    margin: 2.5rem auto 0;
+    padding: 1.75rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-left: 4px solid #2fd57b;
+    border-radius: 8px;
+  }
+  .cos-block h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+  .cos-block p { color: var(--text-secondary); line-height: 1.8; margin: 0; }
+
+  .lab-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .lab-stat {
+    padding: 1.5rem 1.25rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .ls-v {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.1;
+  }
+  .ls-k { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; }
+
+  .lab-footnote {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: var(--bg-primary);
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-color);
+  }
+  .lab-footnote p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; margin: 0; }
+
+  /* ---- Field Notes ---- */
+  .notes-soon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .notes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.5rem; }
+  .note-card {
+    padding: 1.75rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .note-card:hover { border-color: var(--accent-color); transform: translateY(-2px); }
+  .note-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 0.2rem 0.55rem;
+    margin-bottom: 1rem;
+  }
+  .note-card h3 { font-size: 1.1rem; font-weight: 600; color: var(--text-primary); line-height: 1.45; margin-bottom: 0.6rem; }
+  .note-card p { color: var(--text-secondary); font-size: 0.92rem; line-height: 1.65; margin: 0; }
+
+  /* ---- Focus + Connect card grids ----
+     Scoped to these two sections only. The global .card-grid rule in
+     Layout.astro stays single-column so Events (and anything else using it)
+     is unaffected. Grid items stretch by default, so cards are equal height. */
+  #focus .card-grid,
+  #engage .card-grid { align-items: stretch; }
+
+  @media (min-width: 700px) {
+    #focus .card-grid,
+    #engage .card-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 900px) {
+    #focus .card-grid,
+    #engage .card-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* ---- Connect ---- */
+  #engage .contact-info { margin-top: 3rem; }
+  #engage .location { margin-bottom: 1rem; }
+  .contact-buttons { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+
+  /* ---- Events ---- */
+  .booking-line { margin-top: 1.5rem; }
+  .booking-line a { color: var(--text-secondary); text-decoration: none; font-size: 0.95rem; }
+  .booking-line a:hover { color: var(--accent-color); }
+
+  @media (max-width: 768px) {
+    .notes-grid { grid-template-columns: 1fr; }
+    .lab-stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
 </Layout>
