@@ -1,0 +1,358 @@
+---
+/**
+ * The Living Loop — self-contained animated diagram for The Lab section.
+ *
+ * Fully namespaced under `.living-loop`:
+ *  - all custom properties are `--ll-*` so they cannot collide with the site
+ *    palette (`--bg-primary`, `--green`, …) or leak upward into `#lab`
+ *  - all element ids are `ll-*`
+ *  - the class formerly named `.card` is `.ll-panel`, to avoid inheriting the
+ *    site's global `.card` rule from Layout.astro
+ *
+ * The dark palette is intentional and identical in the site's light mode — it
+ * reads as a "screen within the page". Loop timings (2.2s inner lap, 24s outer
+ * lap / release cadence) are load-bearing constants; do not retune them.
+ * Zero dependencies, `prefers-reduced-motion` safe.
+ *
+ * Deviation from the supplied source: viewBox widened from "0 0 640 640" to
+ * "-20 0 680 640". At 0-origin the compass sublabels "prompts · flows · routing"
+ * (x from -17.4) and "evidence, not opinion" (x to 646.9) fall outside the
+ * viewport and render clipped. The extra 20px of margin on each side is purely
+ * additive — no coordinate, timing, or proportion of the composition changes.
+ */
+---
+
+<div class="living-loop">
+  <div class="ll-panel">
+    <div class="bar">
+      <span class="dot"></span>
+      <span class="t">dejon@lab:~$ ./run --loop=self-improving</span>
+      <span class="path"></span>
+      <span class="spacer"></span>
+      <span class="chip ver">core <span id="ll-ver">v0.47</span></span>
+      <span class="chip live">● LIVE</span>
+    </div>
+
+    <div class="main">
+      <!-- ==================== VISUAL ==================== -->
+      <div class="viz">
+        <svg viewBox="-20 0 680 640" role="img" aria-label="A living diagram: a conversation ring orbits an AI reasoning core in under a second, while a slower improvement ring — capture, score, learn, improve — feeds each cycle back into the core, which increments its version.">
+          <defs>
+            <radialGradient id="ll-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#2fd57b" stop-opacity=".25"></stop>
+              <stop offset="100%" stop-color="#2fd57b" stop-opacity="0"></stop>
+            </radialGradient>
+            <radialGradient id="ll-corefill" cx="50%" cy="42%" r="65%">
+              <stop offset="0%" stop-color="#123726"></stop>
+              <stop offset="100%" stop-color="#0a1f15"></stop>
+            </radialGradient>
+          </defs>
+
+          <!-- ambient glow -->
+          <circle id="ll-coreglow" cx="320" cy="320" r="150" fill="url(#ll-glow)" class="corepulse"></circle>
+
+          <!-- ============ OUTER: improvement ring ============ -->
+          <circle cx="320" cy="320" r="272" class="ring-imp"></circle>
+          <!-- comet on improvement ring -->
+          <g class="mover">
+            <circle r="5" fill="#f2b544">
+              <animateMotion dur="24s" repeatCount="indefinite"
+                path="M 320,48 A 272,272 0 1,1 319.9,48"></animateMotion>
+            </circle>
+            <circle r="11" fill="#f2b544" opacity=".18">
+              <animateMotion dur="24s" repeatCount="indefinite"
+                path="M 320,48 A 272,272 0 1,1 319.9,48"></animateMotion>
+            </circle>
+          </g>
+
+          <!-- improvement stations (compass) -->
+          <g>
+            <circle cx="320" cy="48" r="24" class="node" stroke="#f2b544" stroke-width="1.5"></circle>
+            <text x="320" y="52" text-anchor="middle" fill="#f2b544" font-size="9" font-weight="700">CAP</text>
+            <text x="356" y="44" class="stlbl">CAPTURE</text>
+            <text x="356" y="57" class="stsub">every conversation</text>
+          </g>
+          <g>
+            <circle cx="592" cy="320" r="24" class="node" stroke="#f2b544" stroke-width="1.5"></circle>
+            <text x="592" y="324" text-anchor="middle" fill="#f2b544" font-size="9" font-weight="700">QA</text>
+            <text x="592" y="282" text-anchor="middle" class="stlbl">SCORE</text>
+            <text x="592" y="295" text-anchor="middle" class="stsub">evidence, not opinion</text>
+          </g>
+          <g>
+            <circle cx="320" cy="592" r="24" class="node" stroke="#f2b544" stroke-width="1.5"></circle>
+            <text x="320" y="596" text-anchor="middle" fill="#f2b544" font-size="9" font-weight="700">INS</text>
+            <text x="356" y="590" class="stlbl">LEARN</text>
+            <text x="356" y="603" class="stsub">gaps · patterns · wins</text>
+          </g>
+          <g>
+            <circle cx="48" cy="320" r="24" class="node" stroke="#f2b544" stroke-width="1.5"></circle>
+            <text x="48" y="324" text-anchor="middle" fill="#f2b544" font-size="9" font-weight="700">IMP</text>
+            <text x="48" y="282" text-anchor="middle" class="stlbl">IMPROVE</text>
+            <text x="48" y="295" text-anchor="middle" class="stsub">prompts · flows · routing</text>
+          </g>
+
+          <!-- feed spokes -->
+          <line x1="320" y1="188" x2="320" y2="74" class="spoke"></line>
+          <line x1="74" y1="320" x2="252" y2="320" class="spoke"></line>
+
+          <!-- ============ INNER: conversation ring ============ -->
+          <circle cx="320" cy="320" r="132" class="ring-conv"></circle>
+          <g class="mover">
+            <circle r="4" fill="#2fd57b">
+              <animateMotion dur="2.2s" repeatCount="indefinite"
+                path="M 320,188 A 132,132 0 1,1 319.9,188"></animateMotion>
+            </circle>
+            <circle r="9" fill="#2fd57b" opacity=".2">
+              <animateMotion dur="2.2s" repeatCount="indefinite"
+                path="M 320,188 A 132,132 0 1,1 319.9,188"></animateMotion>
+            </circle>
+          </g>
+
+          <!-- person on the conversation ring -->
+          <g>
+            <circle cx="320" cy="188" r="20" class="node" stroke="#4aa8e8" stroke-width="1.6"></circle>
+            <circle cx="320" cy="183" r="5.5" fill="none" stroke="#4aa8e8" stroke-width="1.4"></circle>
+            <path d="M 310,198 C 312,191 328,191 330,198" fill="none" stroke="#4aa8e8" stroke-width="1.4"></path>
+            <text x="320" y="165" text-anchor="middle" class="stlbl" fill="#4aa8e8">PERSON</text>
+          </g>
+          <!-- stt / tts markers -->
+          <g>
+            <circle cx="434" cy="386" r="13" class="node" stroke="#9b8cf8" stroke-width="1.3"></circle>
+            <text x="434" y="389" text-anchor="middle" fill="#9b8cf8" font-size="7.5" font-weight="700">STT</text>
+          </g>
+          <g>
+            <circle cx="206" cy="386" r="13" class="node" stroke="#38cfc5" stroke-width="1.3"></circle>
+            <text x="206" y="389" text-anchor="middle" fill="#38cfc5" font-size="7.5" font-weight="700">TTS</text>
+          </g>
+
+          <!-- ============ CORE ============ -->
+          <g id="ll-core">
+            <circle cx="320" cy="320" r="62" fill="url(#ll-corefill)" stroke="#2fd57b" stroke-width="1.8"></circle>
+            <g stroke="#2fd57b" stroke-width="1.2" fill="none" opacity=".85">
+              <circle cx="320" cy="316" r="5"></circle>
+              <circle cx="301" cy="305" r="3"></circle><circle cx="339" cy="305" r="3"></circle>
+              <circle cx="301" cy="328" r="3"></circle><circle cx="339" cy="328" r="3"></circle>
+              <line x1="316" y1="313" x2="304" y2="307"></line><line x1="324" y1="313" x2="336" y2="307"></line>
+              <line x1="316" y1="319" x2="304" y2="326"></line><line x1="324" y1="319" x2="336" y2="326"></line>
+            </g>
+            <text x="320" y="352" text-anchor="middle" fill="#2fd57b" font-size="10.5" font-weight="700" letter-spacing=".08em">REASONING</text>
+          </g>
+
+          <!-- satellites -->
+          <g>
+            <circle cx="428" cy="248" r="4" fill="#e8a33d"></circle>
+            <text x="438" y="245" class="satlbl">KNOWLEDGE</text>
+            <circle cx="440" cy="320" r="4" fill="#4aa8e8"></circle>
+            <text x="450" y="324" class="satlbl">MEMORY</text>
+            <circle cx="428" cy="392" r="4" fill="#e0567a"></circle>
+            <text x="438" y="403" class="satlbl">TOOLS</text>
+          </g>
+
+          <!-- ring labels -->
+          <text x="320" y="230" text-anchor="middle" class="ringlbl" fill="#2fd57b" opacity=".9">CONVERSATION · &lt;1s / LAP</text>
+          <text x="320" y="624" text-anchor="middle" class="ringlbl" fill="#f2b544" opacity=".9">IMPROVEMENT · EVERY LAP SHIPS A BETTER CORE</text>
+        </svg>
+      </div>
+
+      <!-- ==================== TELEMETRY ==================== -->
+      <div class="tele">
+        <div class="stats">
+          <div class="stat"><div class="k">TURNS HANDLED</div><div class="v g" id="ll-turns">4,812</div></div>
+          <div class="stat"><div class="k">AVG LOOP</div><div class="v g" id="ll-loop">0.91<small>s</small></div></div>
+          <div class="stat"><div class="k">QUALITY / RELEASE</div><div class="v a"><span class="sparkline" id="ll-spark">▂▃▃▄▅▅▆▆▇</span> <span id="ll-qual">96.2</span><span class="up">▲</span></div></div>
+          <div class="stat"><div class="k">RELEASES SHIPPED</div><div class="v a" id="ll-rel">47</div></div>
+        </div>
+        <div class="logwrap">
+          <div class="loghead"><span>TELEMETRY</span><span>tail -f loop.log</span></div>
+          <div class="log" id="ll-log"></div>
+          <div class="simnote">// illustrative telemetry — simulated for this visual</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span><b>Inner ring:</b> person ⇄ tech · under a second</span>
+      <span><b>Outer ring:</b> tech → QA → tech · release over release</span>
+      <span><b>One architecture, two deployments</b> — enterprise · home lab</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .living-loop{
+    --ll-panel:#090f0d;
+    --ll-frame:#182420;
+    --ll-text:#cfdcd4;
+    --ll-dim:#5c6f66;
+    --ll-faint:#39463f;
+    --ll-green:#2fd57b;
+    --ll-amber:#f2b544;
+    --ll-blue:#4aa8e8;
+    --ll-purple:#9b8cf8;
+    --ll-mono:'Cascadia Code','JetBrains Mono','Fira Code',Consolas,'Courier New',monospace;
+
+    display:flex;
+    justify-content:center;
+    color:var(--ll-text);
+    font-family:var(--ll-mono);
+    line-height:1.6;
+  }
+  .living-loop *{margin:0;padding:0;box-sizing:border-box}
+
+  .ll-panel{width:100%;max-width:1120px;background:var(--ll-panel);border:1px solid var(--ll-frame);border-radius:12px;overflow:hidden;box-shadow:0 0 60px rgba(47,213,123,.04)}
+  /* the graphic stays dark in light mode — lift it off the white page */
+  :global([data-theme="light"]) .ll-panel{border-color:#2c3a35;box-shadow:0 10px 34px rgba(0,0,0,.22)}
+
+  /* header */
+  .bar{display:flex;align-items:center;gap:10px;padding:11px 18px;border-bottom:1px solid var(--ll-frame);font-size:12px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--ll-green);box-shadow:0 0 9px var(--ll-green);animation:ll-blink 2.6s ease-in-out infinite;flex-shrink:0}
+  .bar .t{letter-spacing:.05em}
+  .bar .path{color:var(--ll-dim)}
+  .spacer{flex:1}
+  .chip{font-size:10.5px;padding:3px 10px;border-radius:4px;border:1px solid;white-space:nowrap}
+  .chip.live{color:var(--ll-green);border-color:rgba(47,213,123,.45);background:rgba(47,213,123,.08)}
+  .chip.ver{color:var(--ll-amber);border-color:rgba(242,181,68,.45);background:rgba(242,181,68,.08)}
+
+  /* layout */
+  .main{display:grid;grid-template-columns:1.35fr 1fr;gap:0}
+  @media (max-width:880px){.main{grid-template-columns:1fr}}
+  .viz{padding:8px 4px 0;display:flex;align-items:center;justify-content:center;min-width:0}
+  .living-loop svg{width:100%;max-width:640px;height:auto;display:block}
+
+  /* telemetry column */
+  .tele{border-left:1px solid var(--ll-frame);display:flex;flex-direction:column;min-width:0}
+  @media (max-width:880px){.tele{border-left:none;border-top:1px solid var(--ll-frame)}}
+  .stats{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--ll-frame)}
+  .stat{padding:12px 16px;border-bottom:1px solid var(--ll-frame);min-width:0}
+  .stat:nth-child(odd){border-right:1px solid var(--ll-frame)}
+  .stat:nth-child(3),.stat:nth-child(4){border-bottom:none}
+  .stat .k{font-size:9.5px;letter-spacing:.14em;color:var(--ll-dim)}
+  .stat .v{font-size:20px;font-weight:700;margin-top:3px;letter-spacing:.02em}
+  .stat .v small{font-size:11px;color:var(--ll-dim);font-weight:400}
+  .v.g{color:var(--ll-green)} .v.a{color:var(--ll-amber)}
+  .sparkline{font-size:13px;letter-spacing:1px;color:var(--ll-green)}
+  .up{color:var(--ll-green);font-size:11px}
+
+  .logwrap{flex:1;display:flex;flex-direction:column;min-height:0}
+  .loghead{padding:8px 16px 6px;font-size:9.5px;letter-spacing:.14em;color:var(--ll-dim);display:flex;justify-content:space-between}
+  .log{flex:1;padding:0 16px 10px;overflow:hidden;font-size:11px;line-height:1.75;min-height:230px;max-height:300px}
+  .log :global(div){white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:1;transition:opacity .5s}
+  .log :global(div.old){opacity:.45}
+  .log :global(.ts){color:var(--ll-faint)}
+  .log :global(.call){color:var(--ll-green)}
+  .log :global(.qa){color:var(--ll-amber)}
+  .log :global(.learn){color:var(--ll-blue)}
+  .log :global(.ship){color:var(--ll-purple);font-weight:600}
+  .log :global(.ev){color:var(--ll-dim);font-style:italic}
+  .simnote{padding:6px 16px 10px;font-size:9.5px;color:var(--ll-faint);letter-spacing:.06em}
+
+  .foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:11px 18px;font-size:11px;color:var(--ll-dim);border-top:1px solid var(--ll-frame)}
+  .foot b{color:var(--ll-text);font-weight:600}
+
+  /* svg */
+  .living-loop text{font-family:var(--ll-mono)}
+  .ringlbl{font-size:10px;letter-spacing:.18em;font-weight:600}
+  .stlbl{fill:var(--ll-text);font-size:10.5px;font-weight:700;letter-spacing:.08em}
+  .stsub{fill:var(--ll-dim);font-size:8.5px;letter-spacing:.03em}
+  .satlbl{fill:var(--ll-dim);font-size:8.5px;letter-spacing:.1em}
+  .ring-conv{fill:none;stroke:var(--ll-green);stroke-width:1.4;stroke-dasharray:3 7;opacity:.55}
+  .ring-imp{fill:none;stroke:var(--ll-amber);stroke-width:1.6;stroke-dasharray:2 9;opacity:.5}
+  .spoke{stroke:rgba(150,170,160,.16);stroke-width:1;stroke-dasharray:2 5}
+  .node{fill:#0c1512}
+  .corepulse{animation:ll-pulse 3s ease-in-out infinite;transform-origin:320px 320px}
+  .flash{animation:ll-coreflash .9s ease-out}
+  @keyframes ll-pulse{0%,100%{opacity:.5}50%{opacity:1}}
+  @keyframes ll-blink{0%,100%{opacity:1}50%{opacity:.4}}
+  @keyframes ll-coreflash{0%{opacity:1}15%{opacity:.2}100%{opacity:1}}
+  @media (prefers-reduced-motion: reduce){
+    .corepulse,.dot{animation:none}
+    .mover{display:none}
+  }
+</style>
+
+<script is:inline>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var log = document.getElementById('ll-log');
+  if(!log) return;
+  var turnsEl=document.getElementById('ll-turns'), loopEl=document.getElementById('ll-loop'),
+      qualEl=document.getElementById('ll-qual'), sparkEl=document.getElementById('ll-spark'),
+      relEl=document.getElementById('ll-rel'), verEl=document.getElementById('ll-ver'),
+      core=document.getElementById('ll-core'), glow=document.getElementById('ll-coreglow');
+
+  var turns=4812, quality=96.2, releases=47, minor=47;
+  var qhist=[94.1,94.4,94.9,95.0,95.4,95.6,95.9,96.0,96.2];
+  var blocks='▁▂▃▄▅▆▇█';
+
+  var langs=['en-US','en-US','en-US','es-MX','es-MX','fr-CA'];
+  var intents=['reschedule appt','refill status','benefits question','after-hours triage','billing inquiry','address change','new-patient intake','callback request'];
+  var evidence=['"…moved to 8:15 tomorrow, does that work?"','"…your refill was sent to the pharmacy today."','"…that visit is covered under your plan."','"…let me get a nurse on with us right now."','"…the confirmation text is on its way."','"…no wait — I can book that for you now."'];
+  var learns=['pattern +1 (after-hours reschedule) → refinement queued','routing gap: billing→human at 2 turns, was 4 → queued','new phrase variant mapped to refill intent → queued','escalation earlier on frustration cues → queued'];
+
+  function ts(){ var d=new Date(); return '['+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+':'+String(d.getSeconds()).padStart(2,'0')+']'; }
+  function ri(a,b){ return Math.floor(Math.random()*(b-a+1))+a; }
+  function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+  function fmt(n){ return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g,','); }
+
+  function line(cls, html){
+    var d=document.createElement('div');
+    d.innerHTML='<span class="ts">'+ts()+'</span> '+html;
+    d.className=cls;
+    log.appendChild(d);
+    var rows=log.children;
+    for(var i=0;i<rows.length;i++){ rows[i].classList.toggle('old', i<rows.length-5); }
+    while(rows.length>13){ log.removeChild(rows[0]); }
+  }
+
+  function spark(){
+    var min=Math.min.apply(null,qhist), max=Math.max.apply(null,qhist);
+    var out='';
+    for(var i=0;i<qhist.length;i++){
+      var t=(qhist[i]-min)/((max-min)||1);
+      out+=blocks[Math.round(t*(blocks.length-1))];
+    }
+    sparkEl.textContent=out;
+  }
+
+  function callTurn(){
+    turns++;
+    var stt=ri(140,260), rz=ri(380,720), tts=ri(120,210);
+    var total=((stt+rz+tts)/1000).toFixed(2);
+    line('call','turn#'+turns+'  '+pick(langs)+'  '+pick(intents)+'  · stt '+stt+'ms · reason '+rz+'ms · tts '+tts+'ms  ▸ '+total+'s ✓');
+    turnsEl.textContent=fmt(turns);
+    loopEl.innerHTML=(0.82+Math.random()*0.16).toFixed(2)+'<small>s</small>';
+    if(Math.random()<0.65){
+      var sc=ri(88,99), t=turns;
+      setTimeout(function(){ line('qa','qa: turn#'+t+' scored '+sc+'/100 — <span class="ev">'+pick(evidence)+'</span>'); }, 900);
+    }
+    if(Math.random()<0.28){
+      setTimeout(function(){ line('learn','learn: '+pick(learns)); }, 1700);
+    }
+  }
+
+  function ship(){
+    releases++; minor++;
+    quality=Math.min(99.0, quality+ (0.05+Math.random()*0.12));
+    qhist.push(Number(quality.toFixed(1))); if(qhist.length>9) qhist.shift();
+    verEl.textContent='v0.'+minor;
+    relEl.textContent=releases;
+    qualEl.textContent=quality.toFixed(1);
+    spark();
+    line('ship','ship: core v0.'+minor+' → prompts · flows · routing updated ✓ next conversation inherits');
+    core.classList.remove('flash'); glow.classList.remove('flash');
+    void core.offsetWidth;
+    core.classList.add('flash'); glow.classList.add('flash');
+  }
+
+  // seed
+  spark();
+  callTurn();
+  setTimeout(callTurn, 400);
+  line('ship','ship: core v0.'+minor+' running · quality '+quality.toFixed(1)+' and climbing');
+
+  if(!reduced){
+    setInterval(callTurn, 3400);
+    setInterval(ship, 24000); // one improvement-ring lap
+  }
+})();
+</script>
