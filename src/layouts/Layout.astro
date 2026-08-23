@@ -579,8 +579,34 @@ const { title, description } = Astro.props;
         font-size: 1.1rem;
     }
 
+    /* Nav stays usable on mobile: wrap the links instead of hiding them, so
+       all six sections and the theme toggle remain reachable on a phone.
+       Wrapping makes the bar ~3 rows tall, so drop the sticky positioning
+       here — it scrolls away instead of eating a third of a phone viewport. */
+    nav {
+        position: static;
+        padding: 0.75rem 0;
+    }
+
+    .nav-content {
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+    }
+
     .nav-links {
-        display: none;
+        flex-wrap: wrap;
+        gap: 0.5rem 0.9rem;
+        justify-content: flex-end;
+        flex: 1;
+    }
+
+    .nav-links a {
+        font-size: 0.82rem;
+    }
+
+    .theme-toggle {
+        font-size: 1.1rem;
+        padding: 0.25rem;
     }
 
     .about-grid {
