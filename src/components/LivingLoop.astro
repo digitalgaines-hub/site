@@ -14,11 +14,10 @@
  * lap / release cadence) are load-bearing constants; do not retune them.
  * Zero dependencies, `prefers-reduced-motion` safe.
  *
- * Deviation from the supplied source: viewBox widened from "0 0 640 640" to
- * "-20 0 680 640". At 0-origin the compass sublabels "prompts · flows · routing"
- * (x from -17.4) and "evidence, not opinion" (x to 646.9) fall outside the
- * viewport and render clipped. The extra 20px of margin on each side is purely
- * additive — no coordinate, timing, or proportion of the composition changes.
+ * viewBox is the source's original "0 0 640 640". It was briefly widened to
+ * "-20 0 680 640" because two station sublabels overflowed the left/right
+ * edges; those sublabels have since been removed, and measured content extent
+ * is now x 23→617, y 23→627, so the margin is no longer needed.
  */
 ---
 
@@ -36,7 +35,7 @@
     <div class="main">
       <!-- ==================== VISUAL ==================== -->
       <div class="viz">
-        <svg viewBox="-20 0 680 640" role="img" aria-label="A living diagram: a conversation ring orbits an AI reasoning core in under a second, while a slower improvement ring — capture, score, learn, improve — feeds each cycle back into the core, which increments its version.">
+        <svg viewBox="0 0 640 640" role="img" aria-label="A living diagram: a conversation ring orbits an AI reasoning core — knowledge, memory and tools — in under a second, while a slower improvement ring of capture, score, learn and improve feeds each cycle back into the core, which increments its version.">
           <defs>
             <radialGradient id="ll-glow" cx="50%" cy="50%" r="50%">
               <stop offset="0%" stop-color="#2fd57b" stop-opacity=".25"></stop>
@@ -70,30 +69,22 @@
             <circle cx="320" cy="48" r="24" class="node" stroke="#f2b544" stroke-width="1.5"></circle>
             <text x="320" y="52" text-anchor="middle" fill="#f2b544" font-size="9" font-weight="700">CAP</text>
             <text x="356" y="44" class="stlbl">CAPTURE</text>
-            <text x="356" y="57" class="stsub">every conversation</text>
           </g>
           <g>
             <circle cx="592" cy="320" r="24" class="node" stroke="#f2b544" stroke-width="1.5"></circle>
             <text x="592" y="324" text-anchor="middle" fill="#f2b544" font-size="9" font-weight="700">QA</text>
             <text x="592" y="282" text-anchor="middle" class="stlbl">SCORE</text>
-            <text x="592" y="295" text-anchor="middle" class="stsub">evidence, not opinion</text>
           </g>
           <g>
             <circle cx="320" cy="592" r="24" class="node" stroke="#f2b544" stroke-width="1.5"></circle>
             <text x="320" y="596" text-anchor="middle" fill="#f2b544" font-size="9" font-weight="700">INS</text>
             <text x="356" y="590" class="stlbl">LEARN</text>
-            <text x="356" y="603" class="stsub">gaps · patterns · wins</text>
           </g>
           <g>
             <circle cx="48" cy="320" r="24" class="node" stroke="#f2b544" stroke-width="1.5"></circle>
             <text x="48" y="324" text-anchor="middle" fill="#f2b544" font-size="9" font-weight="700">IMP</text>
             <text x="48" y="282" text-anchor="middle" class="stlbl">IMPROVE</text>
-            <text x="48" y="295" text-anchor="middle" class="stsub">prompts · flows · routing</text>
           </g>
-
-          <!-- feed spokes -->
-          <line x1="320" y1="188" x2="320" y2="74" class="spoke"></line>
-          <line x1="74" y1="320" x2="252" y2="320" class="spoke"></line>
 
           <!-- ============ INNER: conversation ring ============ -->
           <circle cx="320" cy="320" r="132" class="ring-conv"></circle>
@@ -115,16 +106,6 @@
             <path d="M 310,198 C 312,191 328,191 330,198" fill="none" stroke="#4aa8e8" stroke-width="1.4"></path>
             <text x="320" y="165" text-anchor="middle" class="stlbl" fill="#4aa8e8">PERSON</text>
           </g>
-          <!-- stt / tts markers -->
-          <g>
-            <circle cx="434" cy="386" r="13" class="node" stroke="#9b8cf8" stroke-width="1.3"></circle>
-            <text x="434" y="389" text-anchor="middle" fill="#9b8cf8" font-size="7.5" font-weight="700">STT</text>
-          </g>
-          <g>
-            <circle cx="206" cy="386" r="13" class="node" stroke="#38cfc5" stroke-width="1.3"></circle>
-            <text x="206" y="389" text-anchor="middle" fill="#38cfc5" font-size="7.5" font-weight="700">TTS</text>
-          </g>
-
           <!-- ============ CORE ============ -->
           <g id="ll-core">
             <circle cx="320" cy="320" r="62" fill="url(#ll-corefill)" stroke="#2fd57b" stroke-width="1.8"></circle>
@@ -136,16 +117,7 @@
               <line x1="316" y1="319" x2="304" y2="326"></line><line x1="324" y1="319" x2="336" y2="326"></line>
             </g>
             <text x="320" y="352" text-anchor="middle" fill="#2fd57b" font-size="10.5" font-weight="700" letter-spacing=".08em">REASONING</text>
-          </g>
-
-          <!-- satellites -->
-          <g>
-            <circle cx="428" cy="248" r="4" fill="#e8a33d"></circle>
-            <text x="438" y="245" class="satlbl">KNOWLEDGE</text>
-            <circle cx="440" cy="320" r="4" fill="#4aa8e8"></circle>
-            <text x="450" y="324" class="satlbl">MEMORY</text>
-            <circle cx="428" cy="392" r="4" fill="#e0567a"></circle>
-            <text x="438" y="403" class="satlbl">TOOLS</text>
+            <text x="320" y="400" text-anchor="middle" class="stsub">knowledge · memory · tools</text>
           </g>
 
           <!-- ring labels -->
@@ -254,10 +226,8 @@
   .ringlbl{font-size:10px;letter-spacing:.18em;font-weight:600}
   .stlbl{fill:var(--ll-text);font-size:10.5px;font-weight:700;letter-spacing:.08em}
   .stsub{fill:var(--ll-dim);font-size:8.5px;letter-spacing:.03em}
-  .satlbl{fill:var(--ll-dim);font-size:8.5px;letter-spacing:.1em}
   .ring-conv{fill:none;stroke:var(--ll-green);stroke-width:1.4;stroke-dasharray:3 7;opacity:.55}
   .ring-imp{fill:none;stroke:var(--ll-amber);stroke-width:1.6;stroke-dasharray:2 9;opacity:.5}
-  .spoke{stroke:rgba(150,170,160,.16);stroke-width:1;stroke-dasharray:2 5}
   .node{fill:#0c1512}
   .corepulse{animation:ll-pulse 3s ease-in-out infinite;transform-origin:320px 320px}
   .flash{animation:ll-coreflash .9s ease-out}
@@ -314,19 +284,24 @@
     sparkEl.textContent=out;
   }
 
-  function callTurn(){
+  // `immediate` emits the follow-up qa/learn lines synchronously instead of on
+  // a timer, so the on-load seed can build a backlog without waiting them out.
+  function callTurn(immediate){
     turns++;
     var stt=ri(140,260), rz=ri(380,720), tts=ri(120,210);
     var total=((stt+rz+tts)/1000).toFixed(2);
     line('call','turn#'+turns+'  '+pick(langs)+'  '+pick(intents)+'  · stt '+stt+'ms · reason '+rz+'ms · tts '+tts+'ms  ▸ '+total+'s ✓');
     turnsEl.textContent=fmt(turns);
     loopEl.innerHTML=(0.82+Math.random()*0.16).toFixed(2)+'<small>s</small>';
+    var t=turns;
     if(Math.random()<0.65){
-      var sc=ri(88,99), t=turns;
-      setTimeout(function(){ line('qa','qa: turn#'+t+' scored '+sc+'/100 — <span class="ev">'+pick(evidence)+'</span>'); }, 900);
+      var sc=ri(88,99);
+      var qa=function(){ line('qa','qa: turn#'+t+' scored '+sc+'/100 — <span class="ev">'+pick(evidence)+'</span>'); };
+      immediate ? qa() : setTimeout(qa, 900);
     }
     if(Math.random()<0.28){
-      setTimeout(function(){ line('learn','learn: '+pick(learns)); }, 1700);
+      var lr=function(){ line('learn','learn: '+pick(learns)); };
+      immediate ? lr() : setTimeout(lr, 1700);
     }
   }
 
@@ -344,14 +319,13 @@
     core.classList.add('flash'); glow.classList.add('flash');
   }
 
-  // seed
+  // seed a short backlog (~8 rows) so the panel doesn't start half-empty
   spark();
-  callTurn();
-  setTimeout(callTurn, 400);
   line('ship','ship: core v0.'+minor+' running · quality '+quality.toFixed(1)+' and climbing');
+  while(log.children.length < 8){ callTurn(true); }
 
   if(!reduced){
-    setInterval(callTurn, 3400);
+    setInterval(function(){ callTurn(); }, 3400);
     setInterval(ship, 24000); // one improvement-ring lap
   }
 })();
